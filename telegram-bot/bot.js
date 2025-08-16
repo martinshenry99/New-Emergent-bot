@@ -360,6 +360,85 @@ Should we revoke mint authority after creation?
                 showFinalSummary(chatId, userId, session.data);
             }
         }
+    } else if (data.startsWith('ai_continue_')) {
+        const sessionUserId = data.replace('ai_continue_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                // Continue with AI branding settings
+                bot.sendMessage(chatId, `🤖 AI Branding: ${session.data.name} (${session.data.symbol})
+
+Now let's configure the remaining settings:
+
+Step 1: Liquidity Lock
+Should we lock the liquidity to prevent rug pulls?`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '🔒 Yes, Lock It', callback_data: `ai_lock_yes_${userId}` },
+                                { text: '🚫 No Lock', callback_data: `ai_lock_no_${userId}` }
+                            ]
+                        ]
+                    }
+                });
+            }
+        }
+    } else if (data.startsWith('ai_lock_')) {
+        const [, decision, sessionUserId] = data.split('_');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session) {
+                session.data.liquidityLock = decision === 'yes';
+                bot.sendMessage(chatId, `✅ Liquidity Lock: ${decision === 'yes' ? 'Enabled' : 'Disabled'}
+
+Step 2: Mint Authority Revoke
+Should we revoke mint authority after creation?
+
+🔒 Mint Authority Revoke prevents creating more tokens after initial mint, ensuring fixed supply forever.`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '🔒 Yes, Revoke', callback_data: `ai_mint_yes_${userId}` },
+                                { text: '🔄 Keep Authority', callback_data: `ai_mint_no_${userId}` }
+                            ]
+                        ]
+                    }
+                });
+                userSessions.set(userId, session);
+            }
+        }
+    } else if (data.startsWith('ai_mint_')) {
+        const [, decision, sessionUserId] = data.split('_');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session) {
+                session.data.revokeMint = decision === 'yes';
+                bot.sendMessage(chatId, `✅ Mint Authority: ${decision === 'yes' ? 'Will be revoked' : 'Keep authority'}
+
+Step 3: Network Selection
+Choose which network to deploy on:`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '🧪 Devnet (Free)', callback_data: `ai_network_devnet_${userId}` },
+                                { text: '🌐 Mainnet (Live)', callback_data: `ai_network_mainnet_${userId}` }
+                            ]
+                        ]
+                    }
+                });
+                userSessions.set(userId, session);
+            }
+        }
+    } else if (data.startsWith('ai_network_')) {
+        const [, , network, sessionUserId] = data.split('_');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session) {
+                session.data.network = network;
+                session.data.totalSupply = 1000000; // Default 1M supply for AI tokens
+                showFinalSummary(chatId, userId, session.data);
+            }
+        }
     } else if (data === 'show_wallets') {
         await showWallets(chatId);
     } else if (data === 'cancel_wizard') {
