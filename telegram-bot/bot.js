@@ -413,11 +413,20 @@ Should we lock the liquidity to prevent rug pulls?`, {
             }
         }
     } else if (data.startsWith('ai_lock_')) {
-        const [, decision, sessionUserId] = data.split('_');
+        // Handle liquidity lock decision in AI branding
+        console.log(`🤖 Processing ai_lock callback: ${data}`);
+        const parts = data.split('_');
+        const decision = parts[2]; // 'yes' or 'no'
+        const sessionUserId = parts[3]; // user ID
+        
+        console.log(`🤖 AI lock decision: ${decision}, sessionUserId: ${sessionUserId}, currentUserId: ${userId}`);
+        
         if (sessionUserId === userId.toString()) {
             const session = userSessions.get(userId);
             if (session) {
                 session.data.liquidityLock = decision === 'yes';
+                console.log(`✅ AI Lock processed: liquidityLock = ${session.data.liquidityLock}`);
+                
                 bot.sendMessage(chatId, `✅ Liquidity Lock: ${decision === 'yes' ? 'Enabled' : 'Disabled'}
 
 Step 2: Mint Authority Revoke
@@ -434,7 +443,11 @@ Should we revoke mint authority after creation?
                     }
                 });
                 userSessions.set(userId, session);
+            } else {
+                console.log(`❌ No AI session found for user ${userId}`);
             }
+        } else {
+            console.log(`❌ AI Session userId mismatch: ${sessionUserId} vs ${userId}`);
         }
     } else if (data.startsWith('ai_mint_')) {
         const [, decision, sessionUserId] = data.split('_');
