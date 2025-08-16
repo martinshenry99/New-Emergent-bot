@@ -318,16 +318,15 @@ bot.on('callback_query', async (callbackQuery) => {
                 session.data.liquidityLock = decision === 'yes';
                 session.step = 6;
                 // Continue to mint authority step
-                bot.sendMessage(chatId, `✅ Liquidity Lock: **${decision === 'yes' ? 'Enabled' : 'Disabled'}**
+                bot.sendMessage(chatId, `✅ Liquidity Lock: ${decision === 'yes' ? 'Enabled' : 'Disabled'}
 
-**Step 6/9: Mint Authority Revoke**
+Step 6/9: Mint Authority Revoke
 
 Should we revoke mint authority after creation?
 
-🔒 **Mint Authority Revoke** prevents creating more tokens after initial mint, ensuring fixed supply forever.
+🔒 Mint Authority Revoke prevents creating more tokens after initial mint, ensuring fixed supply forever.
 
-💡 *Tip: Revoking shows commitment to tokenomics*`, {
-                    parse_mode: 'Markdown',
+💡 Tip: Revoking shows commitment to tokenomics`, {
                     reply_markup: {
                         inline_keyboard: [
                             [
