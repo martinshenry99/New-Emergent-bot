@@ -38,20 +38,19 @@ console.log(`📡 Connected to Solana ${process.env.SOLANA_NETWORK || 'devnet'}`
 // Start command
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    const welcomeMessage = `🚀 **Welcome to Simplified Meme Token Creator**
+    const welcomeMessage = `🚀 Welcome to Simplified Meme Token Creator
 
 Create your own meme token on Solana with just 2 simple commands:
 
-**🛠️ Manual Setup:**
+🛠️ Manual Setup:
 /launch - Step-by-step token creation wizard
 
-**🤖 AI-Powered:**
+🤖 AI-Powered:
 /auto_brand - AI creates everything for you
 
 Ready to launch your meme coin? 🚀`;
 
     bot.sendMessage(chatId, welcomeMessage, {
-        parse_mode: 'Markdown',
         reply_markup: {
             inline_keyboard: [
                 [
