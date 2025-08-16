@@ -223,17 +223,17 @@ Please enter your ticker symbol:`);
             }
             data.symbol = ticker;
             session.step = 4;
-            bot.sendMessage(chatId, `✅ Ticker Symbol: **${ticker}**
+            bot.sendMessage(chatId, `✅ Ticker Symbol: ${ticker}
 
-**Step 4/9: Total Supply**
+Step 4/9: Total Supply
 
 Total number of tokens to mint.
 
 Examples: 1000000 (1M), 100000000 (100M), 1000000000 (1B)
 
-💡 *Tip: Popular supplies are 1M, 100M, or 1B tokens*
+💡 Tip: Popular supplies are 1M, 100M, or 1B tokens
 
-Please enter total supply (numbers only):`, { parse_mode: 'Markdown' });
+Please enter total supply (numbers only):`);
             break;
 
         case 4: // Total Supply
