@@ -482,16 +482,15 @@ This may take 30-45 seconds...`, { parse_mode: 'Markdown' });
                 }
             });
 
-            bot.sendMessage(chatId, `🎉 **AI Branding Complete!**
+            bot.sendMessage(chatId, `🎉 AI Branding Complete!
 
-🪙 **Token Name:** ${brandingResult.name}
-🔤 **Symbol:** ${brandingResult.symbol}
-📝 **Description:** ${brandingResult.description}
-🖼️ **Logo:** ${brandingResult.imageUrl ? 'Generated' : 'Placeholder'}
-🤖 **Mode:** ${mode === 'trending' ? 'Trending Memes' : 'Pure AI'}
+🪙 Token Name: ${brandingResult.name}
+🔤 Symbol: ${brandingResult.symbol}
+📝 Description: ${brandingResult.description}
+🖼️ Logo: ${brandingResult.imageUrl ? 'Generated' : 'Placeholder'}
+🤖 Mode: ${mode === 'trending' ? 'Trending Memes' : 'Pure AI'}
 
-**Settings Still Needed:**`, {
-                parse_mode: 'Markdown',
+Settings Still Needed:`, {
                 reply_markup: {
                     inline_keyboard: [
                         [
