@@ -184,17 +184,17 @@ function handleManualLaunchStep(chatId, userId, text, session) {
             }
             data.name = text;
             session.step = 2;
-            bot.sendMessage(chatId, `✅ Token Name: **${text}**
+            bot.sendMessage(chatId, `✅ Token Name: ${text}
 
-**Step 2/9: Token Description**
+Step 2/9: Token Description
 
 Briefly describe the vibe or joke behind your token.
 
 Examples: "The ultimate meme coin for diamond hands 💎", "Community-driven dog coin with a twist 🐕"
 
-💡 *Tip: Make it engaging and under 200 characters*
+💡 Tip: Make it engaging and under 200 characters
 
-Please enter your token description:`, { parse_mode: 'Markdown' });
+Please enter your token description:`);
             break;
 
         case 2: // Token Description
