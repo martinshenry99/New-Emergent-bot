@@ -499,6 +499,10 @@ Choose which network to deploy on:`, {
     } else if (data === 'cancel_wizard') {
         userSessions.delete(userId);
         bot.sendMessage(chatId, '❌ Wizard cancelled. Use /start to begin again.');
+    } else {
+        // Debug: Log unhandled callbacks
+        console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
+        bot.sendMessage(chatId, `⚠️ Button action not recognized: ${data}. Please try again or use /start.`);
     }
 
     bot.answerCallbackQuery(callbackQuery.id);
