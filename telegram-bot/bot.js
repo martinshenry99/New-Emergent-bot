@@ -244,16 +244,15 @@ Please enter total supply (numbers only):`);
             }
             data.totalSupply = supply;
             session.step = 5;
-            bot.sendMessage(chatId, `✅ Total Supply: **${supply.toLocaleString()}** tokens
+            bot.sendMessage(chatId, `✅ Total Supply: ${supply.toLocaleString()} tokens
 
-**Step 5/9: Liquidity Lock**
+Step 5/9: Liquidity Lock
 
 Should we lock the liquidity to prevent rug pulls?
 
-🔒 **Liquidity Lock** means the liquidity tokens are locked for a specific period, making it impossible for creators to remove liquidity (prevents rug pulls).
+🔒 Liquidity Lock means the liquidity tokens are locked for a specific period, making it impossible for creators to remove liquidity (prevents rug pulls).
 
-💡 *Tip: Locking builds trust with your community*`, {
-                parse_mode: 'Markdown',
+💡 Tip: Locking builds trust with your community`, {
                 reply_markup: {
                     inline_keyboard: [
                         [
