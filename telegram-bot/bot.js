@@ -300,7 +300,7 @@ bot.on('callback_query', async (callbackQuery) => {
     const chatId = callbackQuery.message.chat.id;
     const userId = callbackQuery.from.id;
 
-    console.log(`🔔 Callback: ${data} from user ${userId}`);
+    console.log(`🔔 Callback received: "${data}" from user ${userId} in chat ${chatId}`);
 
     if (data === 'manual_launch') {
         startManualLaunch(chatId, userId);
