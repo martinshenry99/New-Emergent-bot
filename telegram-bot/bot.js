@@ -450,11 +450,20 @@ Should we revoke mint authority after creation?
             console.log(`❌ AI Session userId mismatch: ${sessionUserId} vs ${userId}`);
         }
     } else if (data.startsWith('ai_mint_')) {
-        const [, decision, sessionUserId] = data.split('_');
+        // Handle mint authority decision in AI branding
+        console.log(`🤖 Processing ai_mint callback: ${data}`);
+        const parts = data.split('_');
+        const decision = parts[2]; // 'yes' or 'no'
+        const sessionUserId = parts[3]; // user ID
+        
+        console.log(`🤖 AI mint decision: ${decision}, sessionUserId: ${sessionUserId}, currentUserId: ${userId}`);
+        
         if (sessionUserId === userId.toString()) {
             const session = userSessions.get(userId);
             if (session) {
                 session.data.revokeMint = decision === 'yes';
+                console.log(`✅ AI Mint processed: revokeMint = ${session.data.revokeMint}`);
+                
                 bot.sendMessage(chatId, `✅ Mint Authority: ${decision === 'yes' ? 'Will be revoked' : 'Keep authority'}
 
 Step 3: Network Selection
@@ -469,7 +478,11 @@ Choose which network to deploy on:`, {
                     }
                 });
                 userSessions.set(userId, session);
+            } else {
+                console.log(`❌ No AI session found for user ${userId}`);
             }
+        } else {
+            console.log(`❌ AI Mint userId mismatch: ${sessionUserId} vs ${userId}`);
         }
     } else if (data.startsWith('ai_network_')) {
         const [, , network, sessionUserId] = data.split('_');
