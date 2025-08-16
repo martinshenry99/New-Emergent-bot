@@ -204,15 +204,15 @@ Please enter your token description:`);
             }
             data.description = text;
             session.step = 3;
-            bot.sendMessage(chatId, `✅ Description: **${text}**
+            bot.sendMessage(chatId, `✅ Description: ${text}
 
-**Step 3/9: Ticker Symbol**
+Step 3/9: Ticker Symbol
 
 3-6 uppercase letters, e.g., DOGE, PEPE, MOON
 
-💡 *Tip: Keep it short, memorable, and related to your token name*
+💡 Tip: Keep it short, memorable, and related to your token name
 
-Please enter your ticker symbol:`, { parse_mode: 'Markdown' });
+Please enter your ticker symbol:`);
             break;
 
         case 3: // Ticker Symbol
