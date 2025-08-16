@@ -340,14 +340,44 @@ Should we revoke mint authority after creation?
             }
         }
     } else if (data.startsWith('step6_')) {
-        const [, decision, sessionUserId] = data.split('_');
+        // Handle mint authority decision in manual launch
+        console.log(`📝 Processing step6 callback: ${data}`);
+        const parts = data.split('_');
+        const decision = parts[1]; // 'yes' or 'no' 
+        const sessionUserId = parts[2]; // user ID
+        
+        console.log(`📝 Step6 decision: ${decision}, sessionUserId: ${sessionUserId}, currentUserId: ${userId}`);
+        
         if (sessionUserId === userId.toString()) {
             const session = userSessions.get(userId);
             if (session) {
                 session.data.revokeMint = decision === 'yes';
                 session.step = 7;
-                handleManualLaunchStep(chatId, userId, '', session);
+                console.log(`✅ Step6 processed: revokeMint = ${session.data.revokeMint}`);
+                
+                bot.sendMessage(chatId, `✅ Mint Authority: ${decision === 'yes' ? 'Will be revoked' : 'Keep authority'}
+
+Step 7/9: Network Selection
+
+Choose which network to deploy on:
+
+🧪 Devnet - Free testing network (recommended)
+🌐 Mainnet - Live network (real SOL required)`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '🧪 Devnet (Free)', callback_data: `network_devnet_${userId}` },
+                                { text: '🌐 Mainnet (Live)', callback_data: `network_mainnet_${userId}` }
+                            ]
+                        ]
+                    }
+                });
+                userSessions.set(userId, session);
+            } else {
+                console.log(`❌ No session found for user ${userId}`);
             }
+        } else {
+            console.log(`❌ Session userId mismatch: ${sessionUserId} vs ${userId}`);
         }
     } else if (data.startsWith('network_')) {
         const [, network, sessionUserId] = data.split('_');
