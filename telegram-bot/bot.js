@@ -100,18 +100,17 @@ function startManualLaunch(chatId, userId) {
         data: {}
     });
 
-    bot.sendMessage(chatId, `🛠️ **Manual Token Creation Wizard**
+    bot.sendMessage(chatId, `🛠️ Manual Token Creation Wizard
 
-**Step 1/9: Token Name**
+Step 1/9: Token Name
 
 Choose something catchy and relevant to your meme.
 
 Examples: "Doge Killer", "Moon Rocket", "Diamond Hands"
 
-💡 *Tip: Keep it memorable and under 32 characters*
+💡 Tip: Keep it memorable and under 32 characters
 
 Please enter your token name:`, {
-        parse_mode: 'Markdown',
         reply_markup: {
             inline_keyboard: [
                 [{ text: '❌ Cancel', callback_data: 'cancel_wizard' }]
