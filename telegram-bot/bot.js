@@ -126,22 +126,21 @@ bot.onText(/\/auto_brand/, (msg) => {
 });
 
 function startAutoBrand(chatId, userId) {
-    bot.sendMessage(chatId, `🤖 **AI-Powered Token Branding**
+    bot.sendMessage(chatId, `🤖 AI-Powered Token Branding
 
 Choose your AI branding mode:
 
-🔥 **Trending Meme Mode**
+🔥 Trending Meme Mode
 • Scan trending Twitter memes
 • Extract popular themes
 • Create based on current trends
 
-🎯 **Pure AI Mode**
+🎯 Pure AI Mode
 • Generate unique concept from scratch
 • Creative AI-driven ideas
 • Completely original branding
 
 Which mode would you prefer?`, {
-        parse_mode: 'Markdown',
         reply_markup: {
             inline_keyboard: [
                 [
