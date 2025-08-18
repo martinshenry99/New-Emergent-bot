@@ -1,62 +1,33 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "gown climb select custom truck clown banner mystery rule craft behind section",
-      "publicKey": "2roU9QxaNahVfc3er5N1zGBcwYLufVQB3CUucu24SYC7",
-      "createdAt": "2025-08-18T12:09:31.350Z"
+      "mnemonic": "tide spice parade angle metal refuse frown cart powder season fruit coyote",
+      "publicKey": "AeCsn7bfyoccoXxcHirSfkqG8ko8g6UAS5FkFuNqFXXa",
+      "createdAt": "2025-08-18T12:34:59.570Z"
     },
     "wallet2": {
-      "mnemonic": "swarm upper deer vacuum banner erode increase plastic globe together century farm",
-      "publicKey": "Do1a96PyW2RddCrW9TZyhn5Gv4za8ALTvT65371UT88s",
-      "createdAt": "2025-08-18T12:09:31.446Z"
+      "mnemonic": "know party under feature mango toss pluck treat nest peasant tuna main",
+      "publicKey": "3Z1PSyg1fF4sGLnvRytFimVCgR8PQG2GHxdVcPJvJ8ks",
+      "createdAt": "2025-08-18T12:34:59.649Z"
     },
     "wallet3": {
-      "mnemonic": "catalog faith sibling city mercy logic innocent dwarf census eyebrow digital lake",
-      "publicKey": "ABCca3wajYaUogeDXm6heEmAwgSKV2pjZD7s64CvkFa2",
-      "createdAt": "2025-08-18T12:09:31.464Z"
+      "mnemonic": "capable surround client country repeat total offer pink love senior orbit fork",
+      "publicKey": "J3WJs1utponZFnq1Ycdx49tisE56xn4AoAAGHLkfHbq8",
+      "createdAt": "2025-08-18T12:34:59.701Z"
     },
     "wallet4": {
-      "mnemonic": "report field pave craft always midnight derive deliver dove steak awake eager",
-      "publicKey": "FiDr9oP7X7LLXaQzV47mNFVCcvT9GTSGgCRw4bfFMERT",
-      "createdAt": "2025-08-18T12:09:31.535Z"
+      "mnemonic": "choose canoe sibling scrap domain purse device humble weird cram about motor",
+      "publicKey": "BNGuFhedNgqXawc5AQLNubVSmaEGFnEkat9jGCQ5S8E5",
+      "createdAt": "2025-08-18T12:34:59.743Z"
     },
     "wallet5": {
-      "mnemonic": "bonus match permit lift vibrant impact bachelor peanut jazz argue myth month",
-      "publicKey": "Ci3839z87xWze2eZCzdhtEpsQt6fMNQQDuV7FzP7AaEC",
-      "createdAt": "2025-08-18T12:09:31.551Z"
+      "mnemonic": "elegant weird lazy globe lift guilt negative ritual flight swap vendor rail",
+      "publicKey": "3TaCbA1b54ZCB8uUtDqFACr7i7YZBU29xpLuuHrEMgfL",
+      "createdAt": "2025-08-18T12:34:59.799Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {
-    "HTgSKK9LLtL1is1T6rYk8FnnpjCWUMEXzEqkWRZyEdak": {
-      "success": true,
-      "name": "ShibaBoss",
-      "symbol": "SHIBOSS",
-      "description": "🔥 Trending meme token based on Shiba Inu as a business executive! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=SHIBOSS",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-08-18T12:13:43.659Z",
-      "lastUpdated": "2025-08-18T12:13:43.659Z"
-    },
-    "GoH8c5ikj41TNXvXtv1zz2UH78Y5TkfXysBWEsXYaka": {
-      "success": true,
-      "name": "DiamondApe",
-      "symbol": "DIAPE",
-      "description": "🔥 Trending meme token based on Diamond hands meets ape strong! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=DIAPE",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": false,
-      "createdAt": "2025-08-18T12:29:17.738Z",
-      "lastUpdated": "2025-08-18T12:29:17.738Z"
-    }
-  },
+  "tokens": {},
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
