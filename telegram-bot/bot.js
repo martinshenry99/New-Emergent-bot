@@ -880,16 +880,17 @@ Updating wallet balance...`);
         // Step 4: Balance update (already done in airdrop function)
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        bot.sendMessage(chatId, `✅ **AIRDROP COMPLETED!**
+        bot.sendMessage(chatId, `✅ **REAL AIRDROP COMPLETED!**
 
 🎉 **Transaction Successful!**
 💰 **1 SOL** has been added to Wallet ${walletNumber}
 
 📊 **Transaction Details:**
-• Signature: \`${signature}\`
+• Signature: \`${airdropResult.signature}\`
 • Amount: 1 SOL
 • Network: ${networkName}
-• Status: ✅ Confirmed
+• Status: ✅ Confirmed on Solana devnet
+• New Balance: ${airdropResult.newBalance.toFixed(4)} SOL
 • Wallet: \`${wallet.publicKey.substring(0, 8)}...${wallet.publicKey.substring(-8)}\`
 
 💡 **What's Next:**
@@ -900,7 +901,7 @@ Your wallet now has additional SOL for:
 • Trading operations
 
 🔗 **View on Explorer:**
-[View Transaction](https://explorer.solana.com/tx/${signature}?cluster=devnet)`, {
+[View Transaction](https://explorer.solana.com/tx/${airdropResult.signature}?cluster=devnet)`, {
             parse_mode: 'Markdown',
             reply_markup: {
                 inline_keyboard: [
