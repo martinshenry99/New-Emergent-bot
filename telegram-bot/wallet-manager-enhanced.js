@@ -30,11 +30,15 @@ class EnhancedWalletManager {
         const savedWallets = this.database.getWallets(network);
         
         if (savedWallets && Object.keys(savedWallets).length === 5) {
-            // Load existing wallets
+            // Load existing wallets - NEVER regenerate if they exist
             console.log(`📂 Loading existing ${network} wallets...`);
             await this.loadWalletsFromDatabase(network, savedWallets);
+        } else if (network === 'mainnet') {
+            // NEVER auto-generate mainnet wallets - they should be manually set
+            console.log('⚠️ Mainnet wallets not found - using empty set (manual configuration required)');
+            // Don't generate new mainnet wallets automatically
         } else {
-            // Generate new wallets
+            // Only generate new devnet wallets if none exist
             console.log(`🆕 Generating new ${network} wallets...`);
             await this.generateNewWallets(network);
         }
