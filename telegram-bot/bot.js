@@ -844,40 +844,41 @@ Please wait...`);
         // Step 2: Processing  
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Real airdrop implementation for devnet
-        let airdropSuccess = false;
-        let signature = `${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+        // REAL AIRDROP IMPLEMENTATION
+        let airdropResult;
         
         try {
-            if (network === 'devnet') {
-                const connection = enhancedWalletManager.getConnection(network);
-                // For real implementation:
-                // const sig = await connection.requestAirdrop(wallet.keypair.publicKey, LAMPORTS_PER_SOL);
-                // await connection.confirmTransaction(sig);
-                // signature = sig;
-                airdropSuccess = true;
+            bot.sendMessage(chatId, `🔄 **Processing Transaction...**
+
+📡 Submitting airdrop request to Solana devnet...
+🔍 Requesting 1 SOL from faucet...
+⚡ Confirming transaction on blockchain...
+
+Please wait...`);
+            
+            // Call REAL airdrop function
+            airdropResult = await enhancedWalletManager.requestDevnetAirdrop(walletNumber);
+            
+            if (!airdropResult.success) {
+                throw new Error('Airdrop request failed');
             }
+
         } catch (realAirdropError) {
-            console.log('Real airdrop failed, using simulation:', realAirdropError.message);
-            airdropSuccess = true; // Continue with simulation
-        }
-        
-        if (!airdropSuccess) {
-            throw new Error('Devnet faucet is currently unavailable');
+            console.error('Real airdrop failed:', realAirdropError.message);
+            throw new Error(`Devnet airdrop failed: ${realAirdropError.message}`);
         }
 
-        // Step 3: Success confirmation
+        // Step 3: Success confirmation with REAL transaction data
         bot.sendMessage(chatId, `⚡ **Transaction Confirmed!**
 
-🔗 Signature: \`${signature}\`
-✅ Status: Confirmed
-📦 Block: ${Math.floor(Math.random() * 1000000) + 200000000}
+🔗 Signature: \`${airdropResult.signature}\`
+✅ Status: Confirmed on devnet
+📦 Amount: 1 SOL received
 
 Updating wallet balance...`);
 
-        // Step 4: Balance update
+        // Step 4: Balance update (already done in airdrop function)
         await new Promise(resolve => setTimeout(resolve, 1000));
-        await enhancedWalletManager.updateBalances(network);
         
         bot.sendMessage(chatId, `✅ **AIRDROP COMPLETED!**
 
