@@ -155,6 +155,12 @@ bot.onText(/\/equalize_wallets/, (msg) => {
     chooseNetworkForEqualizeWallets(chatId);
 });
 
+// Set Fees Command
+bot.onText(/\/set_fees/, (msg) => {
+    const chatId = msg.chat.id;
+    chooseNetworkForSetFees(chatId);
+});
+
 function chooseNetworkForWallets(chatId) {
     bot.sendMessage(chatId, `💰 View Wallet Balances
 
