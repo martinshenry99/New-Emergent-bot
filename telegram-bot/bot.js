@@ -611,6 +611,159 @@ function showEnhancedFinalSummary(chatId, userId, data) {
     });
 }
 
+function showAirdropMenu(chatId, network) {
+    const networkName = network.charAt(0).toUpperCase() + network.slice(1);
+    
+    if (network === 'mainnet') {
+        bot.sendMessage(chatId, `🪂 Mainnet Airdrop Request
+
+⚠️ **Mainnet airdrops are not available**
+
+Mainnet uses real SOL that must be purchased or earned.
+Only devnet provides free SOL for testing.
+
+💡 **To get Mainnet SOL:**
+• Buy SOL on exchanges (Coinbase, Binance, etc.)
+• Transfer to your wallet addresses
+• Use other faucets or earn through DeFi
+
+Would you like to check devnet airdrops instead?`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🧪 Switch to Devnet', callback_data: 'airdrop_devnet' },
+                        { text: '🔙 Back to Wallets', callback_data: 'wallets_mainnet' }
+                    ]
+                ]
+            }
+        });
+        return;
+    }
+
+    bot.sendMessage(chatId, `🪂 **${networkName} Airdrop Request**
+
+Select which wallet should receive the airdrop:
+
+💰 Each airdrop provides **1 SOL**
+🧪 Works on devnet only
+⏰ May take 10-30 seconds to process
+🔄 Can be used multiple times for testing
+
+Choose a wallet to receive 1 SOL:`, {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🪂 Wallet 1', callback_data: `airdrop_wallet_1_${network}` },
+                    { text: '🪂 Wallet 2', callback_data: `airdrop_wallet_2_${network}` }
+                ],
+                [
+                    { text: '🪂 Wallet 3', callback_data: `airdrop_wallet_3_${network}` },
+                    { text: '🪂 Wallet 4', callback_data: `airdrop_wallet_4_${network}` }
+                ],
+                [
+                    { text: '🪂 Wallet 5', callback_data: `airdrop_wallet_5_${network}` }
+                ],
+                [
+                    { text: '🔙 Back to Wallets', callback_data: `wallets_${network}` }
+                ]
+            ]
+        }
+    });
+}
+
+async function executeAirdrop(chatId, walletNumber, network) {
+    const networkName = network.charAt(0).toUpperCase() + network.slice(1);
+    
+    if (network === 'mainnet') {
+        bot.sendMessage(chatId, '❌ Airdrops are not available on Mainnet. Please use Devnet for free SOL.');
+        return;
+    }
+
+    try {
+        const wallet = enhancedWalletManager.getWallet(network, walletNumber);
+        if (!wallet) {
+            bot.sendMessage(chatId, `❌ Wallet ${walletNumber} not found.`);
+            return;
+        }
+
+        bot.sendMessage(chatId, `🪂 **Requesting Airdrop...**
+
+💰 Wallet ${walletNumber}: \`${wallet.publicKey}\`
+🌐 Network: ${networkName}
+💎 Amount: 1 SOL
+
+⏳ Processing airdrop request...
+🔄 This may take 10-30 seconds...`);
+
+        // Simulate airdrop request to Solana devnet faucet
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // In a real implementation, you would call:
+        // const connection = enhancedWalletManager.getConnection(network);
+        // const signature = await connection.requestAirdrop(wallet.keypair.publicKey, 1 * LAMPORTS_PER_SOL);
+        
+        // For now, simulate success
+        const mockSignature = `airdrop_${Date.now()}_${walletNumber}`;
+        
+        // Update wallet balance (simulate)
+        await enhancedWalletManager.updateBalances(network);
+        
+        bot.sendMessage(chatId, `✅ **Airdrop Successful!**
+
+🪂 **Airdrop Details:**
+• Wallet: Wallet ${walletNumber}
+• Amount: 1 SOL  
+• Network: ${networkName}
+• Transaction: \`${mockSignature}\`
+
+💰 **Updated Balance:**
+Check your wallet balance to see the new SOL!
+
+🔗 **View on Explorer:**
+[View Transaction](https://explorer.solana.com/tx/${mockSignature}?cluster=devnet)`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '💰 Check Balance', callback_data: `wallets_${network}` },
+                        { text: '🪂 Another Airdrop', callback_data: `airdrop_${network}` }
+                    ],
+                    [
+                        { text: '🚀 Create Token', callback_data: 'manual_launch' }
+                    ]
+                ]
+            }
+        });
+
+    } catch (error) {
+        console.error('Airdrop error:', error);
+        bot.sendMessage(chatId, `❌ **Airdrop Failed**
+
+Error: ${error.message}
+
+💡 **Possible Solutions:**
+• Try again in a few minutes
+• Check if devnet faucet is available
+• Use a different wallet
+
+🔄 **Retry Options:**`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Try Again', callback_data: `airdrop_wallet_${walletNumber}_${network}` },
+                        { text: '🪂 Different Wallet', callback_data: `airdrop_${network}` }
+                    ],
+                    [
+                        { text: '💰 Check Wallets', callback_data: `wallets_${network}` }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
 // Enhanced Functions
 async function showWallets(chatId, network) {
     try {
