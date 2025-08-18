@@ -773,19 +773,27 @@ Updating wallet balance...`);
         await new Promise(resolve => setTimeout(resolve, 1000));
         await enhancedWalletManager.updateBalances(network);
         
-        bot.sendMessage(chatId, `✅ **Airdrop Successful!**
+        bot.sendMessage(chatId, `✅ **AIRDROP COMPLETED!**
 
-🪂 **Airdrop Details:**
-• Wallet: Wallet ${walletNumber}
-• Amount: 1 SOL  
+🎉 **Transaction Successful!**
+💰 **1 SOL** has been added to Wallet ${walletNumber}
+
+📊 **Transaction Details:**
+• Signature: \`${signature}\`
+• Amount: 1 SOL
 • Network: ${networkName}
-• Transaction: \`${mockSignature}\`
+• Status: ✅ Confirmed
+• Wallet: \`${wallet.publicKey.substring(0, 8)}...${wallet.publicKey.substring(-8)}\`
 
-💰 **Updated Balance:**
-Check your wallet balance to see the new SOL!
+💡 **What's Next:**
+Your wallet now has additional SOL for:
+• Token creation and minting
+• Pool creation and liquidity
+• Transaction fees
+• Trading operations
 
 🔗 **View on Explorer:**
-[View Transaction](https://explorer.solana.com/tx/${mockSignature}?cluster=devnet)`, {
+[View Transaction](https://explorer.solana.com/tx/${signature}?cluster=devnet)`, {
             parse_mode: 'Markdown',
             reply_markup: {
                 inline_keyboard: [
