@@ -218,6 +218,26 @@ Distributes SOL from Wallet 1 to Wallets 2-5 equally.
     });
 }
 
+function chooseNetworkForSetFees(chatId) {
+    bot.sendMessage(chatId, `💸 Set Trading Fees
+
+Which network do you want to configure fees for?
+
+Set buy/sell tax rates for your tokens (0-99%).
+
+🧪 Devnet - Test fee configurations
+🌐 Mainnet - Live fee settings`, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🧪 Devnet Fees', callback_data: 'set_fees_devnet' },
+                    { text: '🌐 Mainnet Fees', callback_data: 'set_fees_mainnet' }
+                ]
+            ]
+        }
+    });
+}
+
 // Message handler for wizard steps
 bot.on('message', (msg) => {
     const userId = msg.from.id;
