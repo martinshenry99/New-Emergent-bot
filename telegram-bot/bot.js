@@ -514,6 +514,14 @@ Would you like to:`, {
             await executeEnhancedTokenCreation(chatId, userId);
         }
 
+    // Airdrop Handlers
+    } else if (data.startsWith('airdrop_')) {
+        const network = data.replace('airdrop_', '');
+        showAirdropMenu(chatId, network);
+    } else if (data.startsWith('airdrop_wallet_')) {
+        const [, , walletNum, network] = data.split('_');
+        await executeAirdrop(chatId, parseInt(walletNum), network);
+
     // Navigation
     } else if (data === 'manual_launch') {
         startManualLaunch(chatId, userId);
