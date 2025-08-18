@@ -53,7 +53,22 @@
       "createdAt": "2025-08-18T11:13:26.612Z"
     }
   },
-  "tokens": {},
+  "tokens": {
+    "64ZMXTqHpUHa7e44vwQqV9uQvYtErDxSkW5qyjPMp1Rz": {
+      "success": true,
+      "name": "DiamondApe",
+      "symbol": "DIAPE",
+      "description": "🔥 Trending meme token based on Diamond hands meets ape strong! Join the community and ride the wave! 🚀💎",
+      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=DIAPE",
+      "network": "devnet",
+      "totalSupply": 1000000,
+      "mode": "trending",
+      "liquidityLock": true,
+      "revokeMint": false,
+      "createdAt": "2025-08-18T11:17:06.649Z",
+      "lastUpdated": "2025-08-18T11:17:06.649Z"
+    }
+  },
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
