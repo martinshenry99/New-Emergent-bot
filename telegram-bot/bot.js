@@ -520,24 +520,12 @@ Please enter your token name:`);
             }
         }
 
-    // Create Pool Handler (FIXED)
+    // Create Pool Handler (FIXED - REAL IMPLEMENTATION)
     } else if (data === 'create_pool') {
-        bot.sendMessage(chatId, `🏊 Pool Creation
-
-This feature will create a liquidity pool for your token.
-
-🚧 Currently in development - Available soon!
-
-Would you like to:`, {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        { text: '🚀 Create Another Token', callback_data: 'manual_launch' },
-                        { text: '💰 Check Wallets', callback_data: 'choose_network_wallets' }
-                    ]
-                ]
-            }
-        });
+        showCreatePoolMenu(chatId);
+    } else if (data.startsWith('create_pool_')) {
+        const network = data.replace('create_pool_', '');
+        await executeCreatePool(chatId, network);
 
     // Final Token Creation
     } else if (data.startsWith('create_enhanced_final_')) {
