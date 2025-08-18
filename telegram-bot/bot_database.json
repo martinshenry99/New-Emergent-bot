@@ -1,58 +1,32 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "grain leave achieve inch body wisdom cattle photo weather sentence sniff all",
-      "publicKey": "DBH9WksKvkLW8BdA4Yt3XBeQtynjznhE3936J5XQsHSH",
-      "createdAt": "2025-08-18T11:12:39.825Z"
+      "mnemonic": "wrist swamp vital knock party trip come vast grit under spike print",
+      "publicKey": "DDpVHyf8XzMb5Ekvwz9yoZCYSeUBgLLXQ2f3bFLbGd28",
+      "createdAt": "2025-08-18T11:13:25.615Z"
     },
     "wallet2": {
-      "mnemonic": "recipe frown raven flag inform snap word girl mixed enter unknown gift",
-      "publicKey": "6rkJWivRaAmZ3FfzecDvWvryPtNu2kcZ2X7eMzjwK7Yh",
-      "createdAt": "2025-08-18T11:12:39.913Z"
+      "mnemonic": "scatter dress lunch nothing soul welcome model fossil resource profit sell gasp",
+      "publicKey": "3bmRx32zn6YLyZK8RLGfadTYZrM7T5aojQqTyV34sjFe",
+      "createdAt": "2025-08-18T11:13:25.705Z"
     },
     "wallet3": {
-      "mnemonic": "seat pause echo captain special coin lawsuit inmate final bless opinion prepare",
-      "publicKey": "DJSjReBryDDpJgU63WnkFKEhuDME8TkqWvbR5bgFfxMY",
-      "createdAt": "2025-08-18T11:12:39.930Z"
+      "mnemonic": "mirror pyramid liberty solid lazy door head behave hockey retire grab neck",
+      "publicKey": "AUcqCjp4DWEhfZ928DjFAAzGhGb7P1ft3Abtqfubd4mk",
+      "createdAt": "2025-08-18T11:13:25.721Z"
     },
     "wallet4": {
-      "mnemonic": "echo snow warfare coyote save scorpion rib bind same mask coach gym",
-      "publicKey": "5djCy8xZp1JcP4drEGPFrhLHqvQCAnY1UNgbn1VZks7A",
-      "createdAt": "2025-08-18T11:12:40.010Z"
+      "mnemonic": "life boy misery client exotic fever elder scrap craft convince access kind",
+      "publicKey": "8JHX1SGHRLbxYpcbh7G3UZJRuNHc365pwPB23F14b2Fu",
+      "createdAt": "2025-08-18T11:13:25.786Z"
     },
     "wallet5": {
-      "mnemonic": "mystery expand shine lunar since unaware tell observe disease gossip coral vocal",
-      "publicKey": "8q6Eb7vFvwKy927o2EogjC5rSQvP4SiNQ2H7boAs4Ka8",
-      "createdAt": "2025-08-18T11:12:40.027Z"
+      "mnemonic": "lucky upper subject hold wisdom identify play dumb myself renew cherry tail",
+      "publicKey": "6FiLrBfpvhsExfcyzBgCmkvBmRY6fFgwKgxFrS8DAXz5",
+      "createdAt": "2025-08-18T11:13:25.811Z"
     }
   },
-  "mainnetWallets": {
-    "wallet1": {
-      "mnemonic": "draw sphere barrel issue enroll praise section dish nose riot enjoy sniff",
-      "publicKey": "2sh2JUNAhBE6HGXLHeeMSfd4ev9dU8yyUem7B5DHa13G",
-      "createdAt": "2025-08-18T11:12:40.647Z"
-    },
-    "wallet2": {
-      "mnemonic": "involve script capable blossom voice expire lonely when license comfort paper assist",
-      "publicKey": "78KSepN5s3sEQunnRA4afpYcubNRkhtENFjnqGQHNep",
-      "createdAt": "2025-08-18T11:12:40.701Z"
-    },
-    "wallet3": {
-      "mnemonic": "orient achieve witness shock wage tent toddler thought pudding also note trip",
-      "publicKey": "BSfRXQiegFcG1QDsaJf6raoSv29gGxBuBAE9NFyQuxWC",
-      "createdAt": "2025-08-18T11:12:40.719Z"
-    },
-    "wallet4": {
-      "mnemonic": "furnace lift blur day loan surface man owner surround tornado pigeon tiger",
-      "publicKey": "hmq1gtgjVduRDVsB3xbhXnJcVVRAu9Y3AM7VnFaQfeX",
-      "createdAt": "2025-08-18T11:12:40.737Z"
-    },
-    "wallet5": {
-      "mnemonic": "provide bring nuclear job point caution write tornado wage wear melody believe",
-      "publicKey": "Ag4wuoxuZGzBHd1foMfbdxap85uHNkA179fbnJ4esWbo",
-      "createdAt": "2025-08-18T11:12:40.754Z"
-    }
-  },
+  "mainnetWallets": {},
   "tokens": {},
   "settings": {
     "lockDuration": 86400000,
