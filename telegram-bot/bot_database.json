@@ -1,0 +1,61 @@
+{
+  "devnetWallets": {
+    "wallet1": {
+      "mnemonic": "mouse guitar ship high display snap fever senior brief shuffle kidney wife",
+      "publicKey": "8CK89sR8TEfiBZeAaXoVXiRQmnWZY9QkVZpRgXz3rqEv",
+      "createdAt": "2025-08-18T10:51:47.603Z"
+    },
+    "wallet2": {
+      "mnemonic": "network obey frown cross one much expand ice misery worry throw flock",
+      "publicKey": "GCetfKLg35wcrJcJbibP66y6ypNFzCCD26yc44W979Vk",
+      "createdAt": "2025-08-18T10:51:47.632Z"
+    },
+    "wallet3": {
+      "mnemonic": "diamond excuse diesel awake awesome benefit rice tattoo once island wire polar",
+      "publicKey": "7KuQ7VkJBzc4hixFJwMZu3YKzrmmhWmxuiL94QUoFknn",
+      "createdAt": "2025-08-18T10:51:47.692Z"
+    },
+    "wallet4": {
+      "mnemonic": "quote resemble chimney clean trade invest next lesson mirror kit become draft",
+      "publicKey": "4MK496SettQWmCRsLpksZnNsuQh13MPNyDrswQtKzDnf",
+      "createdAt": "2025-08-18T10:51:47.712Z"
+    },
+    "wallet5": {
+      "mnemonic": "sand erupt identify liar spirit gun immense relax cattle gossip guard celery",
+      "publicKey": "Cc9iQgNit62uvdENCbTXHyVZutkwHZsLxpBKYaAcVYzg",
+      "createdAt": "2025-08-18T10:51:47.783Z"
+    }
+  },
+  "mainnetWallets": {
+    "wallet1": {
+      "mnemonic": "assault gather torch survey rule one castle install list giant shy brother",
+      "publicKey": "TG4zV7EsiZkFpAszxBxy7WcWYaaeT5HGQq3bsu3JiFu",
+      "createdAt": "2025-08-18T10:51:48.532Z"
+    },
+    "wallet2": {
+      "mnemonic": "warrior glare afraid pizza maximum sibling depth fetch purchase bomb next vault",
+      "publicKey": "9SVWy7XkyL2zhRWnxLtCJjNKcR4yfHwq5HaYR6xBf3RK",
+      "createdAt": "2025-08-18T10:51:48.586Z"
+    },
+    "wallet3": {
+      "mnemonic": "disorder robot future neglect coyote rose horn logic wood laundry glimpse ivory",
+      "publicKey": "zVodwaNLsLPrnKDdsQNAVWmczWMtGEYFQEsLuHxAMwC",
+      "createdAt": "2025-08-18T10:51:48.613Z"
+    },
+    "wallet4": {
+      "mnemonic": "bacon adapt rate picnic area salon mystery immune make flush wedding vacuum",
+      "publicKey": "6tbzb8e4hVrnSjrE1EEAd8RNdUsioqeGFRZ4fd1qhhrT",
+      "createdAt": "2025-08-18T10:51:48.630Z"
+    },
+    "wallet5": {
+      "mnemonic": "drastic liar home certain measure story panther humor select belt clown tooth",
+      "publicKey": "ANUKKoM2bqzxp1qXzzip4jAe59K1GJxZtbCeZ46j7dKn",
+      "createdAt": "2025-08-18T10:51:48.647Z"
+    }
+  },
+  "tokens": {},
+  "settings": {
+    "lockDuration": 86400000,
+    "minimumReserveSol": 0.05
+  }
+}
