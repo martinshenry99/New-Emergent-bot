@@ -28,29 +28,29 @@
   },
   "mainnetWallets": {
     "wallet1": {
-      "mnemonic": "off play vocal quote length country spatial tongue obscure before final action",
-      "publicKey": "7PTBVSjAH7KituSGDBfZ7BMEdhTAzgMLF4F6EicaSoDa",
-      "createdAt": "2025-08-18T11:30:35.431Z"
+      "mnemonic": "assault gather torch survey rule one castle install list giant shy brother",
+      "publicKey": "YOUR_ORIGINAL_ADDRESS_1",
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     "wallet2": {
-      "mnemonic": "volume easily upgrade ten amateur gain scrap digital shallow grape fee wall",
-      "publicKey": "H5bdrBQ1CPDdavpFSxnqwoztYvgd1egy9HQauwZezBH3",
-      "createdAt": "2025-08-18T11:30:35.510Z"
+      "mnemonic": "warrior glare afraid pizza maximum sibling depth fetch purchase bomb next vault",
+      "publicKey": "YOUR_ORIGINAL_ADDRESS_2",
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     "wallet3": {
-      "mnemonic": "swarm extend often mesh traffic object arena lava carbon drift poet balcony",
-      "publicKey": "gdN1BZkE6TfFKV5Ev6TiPtr2VcbLMotgSCmAuyRfB8w",
-      "createdAt": "2025-08-18T11:30:35.528Z"
+      "mnemonic": "disorder robot future neglect coyote rose horn logic wood laundry glimpse ivory",
+      "publicKey": "YOUR_ORIGINAL_ADDRESS_3",
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     "wallet4": {
-      "mnemonic": "armor soul used nation hybrid poem mail mouse youth chronic enforce long",
-      "publicKey": "FGkeSnMTt9zWg4ak88mwFnZMCTdpKe5xDfdsKY6z2yCv",
-      "createdAt": "2025-08-18T11:30:35.545Z"
+      "mnemonic": "bacon adapt rate picnic area salon mystery immune make flush wedding vacuum",
+      "publicKey": "YOUR_ORIGINAL_ADDRESS_4",
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     "wallet5": {
-      "mnemonic": "dignity predict cradle spawn husband lumber total room caught brand pioneer pluck",
-      "publicKey": "HMLhxjGkcpdmCmiPheTDJp8gm6gnE6PRCT2eofK21VgF",
-      "createdAt": "2025-08-18T11:30:35.584Z"
+      "mnemonic": "drastic liar home certain measure story panther humor select belt clown tooth",
+      "publicKey": "YOUR_ORIGINAL_ADDRESS_5",
+      "createdAt": "2024-01-01T00:00:00.000Z"
     }
   },
   "tokens": {},
