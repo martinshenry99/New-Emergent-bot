@@ -28,29 +28,29 @@
   },
   "mainnetWallets": {
     "wallet1": {
-      "mnemonic": "pelican govern horn jar can search warrior document undo gentle captain cave",
-      "publicKey": "5FvNVcDeeFoTm8QfZHuPNNVhxk5eQW6WNYBeJwFJtTVG",
-      "createdAt": "2025-08-18T11:13:26.510Z"
+      "mnemonic": "assault gather torch survey rule one castle install list giant shy brother",
+      "publicKey": "ORIGINAL_ADDRESS_1",
+      "createdAt": "2025-08-18T11:26:37.164Z"
     },
     "wallet2": {
-      "mnemonic": "skate scan mechanic vivid layer defy grocery true knock below pink robot",
-      "publicKey": "GHUKdcGCazAC3Dv9h4pdqiZ7i1Qwd1AEWYeAhdGvroSv",
-      "createdAt": "2025-08-18T11:13:26.527Z"
+      "mnemonic": "warrior glare afraid pizza maximum sibling depth fetch purchase bomb next vault",
+      "publicKey": "ORIGINAL_ADDRESS_2",
+      "createdAt": "2025-08-18T11:26:37.164Z"
     },
     "wallet3": {
-      "mnemonic": "caught junk table ranch render system setup hip buffalo host word cargo",
-      "publicKey": "3Z1pzff6k4Kqv9mzadb5i2B2mUAzAx8cfdKH51ti6Uzd",
-      "createdAt": "2025-08-18T11:13:26.544Z"
+      "mnemonic": "disorder robot future neglect coyote rose horn logic wood laundry glimpse ivory",
+      "publicKey": "ORIGINAL_ADDRESS_3",
+      "createdAt": "2025-08-18T11:26:37.164Z"
     },
     "wallet4": {
-      "mnemonic": "deposit six tomorrow spread carry insect neck head myself vanish switch hamster",
-      "publicKey": "5i2XeKyJ5U5BmbPN5btSUoyZxq1G5CcqndeYVoroKeN3",
-      "createdAt": "2025-08-18T11:13:26.592Z"
+      "mnemonic": "bacon adapt rate picnic area salon mystery immune make flush wedding vacuum",
+      "publicKey": "ORIGINAL_ADDRESS_4",
+      "createdAt": "2025-08-18T11:26:37.164Z"
     },
     "wallet5": {
-      "mnemonic": "execute moment dirt zero foam myself genuine party blue age alarm feel",
-      "publicKey": "GzgdDJ6cqzo5Q3hDMRrZMzpWp7MwSfco6KCGxoKbH4be",
-      "createdAt": "2025-08-18T11:13:26.612Z"
+      "mnemonic": "drastic liar home certain measure story panther humor select belt clown tooth",
+      "publicKey": "ORIGINAL_ADDRESS_5",
+      "createdAt": "2025-08-18T11:26:37.164Z"
     }
   },
   "tokens": {
