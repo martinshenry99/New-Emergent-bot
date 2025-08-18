@@ -579,6 +579,83 @@ Please enter SOL amount:`);
     } else if (data.startsWith('airdrop_wallet_')) {
         const [, , walletNum, network] = data.split('_');
         await executeAirdrop(chatId, parseInt(walletNum), network);
+    } else if (data.startsWith('configure_fees_')) {
+        const network = data.replace('configure_fees_', '');
+        bot.sendMessage(chatId, `💸 Fee Configuration - ${network.charAt(0).toUpperCase() + network.slice(1)}
+
+🚧 **Feature Under Development**
+
+Advanced fee configuration system coming soon!
+
+**Planned Features:**
+• Set custom buy/sell tax rates (0-99%)
+• SOL-based tax collection
+• Wallet exemption system
+• Real-time fee tracking
+• Network-specific configurations
+
+**Current Status:** In development
+
+Would you like to:`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🚀 Create Token Instead', callback_data: 'manual_launch' },
+                        { text: '💰 Check Wallets', callback_data: 'choose_network_wallets' }
+                    ]
+                ]
+            }
+        });
+    } else if (data.startsWith('view_fees_')) {
+        const network = data.replace('view_fees_', '');
+        bot.sendMessage(chatId, `📊 Current Fee Settings - ${network.charAt(0).toUpperCase() + network.slice(1)}
+
+No tokens with configured fees found.
+
+💡 **To set up fees:**
+1. Create a token using /launch
+2. Configure trading fees
+3. Set buy/sell tax rates
+4. Enable tax collection
+
+**Available Soon!**`);
+    } else if (data === 'back_to_start') {
+        // Back to start menu
+        bot.sendMessage(chatId, `🚀 Enhanced Meme Token Creator
+
+Create tokens on both Devnet and Mainnet with advanced features:
+
+🛠️ Manual Setup:
+/launch - Step-by-step token creation wizard
+
+🤖 AI-Powered:
+/auto_brand - AI creates everything for you
+
+💰 Wallet Management:
+/wallets - View balances (network choice)
+/seed_wallets - Distribute SOL (network choice)
+/equalize_wallets - Balance all wallets
+
+🆕 New Features:
+• Mainnet + Devnet wallet support
+• Real vs Inflated market cap display
+• 24-hour liquidity locks
+• 0.05 SOL reserve protection
+
+Ready to launch your meme coin? 🚀`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🛠️ Manual Launch', callback_data: 'manual_launch' },
+                        { text: '🤖 AI Auto-Brand', callback_data: 'ai_auto_brand' }
+                    ],
+                    [
+                        { text: '💰 Check Wallets', callback_data: 'choose_network_wallets' },
+                        { text: '⚖️ Equalize Wallets', callback_data: 'choose_network_equalize' }
+                    ]
+                ]
+            }
+        });
 
     // Navigation
     } else if (data === 'manual_launch') {
