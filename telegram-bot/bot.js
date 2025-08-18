@@ -515,6 +515,34 @@ Would you like to:`, {
             await executeEnhancedTokenCreation(chatId, userId);
         }
 
+    // AI Branding Settings Continue
+    } else if (data.startsWith('ai_continue_settings_')) {
+        const sessionUserId = data.replace('ai_continue_settings_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                if (session.data.network === 'mainnet') {
+                    // Ask for liquidity settings
+                    bot.sendMessage(chatId, `💰 Mainnet Liquidity Configuration
+
+Your AI token: ${session.data.name} (${session.data.symbol})
+
+Step 1: How much SOL do you want to put in the pool?
+
+This is your real investment for liquidity.
+
+Examples: 0.1, 0.5, 1, 2, 5
+
+Please enter SOL amount:`);
+                    session.step = 'liquidity_amount';
+                    userSessions.set(userId, session);
+                } else {
+                    // Skip liquidity questions for devnet
+                    handleLiquidityLockStep(chatId, userId, session);
+                }
+            }
+        }
+
     // Airdrop Handlers
     } else if (data.startsWith('airdrop_')) {
         const network = data.replace('airdrop_', '');
