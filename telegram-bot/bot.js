@@ -494,8 +494,43 @@ Choose which network to deploy on:`, {
                 showFinalSummary(chatId, userId, session.data);
             }
         }
-    } else if (data === 'show_wallets') {
-        await showWallets(chatId);
+    } else if (data.startsWith('create_final_')) {
+        // Handle final token creation
+        console.log(`🚀 Processing create_final callback: ${data}`);
+        const sessionUserId = data.replace('create_final_', '');
+        
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                console.log(`✅ Creating token for user ${userId}:`, session.data);
+                
+                bot.sendMessage(chatId, `🚀 Creating Your Token...
+
+🪙 Token: ${session.data.name} (${session.data.symbol})
+📝 Description: ${session.data.description}
+🔢 Supply: ${session.data.totalSupply?.toLocaleString() || '1,000,000'}
+🌐 Network: ${session.data.network || 'devnet'}
+
+⏳ This may take 1-2 minutes...
+📊 Creating metadata...
+🪙 Minting tokens...
+🏊 Setting up liquidity...`);
+
+                try {
+                    // Simulate token creation process
+                    await createTokenFromSession(chatId, userId, session.data);
+                } catch (error) {
+                    console.error('Token creation error:', error);
+                    bot.sendMessage(chatId, `❌ Token creation failed: ${error.message}`);
+                }
+                
+                // Clean up session
+                userSessions.delete(userId);
+            } else {
+                console.log(`❌ No session found for create_final user ${userId}`);
+                bot.sendMessage(chatId, '❌ Session expired. Please start over with /start');
+            }
+        }
     } else if (data === 'cancel_wizard') {
         userSessions.delete(userId);
         bot.sendMessage(chatId, '❌ Wizard cancelled. Use /start to begin again.');
