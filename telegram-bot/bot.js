@@ -865,6 +865,42 @@ Error: ${error.message}
     }
 }
 
+function showSetFeesMenu(chatId, network) {
+    const networkName = network.charAt(0).toUpperCase() + network.slice(1);
+    
+    bot.sendMessage(chatId, `💸 **Set Trading Fees - ${networkName}**
+
+Configure buy/sell tax rates for your tokens.
+
+🔧 **How it works:**
+• Set buy tax: 0-99% (charged when people buy your token)
+• Set sell tax: 0-99% (charged when people sell your token)  
+• Taxes collected in SOL (not tokens)
+• All taxes go to Wallet 1
+
+📊 **Current Configuration:**
+No fee settings configured yet.
+
+💡 **Ready to configure trading fees?**
+
+⚠️ **Note:** You need created tokens to set fees for.`, {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🔧 Configure Fees', callback_data: `configure_fees_${network}` }
+                ],
+                [
+                    { text: '📊 View Current Fees', callback_data: `view_fees_${network}` }
+                ],
+                [
+                    { text: '🔙 Back to Menu', callback_data: 'back_to_start' }
+                ]
+            ]
+        }
+    });
+}
+
 // Enhanced Functions
 async function showWallets(chatId, network) {
     try {
