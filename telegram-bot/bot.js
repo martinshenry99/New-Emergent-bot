@@ -5,6 +5,7 @@ const DatabaseManager = require('./database');
 const EnhancedWalletManager = require('./wallet-manager-enhanced');
 const AIIntegrations = require('./ai-integrations');
 const MetadataManager = require('./metadata-manager');
+const PoolManager = require('./pool-manager');
 
 // Initialize Telegram Bot
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
