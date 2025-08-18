@@ -13,6 +13,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 // Initialize Database and Enhanced Managers
 const database = new DatabaseManager();
 const enhancedWalletManager = new EnhancedWalletManager(database);
+const poolManager = new PoolManager(database, enhancedWalletManager);
 const aiIntegrations = new AIIntegrations();
 const metadataManager = new MetadataManager();
 
