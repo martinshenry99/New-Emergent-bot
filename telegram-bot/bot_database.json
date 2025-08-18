@@ -1,58 +1,32 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "panda usual climb airport divorce around glance annual nation noble picnic mercy",
-      "publicKey": "CJskQfVhjYSNyZ86MLM6LYaH78vTWizSvjJDzx6eCGc7",
-      "createdAt": "2025-08-18T11:30:34.524Z"
+      "mnemonic": "govern brain split october ramp spice win april step claw social deal",
+      "publicKey": "FdbqopoJ7Gqt7fkCRJPLvemr18HxmDG3uK4CqhZdB6jz",
+      "createdAt": "2025-08-18T11:31:15.416Z"
     },
     "wallet2": {
-      "mnemonic": "hollow scrub head spike stuff tail swamp brand people away sail gain",
-      "publicKey": "HeejYij76y9PzE5HW5bzQNVuR57KbbwBY1t48DAMnwVr",
-      "createdAt": "2025-08-18T11:30:34.603Z"
+      "mnemonic": "school diagram angry audit circle nature solid pyramid grass quality submit penalty",
+      "publicKey": "Ca1eEi382sHKqh5gqtQerHofbLoi13zeeejgePtVDxBG",
+      "createdAt": "2025-08-18T11:31:15.502Z"
     },
     "wallet3": {
-      "mnemonic": "lumber base toe task mercy garlic echo wild keen use yard opinion",
-      "publicKey": "9mEkPLxct4WH14ApyGtyomoexLi5GYdrVVtnKiLpbhcp",
-      "createdAt": "2025-08-18T11:30:34.619Z"
+      "mnemonic": "maid hammer venue swing ordinary diagram laptop general fabric critic leisure fun",
+      "publicKey": "AAmuZbXMX8RViPTccfaw7QTYkCW7T1i3srFrKFLFWHfh",
+      "createdAt": "2025-08-18T11:31:15.518Z"
     },
     "wallet4": {
-      "mnemonic": "notable surprise aerobic truth face beef approve wrong sight twice fortune cruise",
-      "publicKey": "4X5p2xDgB2M6hcGoaLSoEw7j1ZJWynaNsTu6eaYrsAEg",
-      "createdAt": "2025-08-18T11:30:34.697Z"
+      "mnemonic": "identify permit arrest hurdle because mistake opinion height axis maid gaze siren",
+      "publicKey": "F4kwMVbT9mysCDWAeHf4o8yoK2oHTn12hz6QT1vs8Bxb",
+      "createdAt": "2025-08-18T11:31:15.581Z"
     },
     "wallet5": {
-      "mnemonic": "shock first scrub filter drift session broccoli twin army ensure entire true",
-      "publicKey": "H2pWpGzC7mkja4sP9AcuB8TGNopuEDTJ32T2N6RtSTxT",
-      "createdAt": "2025-08-18T11:30:34.713Z"
+      "mnemonic": "curve minimum comic behind elbow category book disease upgrade maple lottery old",
+      "publicKey": "8Fvc7m4fRyrdEhGF6mwWjybCXfaJNzuVmhZg9GnkYQpq",
+      "createdAt": "2025-08-18T11:31:15.611Z"
     }
   },
-  "mainnetWallets": {
-    "wallet1": {
-      "mnemonic": "assault gather torch survey rule one castle install list giant shy brother",
-      "publicKey": "YOUR_ORIGINAL_ADDRESS_1",
-      "createdAt": "2024-01-01T00:00:00.000Z"
-    },
-    "wallet2": {
-      "mnemonic": "warrior glare afraid pizza maximum sibling depth fetch purchase bomb next vault",
-      "publicKey": "YOUR_ORIGINAL_ADDRESS_2",
-      "createdAt": "2024-01-01T00:00:00.000Z"
-    },
-    "wallet3": {
-      "mnemonic": "disorder robot future neglect coyote rose horn logic wood laundry glimpse ivory",
-      "publicKey": "YOUR_ORIGINAL_ADDRESS_3",
-      "createdAt": "2024-01-01T00:00:00.000Z"
-    },
-    "wallet4": {
-      "mnemonic": "bacon adapt rate picnic area salon mystery immune make flush wedding vacuum",
-      "publicKey": "YOUR_ORIGINAL_ADDRESS_4",
-      "createdAt": "2024-01-01T00:00:00.000Z"
-    },
-    "wallet5": {
-      "mnemonic": "drastic liar home certain measure story panther humor select belt clown tooth",
-      "publicKey": "YOUR_ORIGINAL_ADDRESS_5",
-      "createdAt": "2024-01-01T00:00:00.000Z"
-    }
-  },
+  "mainnetWallets": {},
   "tokens": {},
   "settings": {
     "lockDuration": 86400000,
