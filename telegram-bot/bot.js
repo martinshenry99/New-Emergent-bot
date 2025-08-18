@@ -690,6 +690,8 @@ async function createTokenFromSession(chatId, userId, tokenData) {
         throw error;
     }
 }
+
+function showFinalSummary(chatId, userId, data) {
     const summary = `📋 **Final Token Summary**
 
 🪙 **Name:** ${data.name}
