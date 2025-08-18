@@ -155,7 +155,7 @@ class EnhancedWalletManager {
         return message;
     }
 
-    // SOL Transfer with reserve protection
+    // SOL Transfer with reserve protection - REAL IMPLEMENTATION
     async transferSOL(network, fromWalletId, toWalletId, amount) {
         const connection = this.getConnection(network);
         const fromWallet = this.getWallet(network, fromWalletId);
@@ -165,6 +165,9 @@ class EnhancedWalletManager {
             throw new Error(`Wallet not found`);
         }
 
+        // Update balances first
+        await this.updateBalances(network);
+
         // Check reserve requirement for Wallet 1
         if (fromWalletId === 1) {
             const availableBalance = fromWallet.balance - this.minimumReserve;
@@ -173,20 +176,55 @@ class EnhancedWalletManager {
             }
         }
 
-        // Standard transfer logic here...
-        console.log(`💸 Transferring ${amount} SOL from ${network} wallet ${fromWalletId} to ${toWalletId}`);
-        
-        // Return mock result for now
-        return {
-            success: true,
-            signature: 'mock_signature_' + Date.now(),
-            amount: amount,
-            fromWallet: fromWalletId,
-            toWallet: toWalletId
-        };
+        // Check if from wallet has enough balance
+        if (fromWallet.balance < amount) {
+            throw new Error(`Insufficient balance. Need ${amount} SOL, have ${fromWallet.balance.toFixed(4)} SOL`);
+        }
+
+        try {
+            console.log(`💸 REAL TRANSFER: ${amount} SOL from ${network} wallet ${fromWalletId} to ${toWalletId}`);
+
+            // Create and send real transaction
+            const { Transaction, SystemProgram, sendAndConfirmTransaction, LAMPORTS_PER_SOL } = require('@solana/web3.js');
+            
+            const transaction = new Transaction().add(
+                SystemProgram.transfer({
+                    fromPubkey: fromWallet.keypair.publicKey,
+                    toPubkey: toWallet.keypair.publicKey,
+                    lamports: Math.floor(amount * LAMPORTS_PER_SOL)
+                })
+            );
+
+            // Sign and send transaction
+            const signature = await sendAndConfirmTransaction(
+                connection,
+                transaction,
+                [fromWallet.keypair],
+                { commitment: 'confirmed' }
+            );
+
+            console.log(`✅ REAL SOL transfer completed: ${signature}`);
+
+            // Update balances after transfer
+            await this.updateBalances(network);
+
+            return {
+                success: true,
+                signature: signature,
+                fromWallet: fromWalletId,
+                toWallet: toWalletId,
+                amount: amount,
+                newFromBalance: fromWallet.balance,
+                newToBalance: toWallet.balance
+            };
+
+        } catch (error) {
+            console.error(`❌ REAL SOL transfer failed:`, error);
+            throw new Error(`Transfer failed: ${error.message}`);
+        }
     }
 
-    // Equalize SOL with reserve protection
+    // Equalize SOL with reserve protection - REAL IMPLEMENTATION
     async equalizeSOLAcrossWallets(network) {
         const wallets = this.getWallets(network);
         const wallet1 = wallets.find(w => w.id === 1);
@@ -195,6 +233,9 @@ class EnhancedWalletManager {
             throw new Error('Wallet 1 not found');
         }
 
+        // Update balances first
+        await this.updateBalances(network);
+
         const availableForDistribution = wallet1.balance - this.minimumReserve;
         
         if (availableForDistribution <= 0) {
@@ -202,18 +243,95 @@ class EnhancedWalletManager {
         }
 
         const amountPerWallet = availableForDistribution / 4; // Distribute to wallets 2-5
-        
-        console.log(`⚖️ Equalizing ${network} wallets: ${amountPerWallet.toFixed(4)} SOL per wallet`);
-        console.log(`💎 Keeping ${this.minimumReserve} SOL reserve in Wallet 1`);
 
-        // Return mock result for now
+        if (amountPerWallet < 0.001) {
+            throw new Error(`Not enough SOL to distribute meaningfully. Available: ${availableForDistribution.toFixed(4)} SOL would give ${amountPerWallet.toFixed(6)} SOL per wallet`);
+        }
+        
+        console.log(`⚖️ REAL EQUALIZATION: ${amountPerWallet.toFixed(4)} SOL per wallet on ${network}`);
+
+        const results = [];
+
+        // Transfer to wallets 2-5 with REAL transactions
+        for (let walletId = 2; walletId <= 5; walletId++) {
+            try {
+                const result = await this.transferSOL(network, 1, walletId, amountPerWallet);
+                results.push({
+                    walletId: walletId,
+                    success: true,
+                    amount: amountPerWallet,
+                    signature: result.signature,
+                    newBalance: result.newToBalance
+                });
+                console.log(`✅ REAL transfer to wallet ${walletId}: ${result.signature}`);
+            } catch (error) {
+                console.error(`❌ Failed REAL transfer to wallet ${walletId}:`, error.message);
+                results.push({
+                    walletId: walletId,
+                    success: false,
+                    error: error.message,
+                    amount: amountPerWallet
+                });
+            }
+        }
+
+        // Final balance update
+        await this.updateBalances(network);
+
+        const successfulTransfers = results.filter(r => r.success).length;
+        const totalDistributed = successfulTransfers * amountPerWallet;
+
         return {
             success: true,
             network: network,
             reserveAmount: this.minimumReserve,
             amountPerWallet: amountPerWallet,
-            distributedWallets: 4
+            totalDistributed: totalDistributed,
+            successfulTransfers: successfulTransfers,
+            results: results,
+            finalWallet1Balance: wallet1.balance
         };
+    }
+
+    // REAL AIRDROP IMPLEMENTATION
+    async requestDevnetAirdrop(walletId) {
+        const connection = this.getConnection('devnet');
+        const wallet = this.getWallet('devnet', walletId);
+        
+        if (!wallet) {
+            throw new Error(`Wallet ${walletId} not found`);
+        }
+
+        try {
+            console.log(`🪂 REAL AIRDROP: Requesting 1 SOL for wallet ${walletId}`);
+            
+            // Real Solana devnet airdrop
+            const { LAMPORTS_PER_SOL } = require('@solana/web3.js');
+            const signature = await connection.requestAirdrop(
+                wallet.keypair.publicKey,
+                LAMPORTS_PER_SOL
+            );
+
+            // Confirm the transaction
+            await connection.confirmTransaction(signature, 'confirmed');
+
+            // Update balance
+            await this.updateBalances('devnet');
+
+            console.log(`✅ REAL AIRDROP completed: ${signature}`);
+
+            return {
+                success: true,
+                signature: signature,
+                walletId: walletId,
+                amount: 1,
+                newBalance: wallet.balance
+            };
+
+        } catch (error) {
+            console.error(`❌ REAL AIRDROP failed:`, error);
+            throw new Error(`Airdrop failed: ${error.message}. The devnet faucet might be rate-limited or unavailable.`);
+        }
     }
 
     // Get wallet mnemonics for backup
