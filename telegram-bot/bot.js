@@ -802,6 +802,88 @@ async function showWallets(chatId) {
     }
 }
 
+async function executeAirdrop(chatId, walletNumber) {
+    try {
+        bot.sendMessage(chatId, `🪂 **Requesting SOL Airdrop**
+
+💰 Wallet ${walletNumber} selected
+🧪 Network: Devnet
+⏳ Processing airdrop request...
+
+This may take 10-30 seconds...`, { parse_mode: 'Markdown' });
+
+        // Get the wallet address for the specified wallet number
+        const walletAddress = await walletManager.getWalletAddress(walletNumber - 1);
+        
+        if (!walletAddress) {
+            bot.sendMessage(chatId, `❌ Wallet ${walletNumber} not found. Please check your wallet selection.`);
+            return;
+        }
+
+        // Request airdrop from Solana devnet
+        const airdropResult = await connection.requestAirdrop(
+            new PublicKey(walletAddress),
+            1000000000 // 1 SOL in lamports
+        );
+
+        // Wait for confirmation
+        await connection.confirmTransaction(airdropResult);
+
+        // Get updated balance
+        const balance = await connection.getBalance(new PublicKey(walletAddress));
+        const solBalance = (balance / 1000000000).toFixed(4);
+
+        bot.sendMessage(chatId, `✅ **Airdrop Successful!**
+
+💰 1 SOL sent to Wallet ${walletNumber}
+🏦 New Balance: ${solBalance} SOL
+📝 Transaction: \`${airdropResult}\`
+
+🔄 Balances will update automatically`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🪂 Another Airdrop', callback_data: 'airdrop_menu' },
+                        { text: '💰 Check Wallets', callback_data: 'show_wallets' }
+                    ],
+                    [
+                        { text: '🏠 Back to Menu', callback_data: 'back_to_start' }
+                    ]
+                ]
+            }
+        });
+
+    } catch (error) {
+        console.error('Airdrop error:', error);
+        
+        let errorMessage = '❌ **Airdrop Failed**\n\n';
+        
+        if (error.message.includes('airdrop request failed')) {
+            errorMessage += '🚫 Devnet airdrop service is currently unavailable\n⏰ Please try again in a few minutes';
+        } else if (error.message.includes('rate limit')) {
+            errorMessage += '⏱️ Rate limit exceeded\n🕐 Please wait before requesting another airdrop';
+        } else {
+            errorMessage += `🔧 Technical error: ${error.message}`;
+        }
+
+        bot.sendMessage(chatId, errorMessage, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Try Again', callback_data: 'airdrop_menu' },
+                        { text: '💰 Check Wallets', callback_data: 'show_wallets' }
+                    ],
+                    [
+                        { text: '🏠 Back to Menu', callback_data: 'back_to_start' }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
 // Error handling
 bot.on('error', (error) => {
     console.error('Bot error:', error);
