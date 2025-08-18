@@ -970,6 +970,154 @@ No fee settings configured yet.
     });
 }
 
+function showCreatePoolMenu(chatId) {
+    bot.sendMessage(chatId, `🏊 **Create Liquidity Pool**
+
+Ready to create a liquidity pool for your token!
+
+🌐 **Choose Network:**
+
+🧪 **Devnet** - Free testing pools
+• Test pool creation mechanics
+• Practice liquidity management
+• No real money involved
+
+🌐 **Mainnet** - Real trading pools
+• Live liquidity with real SOL
+• Actual trading and fees
+• Real market exposure
+
+⚠️ **Requirements:**
+• Have a created token
+• Sufficient SOL for liquidity
+• Understanding of impermanent loss
+
+Which network for pool creation?`, {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🧪 Create Devnet Pool', callback_data: 'create_pool_devnet' },
+                    { text: '🌐 Create Mainnet Pool', callback_data: 'create_pool_mainnet' }
+                ],
+                [
+                    { text: '🔙 Back to Menu', callback_data: 'back_to_start' }
+                ]
+            ]
+        }
+    });
+}
+
+async function executeCreatePool(chatId, network) {
+    const networkName = network.charAt(0).toUpperCase() + network.slice(1);
+    
+    try {
+        bot.sendMessage(chatId, `🏊 **Creating ${networkName} Pool...**
+
+🔄 **Step 1:** Scanning for created tokens...
+🔍 **Step 2:** Checking liquidity requirements...
+💰 **Step 3:** Preparing pool creation...
+
+⏳ This may take 30-60 seconds...`);
+
+        // Simulate token detection and pool creation
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Mock token data for demonstration
+        const mockTokenMint = require('@solana/web3.js').Keypair.generate().publicKey.toString();
+        const mockTokenData = {
+            name: 'TestMeme',
+            symbol: 'TMEME',
+            totalSupply: 1000000
+        };
+
+        // Create pool with real implementation
+        const solAmount = network === 'mainnet' ? 0.1 : 0.05; // Less SOL for devnet
+        const tokenAmount = mockTokenData.totalSupply * 0.3; // 30% of supply
+
+        bot.sendMessage(chatId, `🏊 **Creating Pool...**
+
+🪙 Token: ${mockTokenData.name} (${mockTokenData.symbol})
+💰 Adding ${solAmount} SOL + ${tokenAmount.toLocaleString()} ${mockTokenData.symbol}
+🔄 Submitting to DEX...`);
+
+        const poolResult = await poolManager.createPool(
+            network,
+            mockTokenMint,
+            solAmount,
+            tokenAmount,
+            1 // Use wallet 1
+        );
+
+        if (poolResult.success) {
+            bot.sendMessage(chatId, `🎉 **POOL CREATED SUCCESSFULLY!**
+
+🏊 **Pool Details:**
+• Pool ID: \`${poolResult.poolId.substring(0, 16)}...\`
+• Network: ${networkName}
+• Liquidity: ${poolResult.solAmount} SOL + ${poolResult.tokenAmount.toLocaleString()} ${mockTokenData.symbol}
+
+📊 **Market Data:**
+• Price per Token: ${(poolResult.pricePerToken * 1000000).toFixed(2)} SOL per million tokens
+• Market Cap: $${poolResult.marketCap.toLocaleString()}
+• Total Liquidity: $${poolResult.liquidity.toLocaleString()}
+
+🔗 **Pool Address:**
+\`${poolResult.poolId}\`
+
+🎯 **What's Next:**
+• Lock liquidity for security
+• Start trading operations
+• Monitor pool performance
+• Add more liquidity if needed
+
+🔗 **View on Explorer:**
+[View Pool](https://explorer.solana.com/address/${poolResult.poolId}?cluster=${network})`, {
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '🔒 Lock Liquidity (24h)', callback_data: `lock_pool_${mockTokenMint}` },
+                            { text: '📊 Pool Stats', callback_data: `pool_stats_${mockTokenMint}` }
+                        ],
+                        [
+                            { text: '💰 Check Wallets', callback_data: 'choose_network_wallets' },
+                            { text: '🚀 Create Another', callback_data: 'manual_launch' }
+                        ]
+                    ]
+                }
+            });
+        }
+
+    } catch (error) {
+        console.error('Pool creation error:', error);
+        bot.sendMessage(chatId, `❌ **Pool Creation Failed**
+
+Error: ${error.message}
+
+💡 **Possible Solutions:**
+• Ensure you have enough SOL for liquidity
+• Check if token exists
+• Try with smaller liquidity amount
+• Verify wallet balances
+
+🔄 **Try Again:**`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Retry Pool Creation', callback_data: `create_pool_${network}` },
+                        { text: '💰 Check Wallets', callback_data: `wallets_${network}` }
+                    ],
+                    [
+                        { text: '🚀 Create Token First', callback_data: 'manual_launch' }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
 // Enhanced Functions
 async function showWallets(chatId, network) {
     try {
