@@ -723,7 +723,20 @@ function showFinalSummary(chatId, userId, data) {
 async function showWallets(chatId) {
     try {
         const walletInfo = await walletManager.formatAllWalletsForTelegram();
-        bot.sendMessage(chatId, walletInfo, { parse_mode: 'Markdown' });
+        bot.sendMessage(chatId, walletInfo, { 
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Refresh Balances', callback_data: 'refresh_wallets' },
+                        { text: '🪂 Request Airdrop', callback_data: 'airdrop_menu' }
+                    ],
+                    [
+                        { text: '🏠 Back to Menu', callback_data: 'back_to_start' }
+                    ]
+                ]
+            }
+        });
     } catch (error) {
         bot.sendMessage(chatId, '❌ Error fetching wallet information.');
     }
