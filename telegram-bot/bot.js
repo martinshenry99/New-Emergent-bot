@@ -227,7 +227,8 @@ bot.on('message', (msg) => {
     if (session.type === 'manual_launch') {
         handleManualLaunchStep(chatId, userId, text, session);
     } else if (session.type === 'ai_branding') {
-        handleAIBrandingStep(chatId, userId, text, session);
+        // Handle AI branding steps if needed
+        console.log('AI branding step:', session);
     }
 });
 
