@@ -491,6 +491,9 @@ Please enter your token name:`);
     } else if (data.startsWith('equalize_')) {
         const network = data.replace('equalize_', '');
         await executeEqualizeWallets(chatId, network);
+    } else if (data.startsWith('set_fees_')) {
+        const network = data.replace('set_fees_', '');
+        showSetFeesMenu(chatId, network);
 
     // Liquidity Lock Decision
     } else if (data.startsWith('liquidity_')) {
