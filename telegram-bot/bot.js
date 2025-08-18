@@ -534,6 +534,66 @@ Choose which network to deploy on:`, {
     } else if (data === 'cancel_wizard') {
         userSessions.delete(userId);
         bot.sendMessage(chatId, '❌ Wizard cancelled. Use /start to begin again.');
+    } else if (data === 'show_wallets') {
+        await showWallets(chatId);
+    } else if (data === 'refresh_wallets') {
+        await showWallets(chatId);
+    } else if (data === 'airdrop_menu') {
+        bot.sendMessage(chatId, `🪂 **Request SOL Airdrop (Devnet Only)**
+
+Select which wallet should receive the airdrop:
+
+💰 Each airdrop provides 1 SOL
+🧪 Only works on devnet
+⏰ May take 10-30 seconds to process`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🪂 Wallet 1', callback_data: 'airdrop_1' },
+                        { text: '🪂 Wallet 2', callback_data: 'airdrop_2' }
+                    ],
+                    [
+                        { text: '🪂 Wallet 3', callback_data: 'airdrop_3' },
+                        { text: '🪂 Wallet 4', callback_data: 'airdrop_4' }
+                    ],
+                    [
+                        { text: '🪂 Wallet 5', callback_data: 'airdrop_5' }
+                    ],
+                    [
+                        { text: '🔙 Back to Wallets', callback_data: 'show_wallets' }
+                    ]
+                ]
+            }
+        });
+    } else if (data.startsWith('airdrop_')) {
+        const walletNumber = parseInt(data.replace('airdrop_', ''));
+        await executeAirdrop(chatId, walletNumber);
+    } else if (data === 'back_to_start') {
+        // Simulate /start command
+        bot.sendMessage(chatId, `🚀 Welcome to Simplified Meme Token Creator
+
+Create your own meme token on Solana with just 2 simple commands:
+
+🛠️ Manual Setup:
+/launch - Step-by-step token creation wizard
+
+🤖 AI-Powered:
+/auto_brand - AI creates everything for you
+
+Ready to launch your meme coin? 🚀`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🛠️ Manual Launch', callback_data: 'manual_launch' },
+                        { text: '🤖 AI Auto-Brand', callback_data: 'ai_auto_brand' }
+                    ],
+                    [
+                        { text: '💰 Check Wallets', callback_data: 'show_wallets' }
+                    ]
+                ]
+            }
+        });
     } else {
         // Debug: Log unhandled callbacks
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
