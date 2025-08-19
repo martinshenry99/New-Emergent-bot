@@ -69,7 +69,7 @@ backend:
     implemented: true 
     working: false
     file: "telegram-bot/bot.js, telegram-bot/genuine-blockchain-manager.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "critical"
     needs_retesting: false
     status_history:
@@ -79,6 +79,9 @@ backend:
         - working: false
         - agent: "testing"
         - comment: "TESTED: PARTIAL IMPLEMENTATION - Genuine liquidity locking logic exists in genuine-blockchain-manager.js with genuineLiquidityLock method, 24-hour duration, time-locked contracts, on-chain lock creation, and explorer links. However, /liquidity_lock command is NOT integrated into bot.js. The backend functionality is complete but frontend command is missing."
+        - working: false
+        - agent: "testing"
+        - comment: "RE-TESTED: INTEGRATION FAILURE - genuine-blockchain-manager.js contains complete 24-hour liquidity locking implementation with escrow accounts, time-locked contracts, and on-chain verification. However, bot.js has ZERO integration - no imports, no command handlers, no initialization. The /liquidity_lock command does not exist in bot.js. Backend logic is perfect but completely disconnected from the bot interface."
 
   - task: "Implement time-locked mint authority revocation (3 days)"
     implemented: true 
