@@ -1,93 +1,33 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "bring find cave pet cry glad school what confirm book mix program",
-      "publicKey": "2WCirs1UK1aGkDVbGCSMsnBbAvu5DqSKGa9rLsPfvf95",
-      "createdAt": "2025-08-19T16:44:50.577Z"
+      "mnemonic": "crater quality baby boil another interest unaware stuff one harbor avocado trigger",
+      "publicKey": "EFvJScdKeK5s3yahJvzk5B1kaiEH25JHXfG7CqJyJBpc",
+      "createdAt": "2025-08-19T17:15:48.254Z"
     },
     "wallet2": {
-      "mnemonic": "mom defense filter traffic faculty educate submit woman physical prosper weasel witness",
-      "publicKey": "C9xmCBi3dA2ChCR5YJXKRd5LQsNiGSbh4mDQUJ5fQxo7",
-      "createdAt": "2025-08-19T16:44:50.672Z"
+      "mnemonic": "spoon betray vicious spray coffee radio lab sight orphan find funny cricket",
+      "publicKey": "3WAMV649FmBpL1fYbi85JohcRwD2wuV2FActgmg38n3j",
+      "createdAt": "2025-08-19T17:15:48.361Z"
     },
     "wallet3": {
-      "mnemonic": "warfare must ozone pistol chuckle nasty page uncle supply punch rifle spike",
-      "publicKey": "A1HRrEs5L6fqmuwRywhuntCN9wA9fBEPttkB1gURpHhP",
-      "createdAt": "2025-08-19T16:44:50.756Z"
+      "mnemonic": "gloom observe lunar snap host erase allow patient prevent tortoise witness front",
+      "publicKey": "6hkd5Hp8BV11rV6YMMVAeVyY9Hhbw6AS39FPZ4HGD1FL",
+      "createdAt": "2025-08-19T17:15:48.410Z"
     },
     "wallet4": {
-      "mnemonic": "grit tower orphan swallow sniff current friend curious turkey culture tunnel accuse",
-      "publicKey": "CEMrrsfMbjxnyytsmTnehD1C4xJJj9bHRQoRmHCoFRHR",
-      "createdAt": "2025-08-19T16:44:50.805Z"
+      "mnemonic": "bitter raw sight scatter tomorrow bid arena lottery merry approve weasel stadium",
+      "publicKey": "GbEvBFg2mQmw6vKSQVzJstRGCkRpdG95vqTPkwF74jWR",
+      "createdAt": "2025-08-19T17:15:48.428Z"
     },
     "wallet5": {
-      "mnemonic": "original among season luxury sudden topic borrow solar kangaroo flush trumpet eyebrow",
-      "publicKey": "FQBeHZ27yiJbr7F4yWJpi6jf87dSLuS2AiYteptCFftn",
-      "createdAt": "2025-08-19T16:44:50.859Z"
+      "mnemonic": "flush danger giraffe viable unfair awesome royal peanut hunt arrive satoshi humor",
+      "publicKey": "C6tA6hspHodzJp5hUeDqow1HCCbdaRSS6BqyVSShdZgk",
+      "createdAt": "2025-08-19T17:15:48.465Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {
-    "FfduMAah1WWmu8D8aoog3Xu8YrDCMNpNtNhTGYj49vRN": {
-      "network": "devnet",
-      "name": "GoatedFill",
-      "description": "GOATED in a blockchain way",
-      "symbol": "GTF",
-      "totalSupply": 10000000,
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-08-19T16:57:20.284Z",
-      "lastUpdated": "2025-08-19T16:57:20.284Z"
-    },
-    "2YFUX66K4j4eRMhgCY63Qadr9eqij6VqMpkaocYypLVb": {
-      "poolId": "HAJaGrubnvKnjwrmnMG35UvA46JxioWLvFrbG9ATJ1Zn",
-      "tokenMint": "2YFUX66K4j4eRMhgCY63Qadr9eqij6VqMpkaocYypLVb",
-      "lpTokenMint": "AcW5mruexuf2PFFnmi1JFC7sSZNbNp6HKPgz8MdRbgUs",
-      "solAmount": 0.05,
-      "tokenAmount": 300000,
-      "network": "devnet",
-      "createdBy": 1,
-      "createdAt": "2025-08-19T17:06:43.270Z",
-      "status": "active",
-      "pricePerToken": 1.6666666666666668e-7,
-      "marketCap": 1.5,
-      "liquidity": 5,
-      "hasPool": true,
-      "poolCreated": true,
-      "lastUpdated": "2025-08-19T17:06:43.270Z"
-    },
-    "5UcYZXU4x1xYvjMfFFbNserKYQVAm5utdAjb3W8BDmWD": {
-      "success": true,
-      "name": "PepePump",
-      "symbol": "PEPUMP",
-      "description": "🔥 Trending meme token based on Pepe frog pumping weights! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=PEPUMP",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-08-19T17:08:52.381Z",
-      "lastUpdated": "2025-08-19T17:08:52.381Z"
-    },
-    "BTVn3NCpWdix1EcoDwbXFGt9tJhGJEfdt4tkEFanSh61": {
-      "poolId": "6Sfhdg18ZiMN8Jm4Yypy2Nkjyn8WwbXCyEBfMh6CnEQ1",
-      "tokenMint": "BTVn3NCpWdix1EcoDwbXFGt9tJhGJEfdt4tkEFanSh61",
-      "lpTokenMint": "7DthSREnd8YLkZo22974ReczrcEM32R5eVe85boae6EC",
-      "solAmount": 0.05,
-      "tokenAmount": 300000,
-      "network": "devnet",
-      "createdBy": 1,
-      "createdAt": "2025-08-19T17:09:00.173Z",
-      "status": "active",
-      "pricePerToken": 1.6666666666666668e-7,
-      "marketCap": 1.5,
-      "liquidity": 5,
-      "hasPool": true,
-      "poolCreated": true,
-      "lastUpdated": "2025-08-19T17:09:00.173Z"
-    }
-  },
+  "tokens": {},
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
