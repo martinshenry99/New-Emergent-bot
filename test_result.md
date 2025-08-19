@@ -47,7 +47,7 @@
 ##   test_sequence: 0
 ##   run_ui: false
 ##
-user_problem_statement: "Complete Meme-bot devnet configuration: 1) Fix tax system to collect in SOL instead of tokens, 2) Add missing /set_fees command, 3) Implement /mint_rugpull simulation for devnet research, 4) Ensure Wallet 1 gets 20% token supply + enough SOL, 5) Fix liquidity lock to use real LP locker, 6) Add chart activity simulation, 7) Completely remove DALL-E 3 and Fal.ai, replace with Craiyon, 8) Display SOL tax stats in /status"
+user_problem_statement: "Implement GENUINE blockchain operations for Meme-bot: 1) Replace simulated liquidity locking with REAL on-chain locks (24 hours), 2) Implement time-locked mint authority revocation (3-day delay), 3) Create genuine mint+rugpull operations that affect actual blockchain, 4) Add genuine liquidity removal rugpull functionality, 5) All operations must be verifiable on-chain and use real smart contracts, 6) Update status command to show genuine operations"
 
 backend:
   - task: "Implement SOL-based tax system"
