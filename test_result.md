@@ -302,6 +302,8 @@ test_plan:
     - "Update status command with genuine operations"
   stuck_tasks: 
     - "Command integration for genuine blockchain operations"
+    - "Bot.js integration with genuine-blockchain-manager.js"
+    - "Missing command handlers for all genuine operations"
   test_all: false
   test_priority: "critical_first"
 
