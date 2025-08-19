@@ -87,7 +87,7 @@ backend:
     implemented: true 
     working: false
     file: "telegram-bot/bot.js, telegram-bot/genuine-blockchain-manager.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "critical"
     needs_retesting: false
     status_history:
@@ -97,6 +97,9 @@ backend:
         - working: false
         - agent: "testing"
         - comment: "TESTED: PARTIAL IMPLEMENTATION - Genuine mint authority revocation exists in genuine-blockchain-manager.js with genuineRevokeMintAuthority method, setAuthority instructions, and permanent revocation logic. However, /revoke_mint command is NOT integrated into bot.js, and 3-day delay/scheduling system is not implemented. Backend logic exists but command integration and time-lock scheduling missing."
+        - working: false
+        - agent: "testing"
+        - comment: "RE-TESTED: INTEGRATION FAILURE - genuine-blockchain-manager.js contains genuineRevokeMintAuthority method with proper setAuthority instructions and permanent revocation logic. However, bot.js has NO /revoke_mint command handler, no 3-day delay scheduling, and no integration with the genuine manager. The backend implementation exists but is completely isolated from the bot interface."
 
   - task: "Implement genuine mint rugpull operations"
     implemented: true 
