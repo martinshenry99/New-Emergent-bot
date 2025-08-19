@@ -27,7 +27,22 @@
     }
   },
   "mainnetWallets": {},
-  "tokens": {},
+  "tokens": {
+    "6gDsw8Mai9re5nfHRoWE6ZV68Wo94493aZNzwz4dFQTG": {
+      "success": true,
+      "name": "MoonLambo",
+      "symbol": "MLAMBO",
+      "description": "🔥 Trending meme token based on Moon mission with Lamborghini! Join the community and ride the wave! 🚀💎",
+      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=MLAMBO",
+      "network": "devnet",
+      "totalSupply": 1000000,
+      "mode": "trending",
+      "liquidityLock": true,
+      "revokeMint": true,
+      "createdAt": "2025-08-19T17:30:08.856Z",
+      "lastUpdated": "2025-08-19T17:30:08.856Z"
+    }
+  },
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
