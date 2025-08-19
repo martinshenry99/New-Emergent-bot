@@ -279,10 +279,16 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
+  current_focus: 
+    - "Implement genuine liquidity locking (24 hours)"
+    - "Implement time-locked mint authority revocation (3 days)"
+    - "Implement genuine mint rugpull operations"
+    - "Implement genuine liquidity removal rugpull"
+    - "Update status command with genuine operations"
+  stuck_tasks: 
+    - "Command integration for genuine blockchain operations"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "critical_first"
 
 frontend:
   - task: "Basic Frontend Functionality"
