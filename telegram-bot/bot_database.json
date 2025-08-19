@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "patch shift umbrella biology whip hurdle top estate foster scene example hamster",
-      "publicKey": "CsjhacCKLFZreE8pc7pA2VZK4kdXaDh3KYzG9kYfCTUc",
-      "createdAt": "2025-08-19T15:23:23.275Z"
+      "mnemonic": "burger base special candy match embark space height physical exact crop ship",
+      "publicKey": "21Pzx39iXzbCkxXiYYukX5xsnePykuQyCqURjUSCC7cw",
+      "createdAt": "2025-08-19T15:36:24.809Z"
     },
     "wallet2": {
-      "mnemonic": "sunset dutch problem chapter eye physical trash nasty word bachelor grass bronze",
-      "publicKey": "7TyPvfovogVdc2mRyU5jZ8a8uyPYid66zcNFvETSnzat",
-      "createdAt": "2025-08-19T15:23:23.377Z"
+      "mnemonic": "suffer scrap arm cigar few sudden silk exist zone salon discover book",
+      "publicKey": "6kWJG2dzcXpW8dp1aCmvzr21bTZ5kYgRMzp2EyBJSCi8",
+      "createdAt": "2025-08-19T15:36:24.891Z"
     },
     "wallet3": {
-      "mnemonic": "sword glance direct envelope hat wealth strong discover offer lizard laundry accuse",
-      "publicKey": "9c85Jy89fAx8VEC79JqwqhUq3z1GH9JiMPkzrnkEDSnK",
-      "createdAt": "2025-08-19T15:23:23.394Z"
+      "mnemonic": "lock slice page enact path wagon motion ivory pull fiscal million various",
+      "publicKey": "D95FmddTKxJUBVt6cC4sGjQ1Bj11amYUGrzkUMSEBZit",
+      "createdAt": "2025-08-19T15:36:24.965Z"
     },
     "wallet4": {
-      "mnemonic": "million pen now snack situate clown bird group wild bracket scene column",
-      "publicKey": "J4haegumyEEkhYTUnjsDcbv9EwaVVge3ojFLRHfPZvG2",
-      "createdAt": "2025-08-19T15:23:23.410Z"
+      "mnemonic": "october lion detail injury roast ozone odor merry high outdoor can praise",
+      "publicKey": "CJgxEJAwBxwNfQ2TefA3fWS4S7smCYELLemD4JbGVRY2",
+      "createdAt": "2025-08-19T15:36:24.991Z"
     },
     "wallet5": {
-      "mnemonic": "oval pact core garment above width oak tired achieve spend switch attend",
-      "publicKey": "CtfJhuF5kun84BvaF45h56zJQdSxFmkbmgCaBr9QxEhH",
-      "createdAt": "2025-08-19T15:23:23.475Z"
+      "mnemonic": "only response mask plate brief sorry grocery guess bronze moon churn egg",
+      "publicKey": "HozCAq6FdpabQnTxdGXyVGkyHTQB5td5zgNHxTdAWKt5",
+      "createdAt": "2025-08-19T15:36:25.065Z"
     }
   },
   "mainnetWallets": {},
