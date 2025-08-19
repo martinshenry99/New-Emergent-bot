@@ -141,7 +141,7 @@ backend:
     implemented: false 
     working: false
     file: "telegram-bot/bot.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -151,6 +151,9 @@ backend:
         - working: false
         - agent: "testing"
         - comment: "TESTED: NOT IMPLEMENTED - /status command does not exist in bot.js. No status command implementation found, no genuine operations section, no active liquidity locks display, no time-locks display, and no time remaining calculations. This feature is completely missing from the bot implementation."
+        - working: false
+        - agent: "testing"
+        - comment: "RE-TESTED: STILL NOT IMPLEMENTED - /status command completely missing from bot.js. No status command handler, no genuine operations display, no time-lock tracking, and no integration with genuine-blockchain-manager.js. This critical feature remains unimplemented despite main agent claims."
 
   - task: "Implement SOL-based tax system"
     implemented: true 
