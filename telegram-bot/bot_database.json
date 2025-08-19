@@ -1,48 +1,33 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "mixture window fossil grape rebel know clump army stay raccoon online narrow",
-      "publicKey": "5vBRB9yf3tCzq6LKPCVPrM1SAytJ9th51WY4UtQ51KFF",
-      "createdAt": "2025-08-19T17:22:15.208Z"
+      "mnemonic": "humble dwarf glove worth stool name impulse broken patrol rib section mind",
+      "publicKey": "Bcs3uxpXxmpZEmD5mz8C48Yq1ptEhFxG2V7sLXDS8Be4",
+      "createdAt": "2025-08-19T17:59:22.216Z"
     },
     "wallet2": {
-      "mnemonic": "stick image air cause engine crouch video can owner breeze laptop domain",
-      "publicKey": "8nhQJuDGwhRfCob8VMdPJnGbdKZNyUf6MhxzmCjuqCvZ",
-      "createdAt": "2025-08-19T17:22:15.313Z"
+      "mnemonic": "unable powder rose oil planet anxiety fabric trend mesh frog width clip",
+      "publicKey": "Ck8b79vgW6Fq1S33E79BgNXed7ZN6dxu8a2hhaWcTtum",
+      "createdAt": "2025-08-19T17:59:22.355Z"
     },
     "wallet3": {
-      "mnemonic": "deputy gaze account jewel relax gaze obtain funny calm machine crucial jelly",
-      "publicKey": "9QeUxCRGfhFVLfQ6XURYdHCCE43ee6y21mLkqMP4ZJk",
-      "createdAt": "2025-08-19T17:22:15.362Z"
+      "mnemonic": "box virus snack eternal body industry federal fitness certain inhale vintage interest",
+      "publicKey": "C66dcDULjGQh6givEe7tALMJKukrHPv7qgo7y62fCaN1",
+      "createdAt": "2025-08-19T17:59:22.371Z"
     },
     "wallet4": {
-      "mnemonic": "daring field permit truth monster drastic frame fatigue vessel obtain curve absent",
-      "publicKey": "DrRridjtKNdBP7xhXseUZZ2QmhGZgToX9dSAahDoZuRV",
-      "createdAt": "2025-08-19T17:22:15.415Z"
+      "mnemonic": "raise margin hole behave never market mom skin hold session vehicle sick",
+      "publicKey": "5ykXC2faMDX3HeZtgttfRM6oRRVkUH1qKoSYhfdd1ZFA",
+      "createdAt": "2025-08-19T17:59:22.452Z"
     },
     "wallet5": {
-      "mnemonic": "someone raven start size sword change slide tide arrest below diagram tent",
-      "publicKey": "Adod7XB2g1a4NQtEuZxHtjErZ2d49WzKQYmbiyUFMJeU",
-      "createdAt": "2025-08-19T17:22:15.458Z"
+      "mnemonic": "success behave pear loud gather cover lion cart absorb neck yard tongue",
+      "publicKey": "DqK8d2B9hnyxKFvS8TznoM1garf8vNPWyrUdJRi7M8mr",
+      "createdAt": "2025-08-19T17:59:22.468Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {
-    "6gDsw8Mai9re5nfHRoWE6ZV68Wo94493aZNzwz4dFQTG": {
-      "success": true,
-      "name": "MoonLambo",
-      "symbol": "MLAMBO",
-      "description": "🔥 Trending meme token based on Moon mission with Lamborghini! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=MLAMBO",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-08-19T17:30:08.856Z",
-      "lastUpdated": "2025-08-19T17:30:08.856Z"
-    }
-  },
+  "tokens": {},
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
