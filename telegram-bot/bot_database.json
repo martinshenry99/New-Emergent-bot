@@ -1,33 +1,48 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "tourist siren live safe extra divorce habit kite enact outdoor cup item",
-      "publicKey": "CkmU913cDdrxrnPPSKb9eqjEZ1cibzTm4BakBB1YBibT",
-      "createdAt": "2025-08-19T18:06:18.425Z"
+      "mnemonic": "deputy drama title own wide recipe mesh obtain apology kiss embody trial",
+      "publicKey": "CLRDjpuwhwcssxyvy1FuRKGwvc3ZDmswGehEHmrFfYPX",
+      "createdAt": "2025-08-27T22:03:05.101Z"
     },
     "wallet2": {
-      "mnemonic": "uniform recall picnic seminar deposit prosper super atom ramp carbon juice similar",
-      "publicKey": "Gj72fRNs5692uexCSC6JGvPKYLRaqnYPpuHryFci7rLc",
-      "createdAt": "2025-08-19T18:06:18.551Z"
+      "mnemonic": "speed mimic permit later impact holiday saddle face assist okay pool furnace",
+      "publicKey": "CFWVaQe4qqXHySXNwcqqaMRCV7koevibrk5DA5XTgFev",
+      "createdAt": "2025-08-27T22:03:05.203Z"
     },
     "wallet3": {
-      "mnemonic": "surround tomorrow author toe moment suggest front emerge deposit ill ketchup mass",
-      "publicKey": "5YGLtQoxQATEmbeAEwDNYDz4gPSoCEDW9szVhwozhH1g",
-      "createdAt": "2025-08-19T18:06:18.567Z"
+      "mnemonic": "cabbage multiply shiver tray flavor error cause power amused oblige nest uniform",
+      "publicKey": "7B7DKH8E2zd1btTzaBVXxyZt8qPxyiptbfYyNNy7Pcgu",
+      "createdAt": "2025-08-27T22:03:05.295Z"
     },
     "wallet4": {
-      "mnemonic": "among interest betray evidence quick cement differ message soldier private network layer",
-      "publicKey": "RbZxNCZcU4FSp5bco2iU9JFJhqLkBT6ZLiJf2qwZTUC",
-      "createdAt": "2025-08-19T18:06:18.654Z"
+      "mnemonic": "soap profit message spike follow civil inside any purchase legal survey heavy",
+      "publicKey": "2mUs1PggyZ7HYBop5BUSB3owTTW3cHuPSU1YnZdCfg95",
+      "createdAt": "2025-08-27T22:03:05.336Z"
     },
     "wallet5": {
-      "mnemonic": "profit crater mixed switch domain ticket iron journey auction advance inherit innocent",
-      "publicKey": "4oC2624RUVn5FjJtxCSjCuHtyKeWsWi5QrVWubXkEvpu",
-      "createdAt": "2025-08-19T18:06:18.669Z"
+      "mnemonic": "search bar street harbor fog angry loyal charge nice alley magnet sock",
+      "publicKey": "WZtsQPECtRj3i9LYxcfYTMyZoyJDebSVREADJUws4Df",
+      "createdAt": "2025-08-27T22:03:05.398Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {},
+  "tokens": {
+    "6iCpsQRtbwY2JeduPjzXZ8wuhp6ZVbtNpZGsL3QLLFyt": {
+      "success": true,
+      "name": "DiamondApe",
+      "symbol": "DIAPE",
+      "description": "🔥 Trending meme token based on Diamond hands meets ape strong! Join the community and ride the wave! 🚀💎",
+      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=DIAPE",
+      "network": "devnet",
+      "totalSupply": 1000000,
+      "mode": "trending",
+      "liquidityLock": true,
+      "revokeMint": true,
+      "createdAt": "2025-08-27T22:08:50.037Z",
+      "lastUpdated": "2025-08-27T22:08:50.037Z"
+    }
+  },
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
