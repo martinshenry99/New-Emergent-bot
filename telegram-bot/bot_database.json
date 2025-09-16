@@ -1,48 +1,33 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "deputy drama title own wide recipe mesh obtain apology kiss embody trial",
-      "publicKey": "CLRDjpuwhwcssxyvy1FuRKGwvc3ZDmswGehEHmrFfYPX",
-      "createdAt": "2025-08-27T22:03:05.101Z"
+      "mnemonic": "just economy enable hint word chalk evoke crucial fiction tray cash analyst",
+      "publicKey": "5HKWr13ySQM1Q4Qnks1Ejv8CtSpCcbrAH7ECGHyuFAxt",
+      "createdAt": "2025-09-16T23:43:27.710Z"
     },
     "wallet2": {
-      "mnemonic": "speed mimic permit later impact holiday saddle face assist okay pool furnace",
-      "publicKey": "CFWVaQe4qqXHySXNwcqqaMRCV7koevibrk5DA5XTgFev",
-      "createdAt": "2025-08-27T22:03:05.203Z"
+      "mnemonic": "prison behind hello tent search odor ride success rack blur extra camera",
+      "publicKey": "2vtK5jAo9PxMK1u5Dca6GhssV53m916usAosDvyM2HBT",
+      "createdAt": "2025-09-16T23:43:27.816Z"
     },
     "wallet3": {
-      "mnemonic": "cabbage multiply shiver tray flavor error cause power amused oblige nest uniform",
-      "publicKey": "7B7DKH8E2zd1btTzaBVXxyZt8qPxyiptbfYyNNy7Pcgu",
-      "createdAt": "2025-08-27T22:03:05.295Z"
+      "mnemonic": "level heart wide hidden amazing fancy jar case spin program web thrive",
+      "publicKey": "BRLoVcZ6xjbWqiPPG9XzxbBowsMPo3GBMqce6WyS2gEC",
+      "createdAt": "2025-09-16T23:43:27.869Z"
     },
     "wallet4": {
-      "mnemonic": "soap profit message spike follow civil inside any purchase legal survey heavy",
-      "publicKey": "2mUs1PggyZ7HYBop5BUSB3owTTW3cHuPSU1YnZdCfg95",
-      "createdAt": "2025-08-27T22:03:05.336Z"
+      "mnemonic": "vapor crumble gold casino brave alert obtain special army level about gorilla",
+      "publicKey": "nsJecP2TgqHMh67R5V6w5rfLkxJM8b8tWBrdyEFPma9",
+      "createdAt": "2025-09-16T23:43:27.911Z"
     },
     "wallet5": {
-      "mnemonic": "search bar street harbor fog angry loyal charge nice alley magnet sock",
-      "publicKey": "WZtsQPECtRj3i9LYxcfYTMyZoyJDebSVREADJUws4Df",
-      "createdAt": "2025-08-27T22:03:05.398Z"
+      "mnemonic": "alley pave sign improve grief near rhythm merit surround twice tourist merry",
+      "publicKey": "CAJ2LVuXme1T4wGMNnNy5b28fwgsUw3pBkmfjkr1Zift",
+      "createdAt": "2025-09-16T23:43:27.975Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {
-    "6iCpsQRtbwY2JeduPjzXZ8wuhp6ZVbtNpZGsL3QLLFyt": {
-      "success": true,
-      "name": "DiamondApe",
-      "symbol": "DIAPE",
-      "description": "🔥 Trending meme token based on Diamond hands meets ape strong! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=DIAPE",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-08-27T22:08:50.037Z",
-      "lastUpdated": "2025-08-27T22:08:50.037Z"
-    }
-  },
+  "tokens": {},
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
