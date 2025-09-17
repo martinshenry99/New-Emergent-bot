@@ -492,6 +492,8 @@ bot.on('message', (msg) => {
     } else if (session.type === 'ai_branding') {
         // Handle AI branding steps if needed
         console.log('AI branding step:', session);
+    } else if (session.type === 'ai_liquidity_input' || session.type === 'trend_ai_liquidity_input') {
+        handleAILiquidityInput(chatId, userId, text, session);
     }
 });
 
