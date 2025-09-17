@@ -1,222 +1,38 @@
 {
-  "summary": {
-    "total_tests": 30,
-    "passed": 29,
-    "failed": 0,
-    "warnings": 1,
-    "success_rate": 96.66666666666667
-  },
-  "test_results": [
-    {
-      "test": "File Check: telegram-bot/bot.js",
-      "status": "PASS",
-      "details": "Main bot file exists (76121 bytes)",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945676"
+  "success_rate": "4/5",
+  "ai_step35_working": true,
+  "airdrop_working": true,
+  "overall_success": true,
+  "detailed_results": {
+    "ai_image_generation_step35": {
+      "status": "PASSED",
+      "details": [
+        "AI Image Generation Step 3.5 properly implemented for both networks with Craiyon"
+      ]
     },
-    {
-      "test": "File Check: telegram-bot/wallet-manager-enhanced.js",
-      "status": "PASS",
-      "details": "Enhanced wallet manager exists (16093 bytes)",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945714"
+    "airdrop_no_loops": {
+      "status": "PASSED",
+      "details": [
+        "Airdrop functionality properly implemented without loops"
+      ]
     },
-    {
-      "test": "File Check: telegram-bot/genuine-blockchain-manager.js",
-      "status": "PASS",
-      "details": "Genuine blockchain manager exists (21466 bytes)",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945741"
+    "bot_functionality": {
+      "status": "PASSED",
+      "details": [
+        "Bot functionality and dependencies properly configured"
+      ]
     },
-    {
-      "test": "File Check: telegram-bot/ai-integrations.js",
-      "status": "PASS",
-      "details": "AI integrations exists (6689 bytes)",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945768"
+    "file_integrity": {
+      "status": "PASSED",
+      "details": [
+        "All required files and functions present"
+      ]
     },
-    {
-      "test": "Dependencies Check",
-      "status": "PASS",
-      "details": "All required dependencies present",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945875"
-    },
-    {
-      "test": "Environment Variables",
-      "status": "PASS",
-      "details": "Required environment variables present",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.945939"
-    },
-    {
-      "test": "AI Image Step 3.5",
-      "status": "PASS",
-      "details": "Step 3.5 for image generation found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946662"
-    },
-    {
-      "test": "Generate AI Image Button",
-      "status": "PASS",
-      "details": "Generate AI Image button found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946689"
-    },
-    {
-      "test": "AI Image Both Networks",
-      "status": "PASS",
-      "details": "Image generation available for both networks",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946716"
-    },
-    {
-      "test": "/wallets Command Handler",
-      "status": "PASS",
-      "details": "/wallets command handler found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946731"
-    },
-    {
-      "test": "showAllWalletBalances Function",
-      "status": "PASS",
-      "details": "showAllWalletBalances function found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946740"
-    },
-    {
-      "test": "Airdrop Button",
-      "status": "PASS",
-      "details": "Airdrop button found in wallets display",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946751"
-    },
-    {
-      "test": "Both Network Wallets",
-      "status": "PASS",
-      "details": "Both devnet and mainnet wallet display found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946765"
-    },
-    {
-      "test": "executeAirdrop Function",
-      "status": "PASS",
-      "details": "executeAirdrop function found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946785"
-    },
-    {
-      "test": "Airdrop Wallet Callbacks",
-      "status": "PASS",
-      "details": "All 5 airdrop wallet callbacks found: ['airdrop_wallet_1', 'airdrop_wallet_2', 'airdrop_wallet_3', 'airdrop_wallet_4', 'airdrop_wallet_5']",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.946862"
-    },
-    {
-      "test": "Airdrop Loop Prevention",
-      "status": "WARN",
-      "details": "Potential loop issues detected",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947719"
-    },
-    {
-      "test": "Real Airdrop Implementation",
-      "status": "PASS",
-      "details": "Real airdrop implementation found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947757"
-    },
-    {
-      "test": "Enhanced Wallet Manager Usage",
-      "status": "PASS",
-      "details": "enhancedWalletManager found in bot code",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947770"
-    },
-    {
-      "test": "getWallets Method Calls",
-      "status": "PASS",
-      "details": "getWallets method calls found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947781"
-    },
-    {
-      "test": "Balance Update Functionality",
-      "status": "PASS",
-      "details": "updateBalances functionality found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947792"
-    },
-    {
-      "test": "Persistent Wallet Addresses",
-      "status": "PASS",
-      "details": "Environment variable usage for persistent addresses found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947841"
-    },
-    {
-      "test": "requestDevnetAirdrop Method",
-      "status": "PASS",
-      "details": "requestDevnetAirdrop method found in wallet manager",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947980"
-    },
-    {
-      "test": "getWallets Method",
-      "status": "PASS",
-      "details": "getWallets method found in wallet manager",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.947995"
-    },
-    {
-      "test": "Persistent Wallet Loading",
-      "status": "PASS",
-      "details": "Persistent wallet loading with 'NEVER regenerate' found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.948004"
-    },
-    {
-      "test": "Craiyon Integration",
-      "status": "PASS",
-      "details": "Craiyon integration found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.948139"
-    },
-    {
-      "test": "DALL-E Removal",
-      "status": "PASS",
-      "details": "DALL-E references removed",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.948378"
-    },
-    {
-      "test": "Fal.ai Removal",
-      "status": "PASS",
-      "details": "Fal.ai references removed",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.948389"
-    },
-    {
-      "test": "generateImage Method",
-      "status": "PASS",
-      "details": "generateImage method found",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.948396"
-    },
-    {
-      "test": "Bot Syntax Check",
-      "status": "PASS",
-      "details": "Bot.js syntax is valid",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:05.977468"
-    },
-    {
-      "test": "Bot Loading Test",
-      "status": "PASS",
-      "details": "Bot loads without errors",
-      "error": "",
-      "timestamp": "2025-09-17T01:37:07.645439"
+    "callback_handlers": {
+      "status": "FAILED",
+      "details": [
+        "Missing callback handlers: ['airdrop_wallet_1_', 'airdrop_wallet_2_', 'airdrop_wallet_3_', 'airdrop_wallet_4_', 'airdrop_wallet_5_']"
+      ]
     }
-  ],
-  "timestamp": "2025-09-17T01:37:07.645763"
+  }
 }
