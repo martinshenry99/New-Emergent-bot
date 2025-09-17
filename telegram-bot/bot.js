@@ -1768,6 +1768,71 @@ async function generateTrendingMemeToken() {
     };
 }
 
+// ===== AI IMAGE GENERATION FOR MANUAL LAUNCH =====
+async function handleImageGeneration(chatId, userId, session) {
+    try {
+        bot.sendMessage(chatId, `🎨 **Generating AI Image...**
+
+🤖 Using Craiyon AI to create your token logo
+📝 Based on: "${session.data.description}"
+
+⏳ This may take 30-60 seconds...
+🎨 Creating unique artwork for your token...`);
+
+        // Use the real AI integration for image generation
+        const imageResult = await aiIntegrations.generateImage(session.data.description);
+        
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        if (imageResult.success) {
+            // Store the image URL in session data
+            session.data.imageUrl = imageResult.images[0].url;
+            session.data.hasAIImage = true;
+            session.step = 4;
+
+            bot.sendMessage(chatId, `🎉 **AI Image Generated Successfully!**
+
+✅ Description: ${session.data.description}
+🎨 Image: Generated with Craiyon AI
+🖼️ Your token now has a unique AI-generated logo!
+
+Step 4/10: Ticker Symbol
+
+Enter a 3-6 character symbol for your token.
+
+Examples: DOGE, MOON, PEPE, BONK
+
+Please enter your ticker symbol:`);
+        } else {
+            throw new Error('Image generation failed');
+        }
+
+        userSessions.set(userId, session);
+
+    } catch (error) {
+        console.error('Image generation error:', error);
+        
+        // Fallback - continue without image
+        session.step = 4;
+        bot.sendMessage(chatId, `❌ **Image Generation Failed**
+
+The AI image service is temporarily unavailable.
+
+✅ Description: ${session.data.description}
+📝 Continuing without image
+
+Step 4/10: Ticker Symbol
+
+Enter a 3-6 character symbol for your token.
+
+Examples: DOGE, MOON, PEPE, BONK
+
+Please enter your ticker symbol:`);
+
+        userSessions.set(userId, session);
+    }
+}
+
 // ===== INTEGRATION FIX #1: START TRADING COMMAND =====
 function startRealTradingCommand(chatId) {
     const createdPools = poolManager ? poolManager.getAllPools() : [];
