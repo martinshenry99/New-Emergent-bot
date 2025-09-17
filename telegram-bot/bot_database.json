@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "primary derive innocent theory hint six vivid clerk cruise much prefer marble",
-      "publicKey": "G9x7zkCY2PRNKPLGj8ak4VtweqRL985Ah8YgU1YxDKyu",
-      "createdAt": "2025-09-17T11:55:18.566Z"
+      "mnemonic": "arrow gym busy battle keen amazing glare dirt ordinary observe satoshi upon",
+      "publicKey": "8Ee1zfgMjqVceCUvqqWwe8hptEbvoqTAZZVbUrTN4GHh",
+      "createdAt": "2025-09-17T11:56:51.570Z"
     },
     "wallet2": {
-      "mnemonic": "popular hen solve normal embark squeeze mouse dinner plunge knock awful brave",
-      "publicKey": "DyjBT4bW7BzgzPdYEWKMqUKB8TcvmdbWg3eAukvqJWUB",
-      "createdAt": "2025-09-17T11:55:18.587Z"
+      "mnemonic": "oppose brass total require able real wrestle save trash agree edit priority",
+      "publicKey": "FLjsiWtUH53UcLAdAv8fi4HNLgg6HnbZUy3kpnzcXxQN",
+      "createdAt": "2025-09-17T11:56:51.733Z"
     },
     "wallet3": {
-      "mnemonic": "brisk betray neither ill cost gold produce deer cannon bounce width helmet",
-      "publicKey": "6EfvpNPPDeGZVnnBeNAioz1GLhGFGyZixZGinTfDUDrR",
-      "createdAt": "2025-09-17T11:55:18.676Z"
+      "mnemonic": "garlic speak real faculty example very dish coffee eight what waste fun",
+      "publicKey": "7KLnyovXr1CovzWdE6CUtAmZE7QfdG7hA1V7FUM8dyPL",
+      "createdAt": "2025-09-17T11:56:51.780Z"
     },
     "wallet4": {
-      "mnemonic": "cave town dismiss club grass senior legal uncle equip arrest royal know",
-      "publicKey": "B5XB2yvb3haC3pGuEGzo4tRTLna92Zk9dHs7wBmUcmp8",
-      "createdAt": "2025-09-17T11:55:18.710Z"
+      "mnemonic": "city axis program fatigue utility purpose volume swarm thank piece rural axis",
+      "publicKey": "E22pS6XeZaxwmrEJFav83L8DamfY7zcg7VKog3VRK8tG",
+      "createdAt": "2025-09-17T11:56:51.810Z"
     },
     "wallet5": {
-      "mnemonic": "crawl feed surface tiger baby accuse able deny photo uniform focus popular",
-      "publicKey": "4M4e5tUkf5oLhpVAxF7WvxF6wUYH6N4YXwRS8Egh15Xp",
-      "createdAt": "2025-09-17T11:55:18.779Z"
+      "mnemonic": "city wasp also essence convince flush bounce sniff physical biology appear prosper",
+      "publicKey": "5sv6SAq8qMc3PC8qKPMvjVs16hNMW8uyVaAhFD8UKQ7b",
+      "createdAt": "2025-09-17T11:56:51.885Z"
     }
   },
   "mainnetWallets": {},
