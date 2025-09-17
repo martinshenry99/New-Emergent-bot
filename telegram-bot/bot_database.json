@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "install tell couch delay party tide problem mercy income distance piece glory",
-      "publicKey": "AWUGrhB6bekWPrqJTBoRh3upnVwLogLxoi3Y1nUbnuVV",
-      "createdAt": "2025-09-17T11:48:53.825Z"
+      "mnemonic": "primary derive innocent theory hint six vivid clerk cruise much prefer marble",
+      "publicKey": "G9x7zkCY2PRNKPLGj8ak4VtweqRL985Ah8YgU1YxDKyu",
+      "createdAt": "2025-09-17T11:55:18.566Z"
     },
     "wallet2": {
-      "mnemonic": "ten park gain receive curtain page vacuum dawn hammer embody margin napkin",
-      "publicKey": "9SJWkstkgxhKXVidqJTNhmPeGYRQjnRqSqVoYiDz7CTa",
-      "createdAt": "2025-09-17T11:48:53.849Z"
+      "mnemonic": "popular hen solve normal embark squeeze mouse dinner plunge knock awful brave",
+      "publicKey": "DyjBT4bW7BzgzPdYEWKMqUKB8TcvmdbWg3eAukvqJWUB",
+      "createdAt": "2025-09-17T11:55:18.587Z"
     },
     "wallet3": {
-      "mnemonic": "skate weapon certain bargain indicate cannon weapon mail trap desk eternal response",
-      "publicKey": "43VArm1LGTTSZs6H4eBqYhHSCuBEFGo8PJN82UTouBSQ",
-      "createdAt": "2025-09-17T11:48:53.884Z"
+      "mnemonic": "brisk betray neither ill cost gold produce deer cannon bounce width helmet",
+      "publicKey": "6EfvpNPPDeGZVnnBeNAioz1GLhGFGyZixZGinTfDUDrR",
+      "createdAt": "2025-09-17T11:55:18.676Z"
     },
     "wallet4": {
-      "mnemonic": "moon flock strategy earth tackle genre task rebuild dumb exhaust rubber custom",
-      "publicKey": "Df263XgodBQbGx2tQKjNZmFLzRVcxkiKEb6bjzgvmpgE",
-      "createdAt": "2025-09-17T11:48:53.925Z"
+      "mnemonic": "cave town dismiss club grass senior legal uncle equip arrest royal know",
+      "publicKey": "B5XB2yvb3haC3pGuEGzo4tRTLna92Zk9dHs7wBmUcmp8",
+      "createdAt": "2025-09-17T11:55:18.710Z"
     },
     "wallet5": {
-      "mnemonic": "jacket comfort cancel rebel three current brass fury reform reason oxygen must",
-      "publicKey": "BphpeMspk5urv5Ya4eG31qtXC5mTWqaXm32Q53s7PKqL",
-      "createdAt": "2025-09-17T11:48:53.995Z"
+      "mnemonic": "crawl feed surface tiger baby accuse able deny photo uniform focus popular",
+      "publicKey": "4M4e5tUkf5oLhpVAxF7WvxF6wUYH6N4YXwRS8Egh15Xp",
+      "createdAt": "2025-09-17T11:55:18.779Z"
     }
   },
   "mainnetWallets": {},
