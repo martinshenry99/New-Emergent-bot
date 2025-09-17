@@ -4,7 +4,8 @@ const path = require('path');
 
 class AIIntegrations {
     constructor() {
-        console.log('🤖 AI Integrations initialized (Craiyon - Free Service)');
+        this.emergentLLMKey = 'sk-emergent-074FaB28667F37eBb4';
+        console.log('🤖 AI Integrations initialized (Emergent LLM + Craiyon)');
     }
 
     // Generate image using Craiyon (free service - no API key needed)
