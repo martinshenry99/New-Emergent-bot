@@ -264,11 +264,13 @@ async function showAllWalletBalances(chatId) {
             reply_markup: {
                 inline_keyboard: [
                     [
+                        { text: '🪂 Request Airdrop (All Devnet Wallets)', callback_data: 'quick_airdrop_all' },
+                    ],
+                    [
                         { text: '🧪 Devnet Actions', callback_data: 'wallets_devnet' },
                         { text: '🌐 Mainnet Actions', callback_data: 'wallets_mainnet' }
                     ],
                     [
-                        { text: '🪂 Airdrop (Devnet)', callback_data: 'airdrop_devnet' },
                         { text: '🌱 Seed Wallets', callback_data: 'choose_network_seed' }
                     ],
                     [
