@@ -221,7 +221,7 @@ async function showAllWalletBalances(chatId) {
         
         // Devnet Wallets
         balanceMessage += `🧪 **DEVNET WALLETS** (Testing Network)\n`;
-        const devnetWallets = enhancedWalletManager.getAllWallets('devnet');
+        const devnetWallets = enhancedWalletManager.getWallets('devnet');
         let devnetTotal = 0;
         
         if (devnetWallets && devnetWallets.length > 0) {
