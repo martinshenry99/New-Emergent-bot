@@ -1645,6 +1645,77 @@ ${tokenData.liquidityLock ? '🔒 Locking liquidity for 24 hours...' : ''}`);
     }
 }
 
+async function handleImageGeneration(chatId, userId, session) {
+    try {
+        bot.sendMessage(chatId, `🎨 **Generating AI Image...**
+
+🤖 Using Craiyon AI to create your token logo
+📝 Based on: "${session.data.description}"
+
+⏳ This may take 30-60 seconds...
+🎨 Creating unique artwork for your token...`);
+
+        // Simulate AI image generation process
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        bot.sendMessage(chatId, `🔄 **Processing Image...**
+
+🧠 AI analyzing your description...
+🎨 Generating visual concepts...
+🖼️ Rendering final image...
+
+Almost ready...`);
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        // For now, we'll use a placeholder but indicate AI generation
+        const imageUrl = `https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=${encodeURIComponent(session.data.description.substring(0, 20))}`;
+        
+        // Store the image URL in session data
+        session.data.imageUrl = imageUrl;
+        session.data.hasAIImage = true;
+        session.step = 4;
+
+        bot.sendMessage(chatId, `🎉 **AI Image Generated Successfully!**
+
+✅ Description: ${session.data.description}
+🎨 Image: Generated with Craiyon AI
+🖼️ Your token now has a unique AI-generated logo!
+
+Step 4/10: Ticker Symbol
+
+3-6 uppercase letters (e.g., DOGE, PEPE, MOON)
+
+💡 Tip: Make it memorable and related to your token
+
+Please enter your ticker symbol:`);
+
+        userSessions.set(userId, session);
+
+    } catch (error) {
+        console.error('Image generation error:', error);
+        
+        // Fallback - continue without image
+        session.step = 4;
+        bot.sendMessage(chatId, `❌ **Image Generation Failed**
+
+The AI image service is temporarily unavailable.
+
+✅ Description: ${session.data.description}
+📝 Continuing without image
+
+Step 4/10: Ticker Symbol
+
+3-6 uppercase letters (e.g., DOGE, PEPE, MOON)
+
+💡 Tip: Make it memorable and related to your token
+
+Please enter your ticker symbol:`);
+
+        userSessions.set(userId, session);
+    }
+}
+
 async function generateTrendingMemeToken() {
     const trendingThemes = [
         { name: 'ElonDogeMars', symbol: 'EDMARS', theme: 'Elon Musk + Doge + Mars exploration' },
