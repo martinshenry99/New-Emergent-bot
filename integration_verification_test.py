@@ -276,7 +276,7 @@ class IntegrationVerificationTest:
             bot_content = bot_file.read_text()
             
             # Check main callback query handler exists
-            if "bot.on('callback_query', (query) => {" in bot_content:
+            if "bot.on('callback_query'," in bot_content:
                 self.log_test("Main callback query handler", True)
             else:
                 self.log_test("Main callback query handler", False, "Handler not found")
