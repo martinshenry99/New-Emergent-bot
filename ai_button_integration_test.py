@@ -171,7 +171,7 @@ class AIButtonIntegrationTester:
         ]
         
         for handler in step35_handlers:
-            if self.search_in_file(self.bot_file, f"} else if (data.startsWith('{handler}'))"):
+            if self.search_in_file(self.bot_file, "} else if (data.startsWith('" + handler + "'))"):
                 self.log_test(f"Step 3.5 handler: {handler}", "PASS", "Handler found")
             else:
                 self.log_test(f"Step 3.5 handler: {handler}", "FAIL", "Handler missing")
