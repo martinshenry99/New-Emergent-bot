@@ -957,6 +957,36 @@ This will perform a REAL liquidity rugpull on MAINNET:
         await showAllWalletBalances(chatId);
     } else if (data === 'choose_network_seed') {
         chooseNetworkForSeedWallets(chatId);
+    
+    // Image Generation Handlers  
+    } else if (data.startsWith('generate_image_')) {
+        const sessionUserId = data.replace('generate_image_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                await handleImageGeneration(chatId, userId, session);
+            }
+        }
+    } else if (data.startsWith('skip_image_')) {
+        const sessionUserId = data.replace('skip_image_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                // Skip image generation, proceed to step 4
+                session.step = 4;
+                bot.sendMessage(chatId, `✅ Description: ${session.data.description}
+📝 No image selected
+
+Step 4/10: Ticker Symbol
+
+Enter a 3-6 character symbol for your token.
+
+Examples: DOGE, MOON, PEPE, BONK
+
+Please enter your ticker symbol:`);
+                userSessions.set(userId, session);
+            }
+        }
 
     } else {
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
