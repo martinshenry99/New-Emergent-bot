@@ -237,7 +237,7 @@ async function showAllWalletBalances(chatId) {
         
         // Mainnet Wallets
         balanceMessage += `🌐 **MAINNET WALLETS** (Live Network)\n`;
-        const mainnetWallets = enhancedWalletManager.getAllWallets('mainnet');
+        const mainnetWallets = enhancedWalletManager.getWallets('mainnet');
         let mainnetTotal = 0;
         
         if (mainnetWallets && mainnetWallets.length > 0) {
