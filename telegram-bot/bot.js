@@ -705,6 +705,36 @@ Please enter SOL amount:`);
             }
         }
 
+    // Image Generation Handlers
+    } else if (data.startsWith('generate_image_')) {
+        const sessionUserId = data.replace('generate_image_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                await handleImageGeneration(chatId, userId, session);
+            }
+        }
+    } else if (data.startsWith('skip_image_')) {
+        const sessionUserId = data.replace('skip_image_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                // Skip image generation, proceed to step 4
+                session.step = 4;
+                bot.sendMessage(chatId, `✅ Description: ${session.data.description}
+📝 No image selected
+
+Step 4/10: Ticker Symbol
+
+3-6 uppercase letters (e.g., DOGE, PEPE, MOON)
+
+💡 Tip: Make it memorable and related to your token
+
+Please enter your ticker symbol:`);
+                userSessions.set(userId, session);
+            }
+        }
+
     // Airdrop Handlers
     } else if (data.startsWith('airdrop_')) {
         const network = data.replace('airdrop_', '');
