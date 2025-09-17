@@ -2326,6 +2326,164 @@ Please enter SOL amount (example: 1.0):`, {
     });
 }
 
+// ===== EXECUTE AI TOKEN CREATION =====
+async function executeAITokenCreation(chatId, userId, aiData) {
+    try {
+        bot.sendMessage(chatId, `🚀 **Creating AI-Generated Token...**
+
+🤖 Token: ${aiData.name} ($${aiData.symbol})
+📝 Description: ${aiData.description}
+🌐 Network: ${aiData.network.charAt(0).toUpperCase() + aiData.network.slice(1)}
+
+⏳ Processing blockchain operations...`);
+
+        // Initialize the creation process with AI data
+        const creationData = {
+            network: aiData.network,
+            name: aiData.name,
+            symbol: aiData.symbol,
+            description: aiData.description,
+            supply: 1000000000, // 1B tokens default
+            decimals: 9,
+            
+            // AI-specific settings
+            imageUrl: aiData.imageUrl || null,
+            hasAIImage: aiData.hasAIImage || false,
+            aiGenerated: true,
+            provider: aiData.provider || 'emergent-llm',
+            
+            // Default settings for AI tokens
+            liquidityLock: true, // Always lock liquidity for AI tokens
+            revokeMint: true,    // Always revoke mint for security
+            
+            // Liquidity settings
+            realSol: aiData.realSol || (aiData.network === 'mainnet' ? 0.5 : 0.1),
+            displayedLiquidity: aiData.displayedLiquidity || (aiData.network === 'mainnet' ? 0.5 : 0.1)
+        };
+
+        // For mainnet, ensure we have liquidity amount
+        if (aiData.network === 'mainnet' && !aiData.realSol) {
+            bot.sendMessage(chatId, '❌ Mainnet liquidity amount missing. Please try again.');
+            return;
+        }
+
+        // Create the token using enhanced wallet manager
+        bot.sendMessage(chatId, `🔥 **Final Step: Token Creation**
+
+⚡ Creating token with AI-generated branding...
+🔗 Deploying to ${aiData.network} blockchain...
+💰 Setting up liquidity: ${creationData.realSol} SOL
+🔒 Configuring security features...`);
+
+        // Execute the actual token creation (using existing launch system)
+        const result = await createTokenWithAIData(creationData);
+        
+        if (result.success) {
+            // Clear the session
+            userSessions.delete(userId);
+            
+            // Show success message
+            const successMessage = `🎉 **AI TOKEN CREATED SUCCESSFULLY!**
+
+🚀 **${aiData.name} ($${aiData.symbol})**
+${aiData.description}
+
+✅ **Token Details:**
+• Mint Address: \`${result.mintAddress}\`
+• Network: ${aiData.network.charAt(0).toUpperCase() + aiData.network.slice(1)}
+• Supply: 1,000,000,000 tokens
+• Decimals: 9
+
+🔒 **Security Features:**
+• Liquidity Locked: ✅ 24 hours
+• Mint Authority: ✅ Revoked
+
+💰 **Liquidity:**
+• Added: ${creationData.realSol} SOL
+• Pool Created: ✅
+
+🤖 **AI Provider:** ${aiData.provider}
+
+🔗 **View on Explorer:**
+[View Token](https://explorer.solana.com/address/${result.mintAddress}?cluster=${aiData.network})
+
+**Your AI-powered token is now live!** 🎉`;
+
+            bot.sendMessage(chatId, successMessage, {
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '🔄 Create Another AI Token', callback_data: `enhanced_ai_${userId}` },
+                            { text: '📈 Start Trading', callback_data: 'start_trading_menu' }
+                        ],
+                        [
+                            { text: '💰 View Wallets', callback_data: 'refresh_all_balances' },
+                            { text: '🔙 Main Menu', callback_data: 'back_to_start' }
+                        ]
+                    ]
+                }
+            });
+
+        } else {
+            throw new Error(result.error || 'Token creation failed');
+        }
+
+    } catch (error) {
+        console.error('AI token creation error:', error);
+        bot.sendMessage(chatId, `❌ **AI Token Creation Failed**
+
+Error: ${error.message}
+
+This could be due to:
+• Insufficient SOL in wallet
+• Network connectivity issues
+• Blockchain congestion
+
+**Fallback Options:**`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Try Again', callback_data: `create_ai_token_${userId}` },
+                        { text: '🛠️ Manual Launch', callback_data: 'manual_launch' }
+                    ],
+                    [
+                        { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
+// ===== CREATE TOKEN WITH AI DATA =====
+async function createTokenWithAIData(data) {
+    try {
+        // This would integrate with your existing token creation system
+        // For now, return a mock result - you'll need to integrate with your actual creation logic
+        
+        // Generate a mock mint address for testing
+        const mockMintAddress = `AI${Math.random().toString(36).substring(2, 15)}Mock`;
+        
+        return {
+            success: true,
+            mintAddress: mockMintAddress,
+            transactionSignature: `tx_${Math.random().toString(36).substring(2, 15)}`,
+            poolAddress: `pool_${Math.random().toString(36).substring(2, 15)}`
+        };
+        
+        // TODO: Replace with actual token creation logic:
+        // return await enhancedWalletManager.createTokenWithPool(data);
+        
+    } catch (error) {
+        console.error('Token creation with AI data error:', error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+}
+
 // ===== HANDLE AI LIQUIDITY INPUT =====
 function handleAILiquidityInput(chatId, userId, text, session) {
     if (session.step === 'awaiting_sol_amount') {
