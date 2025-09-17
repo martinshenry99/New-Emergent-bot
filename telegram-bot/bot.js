@@ -1919,23 +1919,47 @@ Please enter your ticker symbol:`);
 }
 
 async function generateTrendingMemeToken() {
-    const trendingThemes = [
-        { name: 'ElonDogeMars', symbol: 'EDMARS', theme: 'Elon Musk + Doge + Mars exploration' },
-        { name: 'PepePump', symbol: 'PEPUMP', theme: 'Pepe frog pumping weights' },
-        { name: 'ShibaBoss', symbol: 'SHIBOSS', theme: 'Shiba Inu as a business executive' },
-        { name: 'DiamondApe', symbol: 'DIAPE', theme: 'Diamond hands meets ape strong' },
-        { name: 'MoonLambo', symbol: 'MLAMBO', theme: 'Moon mission with Lamborghini' }
-    ];
+    try {
+        console.log('🤖 Calling REAL AI instead of generic themes...');
+        
+        // Use the real AI integration for trending token generation
+        const trendResult = await aiIntegrations.generateTrendingTokenConcept('Create a viral meme token concept');
+        
+        if (trendResult.success) {
+            return {
+                success: true,
+                name: trendResult.name,
+                symbol: trendResult.symbol,
+                description: trendResult.description,
+                imageUrl: 'https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=' + trendResult.symbol,
+                provider: 'real-ai-integration'
+            };
+        } else {
+            throw new Error('Real AI generation failed');
+        }
+    } catch (error) {
+        console.error('Real AI generation failed, using fallback:', error);
+        
+        // Enhanced fallback with better variety
+        const trendingThemes = [
+            { name: 'CryptoWizard', symbol: 'CWIZ', theme: 'AI-powered crypto magic' },
+            { name: 'MemeVault', symbol: 'MVAULT', theme: 'Secure meme storage protocol' },
+            { name: 'TrendBot', symbol: 'TBOT', theme: 'AI that predicts viral memes' },
+            { name: 'ViralCoin', symbol: 'VIRAL', theme: 'The token that spreads itself' },
+            { name: 'MoonSeer', symbol: 'MSEER', theme: 'Oracle of moon missions' }
+        ];
 
-    const selected = trendingThemes[Math.floor(Math.random() * trendingThemes.length)];
-    
-    return {
-        success: true,
-        name: selected.name,
-        symbol: selected.symbol,
-        description: `🔥 Trending meme token based on ${selected.theme}! Join the community and ride the wave! 🚀💎`,
-        imageUrl: 'https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=' + selected.symbol
-    };
+        const selected = trendingThemes[Math.floor(Math.random() * trendingThemes.length)];
+        
+        return {
+            success: true,
+            name: selected.name,
+            symbol: selected.symbol,
+            description: `🔥 Enhanced meme token: ${selected.theme}! AI-powered community token ready to moon! 🚀💎`,
+            imageUrl: 'https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=' + selected.symbol,
+            provider: 'enhanced-fallback'
+        };
+    }
 }
 
 // ===== QUICK AIRDROP ALL DEVNET WALLETS =====
