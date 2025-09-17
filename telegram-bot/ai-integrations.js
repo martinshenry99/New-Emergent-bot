@@ -216,35 +216,26 @@ Respond in JSON format:
         try {
             console.log(`🤖 Generating AI description for: ${tokenName} (${tokenSymbol})`);
             
-            const enhancedPrompt = userDescription ? 
-                `You are a CRYPTO MARKETING GENIUS who understands what makes communities go WILD.
-
-Create a VIRAL meme token description for "${tokenName}" ($${tokenSymbol}) based on: "${userDescription}"
-
-CHANNEL THE ENERGY OF SUCCESSFUL TOKENS like DOGE, SHIB, PEPE, BONK:
-🚀 Use proven viral patterns and language
-💎 Tap into crypto community psychology  
-🔥 Include elements that make people want to share
-⚡ Reference trending crypto themes and culture
-🌙 Build FOMO and community excitement
-🎯 Make it feel like "the next big thing"
-
-VIRAL ELEMENTS TO CONSIDER:
-- Diamond hands mentality
-- "To the moon" culture  
-- Community-driven messaging
-- Underdog-to-success narrative
-- Meme culture references
-- Crypto native slang` :
-                `You are a VIRAL TOKEN COPYWRITER. Create an explosive description for "${tokenName}" ($${tokenSymbol}) that feels like it's about to MOON.
-
-Use your knowledge of what makes crypto communities go crazy - reference successful patterns from DOGE, SHIB, PEPE era.`;
+            const prompt = userDescription ? 
+                `Create a VIRAL meme token description for "${tokenName}" ($${tokenSymbol}) based on: "${userDescription}". Make it explosive and exciting!` :
+                `Create an explosive description for "${tokenName}" ($${tokenSymbol}) that feels like it's about to MOON!`;
             
-            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
-                model: 'gpt-4',
-                messages: [{
-                    role: 'user', 
-                    content: enhancedPrompt + `
+            // Create Python script for description generation
+            const pythonScript = `
+import asyncio
+import json
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+async def generate_description():
+    try:
+        chat = LlmChat(
+            api_key="${this.emergentLLMKey}",
+            session_id="token-desc-gen",
+            system_message="You are a viral crypto marketing expert who creates exciting token descriptions."
+        ).with_model("openai", "gpt-4o")
+        
+        user_message = UserMessage(
+            text='''${prompt}
 
 REQUIREMENTS:
 - Keep it under 200 characters
@@ -254,24 +245,32 @@ REQUIREMENTS:
 - End with a powerful call to action
 - Make it feel like "this is THE moment to get in"
 
-Respond with just the description text, no JSON.`
-                }],
-                max_tokens: 100,
-                temperature: 0.9
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${this.emergentLLMKey}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+Respond with just the description text, no JSON.'''
+        )
+        
+        response = await chat.send_message(user_message)
+        print(response)
+    except Exception as e:
+        print(f"ERROR: {e}")
 
-            const aiDescription = response.data.choices[0].message.content.trim();
+asyncio.run(generate_description())
+`;
+
+            // Write and execute Python script
+            await fs.writeFile('/tmp/token_desc_gen.py', pythonScript);
+            const { stdout, stderr } = await execAsync('cd /app/telegram-bot && python /tmp/token_desc_gen.py');
+            
+            if (stderr) {
+                throw new Error(`Python error: ${stderr}`);
+            }
+            
+            const aiDescription = stdout.trim();
             console.log('🤖 AI Generated Description:', aiDescription);
             
             return {
                 success: true,
                 description: aiDescription,
-                provider: 'emergent-ai'
+                provider: 'emergent-llm'
             };
         } catch (error) {
             console.error('❌ Description generation failed:', error);
