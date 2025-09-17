@@ -2251,6 +2251,38 @@ Please enter SOL amount (example: 1.0):`, {
     });
 }
 
+// ===== HANDLE AI LIQUIDITY INPUT =====
+function handleAILiquidityInput(chatId, userId, text, session) {
+    if (session.step === 'awaiting_sol_amount') {
+        const solAmount = parseFloat(text);
+        
+        if (isNaN(solAmount) || solAmount <= 0) {
+            bot.sendMessage(chatId, '❌ Please enter a valid SOL amount (example: 0.5)');
+            return;
+        }
+        
+        if (solAmount < 0.1) {
+            bot.sendMessage(chatId, '⚠️ **Minimum 0.1 SOL required for mainnet launch**\n\nPlease enter at least 0.1 SOL:');
+            return;
+        }
+        
+        // Store the liquidity amount and proceed
+        session.data.realSol = solAmount;
+        session.data.displayedLiquidity = solAmount;
+        
+        bot.sendMessage(chatId, `✅ **Liquidity Set:** ${solAmount} SOL (~$${(solAmount * 200).toFixed(0)})
+
+🚀 Proceeding with AI token creation...`);
+
+        // Execute the appropriate AI creation
+        if (session.type === 'ai_liquidity_input') {
+            executeEnhancedAITokenCreation(chatId, userId, 'mainnet');
+        } else if (session.type === 'trend_ai_liquidity_input') {
+            executeTrendAwareTokenCreation(chatId, userId, 'mainnet');
+        }
+    }
+}
+
 // ===== STEP 3.5 AI IMAGE GENERATION =====
 async function handleStep35ImageGeneration(chatId, userId, session) {
     try {
