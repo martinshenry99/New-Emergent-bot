@@ -1603,7 +1603,8 @@ ${tokenData.liquidityLock ? '🔒 Locking liquidity for 24 hours...' : ''}`);
 
 🔧 **Applied Settings:**
 • Liquidity Lock: ${tokenData.liquidityLock ? '✅ 24 hours' : '❌ None'}
-• Mint Authority: ${tokenData.revokeMint ? '✅ Revoked' : '❌ Retained'}`;
+• Mint Authority: ${tokenData.revokeMint ? '✅ Revoked' : '❌ Retained'}
+• Token Image: ${tokenData.hasAIImage ? '🎨 AI Generated' : tokenData.imageUrl ? '🖼️ Custom Image' : '📝 No Image'}`;
 
         if (tokenData.network === 'mainnet' && tokenData.realSol) {
             successMessage += `
