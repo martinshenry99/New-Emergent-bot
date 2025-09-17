@@ -757,17 +757,72 @@ Ready to launch your meme coin? 🚀`, {
         } else {
             bot.sendMessage(chatId, '❌ Genuine mint revocation not available.');
         }
-    } else if (data === 'genuine_mint_rugpull') {
+    } else if (data === 'genuine_mint_rugpull_devnet') {
         if (genuineBlockchainManager.genuineRugpullSimulation) {
-            bot.sendMessage(chatId, '💀 Executing genuine mint rugpull (DEVNET ONLY)...');
-            // Execute genuine mint rugpull
+            bot.sendMessage(chatId, '💀 Executing genuine mint rugpull on DEVNET (Educational)...');
+            // Execute genuine mint rugpull on devnet
         } else {
             bot.sendMessage(chatId, '❌ Genuine mint rugpull not available.');
         }
-    } else if (data === 'genuine_rugpull') {
+    } else if (data === 'genuine_mint_rugpull_mainnet') {
+        bot.sendMessage(chatId, `🚨 **FINAL WARNING: MAINNET OPERATION**
+
+This will perform a REAL mint rugpull on MAINNET:
+• Uses REAL money and REAL tokens
+• Cannot be undone
+• Will destroy real value
+• Legal and ethical implications
+
+**ARE YOU ABSOLUTELY SURE?**`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '⚠️ YES, EXECUTE ON MAINNET', callback_data: 'genuine_mint_rugpull_mainnet_confirmed' },
+                        { text: '❌ Cancel (Recommended)', callback_data: 'cancel_genuine' }
+                    ]
+                ]
+            }
+        });
+    } else if (data === 'genuine_mint_rugpull_mainnet_confirmed') {
+        if (genuineBlockchainManager.genuineRugpullSimulation) {
+            bot.sendMessage(chatId, '💀 Executing genuine mint rugpull on MAINNET (REAL OPERATION)...');
+            // Execute genuine mint rugpull on mainnet
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine mint rugpull not available.');
+        }
+    } else if (data === 'genuine_rugpull_devnet') {
         if (genuineBlockchainManager.liquidity_drain) {
-            bot.sendMessage(chatId, '💀 Executing genuine liquidity removal (DEVNET ONLY)...');
-            // Execute genuine rugpull
+            bot.sendMessage(chatId, '💀 Executing genuine liquidity removal on DEVNET (Educational)...');
+            // Execute genuine rugpull on devnet
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine rugpull not available.');
+        }
+    } else if (data === 'genuine_rugpull_mainnet') {
+        bot.sendMessage(chatId, `🚨 **FINAL WARNING: MAINNET OPERATION**
+
+This will perform a REAL liquidity rugpull on MAINNET:
+• Drains REAL SOL from pools
+• Destroys REAL liquidity
+• Cannot be undone
+• Will destroy real value
+• Legal and ethical implications
+
+**ARE YOU ABSOLUTELY SURE?**`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '⚠️ YES, EXECUTE ON MAINNET', callback_data: 'genuine_rugpull_mainnet_confirmed' },
+                        { text: '❌ Cancel (Recommended)', callback_data: 'cancel_genuine' }
+                    ]
+                ]
+            }
+        });
+    } else if (data === 'genuine_rugpull_mainnet_confirmed') {
+        if (genuineBlockchainManager.liquidity_drain) {
+            bot.sendMessage(chatId, '💀 Executing genuine liquidity removal on MAINNET (REAL OPERATION)...');
+            // Execute genuine rugpull on mainnet
         } else {
             bot.sendMessage(chatId, '❌ Genuine rugpull not available.');
         }
