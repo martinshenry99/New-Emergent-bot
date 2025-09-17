@@ -31,16 +31,34 @@ class EnhancedWalletManager {
         
         if (savedWallets && Object.keys(savedWallets).length === 5) {
             // Load existing wallets - NEVER regenerate if they exist
-            console.log(`📂 Loading existing ${network} wallets...`);
+            console.log(`📂 Loading existing ${network} wallets (PERSISTENT)...`);
             await this.loadWalletsFromDatabase(network, savedWallets);
         } else if (network === 'mainnet') {
             // NEVER auto-generate mainnet wallets - they should be manually set
             console.log('⚠️ Mainnet wallets not found - using empty set (manual configuration required)');
             // Don't generate new mainnet wallets automatically
         } else {
-            // Only generate new devnet wallets if none exist
-            console.log(`🆕 Generating new ${network} wallets...`);
-            await this.generateNewWallets(network);
+            // Check if we have mnemonics from .env for devnet (use them for persistence)
+            const envWallets = this.loadWalletsFromEnv(network);
+            if (envWallets && envWallets.length === 5) {
+                console.log(`📂 Loading ${network} wallets from .env (PERSISTENT)...`);
+                await this.loadWalletsFromEnv(network);
+                
+                // Save to database for persistence
+                const walletData = {};
+                for (let i = 0; i < envWallets.length; i++) {
+                    walletData[`wallet${i + 1}`] = {
+                        mnemonic: envWallets[i].mnemonic,
+                        publicKey: envWallets[i].publicKey,
+                        createdAt: new Date().toISOString()
+                    };
+                }
+                this.database.saveWallets(network, walletData);
+            } else {
+                // Only generate new devnet wallets if none exist
+                console.log(`🆕 Generating new ${network} wallets...`);
+                await this.generateNewWallets(network);
+            }
         }
     }
 
