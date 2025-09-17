@@ -1,0 +1,35 @@
+{
+  "devnetWallets": {
+    "wallet1": {
+      "mnemonic": "degree awake when awesome emotion embrace file pass job siege nice oblige",
+      "publicKey": "FEdoWxMUg5Msi9q2226ux8WonZiSbYeabNcNkkrAgQva",
+      "createdAt": "2025-09-17T00:07:40.000Z"
+    },
+    "wallet2": {
+      "mnemonic": "prevent stand net attract memory despair maze tag digital hold youth vibrant",
+      "publicKey": "Z1CGuzpudzfqmqoeuD3hTyPcFwyQ4bUqaVTsnLnS7bq",
+      "createdAt": "2025-09-17T00:07:40.029Z"
+    },
+    "wallet3": {
+      "mnemonic": "reform spring coral special amateur note squirrel enroll hen lemon offer flag",
+      "publicKey": "LBZ3dobv7KAvcdMhyGC5W1pvBAjFmuTrksRG8x8YrTU",
+      "createdAt": "2025-09-17T00:07:40.104Z"
+    },
+    "wallet4": {
+      "mnemonic": "plate solution wagon alert brush what fat flip acid acquire pledge wear",
+      "publicKey": "VAbNJeo5ipspLeJuAYT7rtGRnHfVYhqdtt99LtucnoC",
+      "createdAt": "2025-09-17T00:07:40.122Z"
+    },
+    "wallet5": {
+      "mnemonic": "cost stumble network text emerge parade taxi wrap science can liar sadness",
+      "publicKey": "DWNyG1RDuKTTVTJYu5Psukw53ykmVVYZL2kTggEdTKoV",
+      "createdAt": "2025-09-17T00:07:40.140Z"
+    }
+  },
+  "mainnetWallets": {},
+  "tokens": {},
+  "settings": {
+    "lockDuration": 86400000,
+    "minimumReserveSol": 0.05
+  }
+}
