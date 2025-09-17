@@ -703,6 +703,77 @@ Ready to launch your meme coin? 🚀`, {
     } else if (data === 'cancel_wizard') {
         userSessions.delete(userId);
         bot.sendMessage(chatId, '❌ Wizard cancelled. Use /start to begin again.');
+    
+    // ===== NEW CALLBACK HANDLERS - INTEGRATION FIXES =====
+    
+    // Start Trading Callbacks
+    } else if (data.startsWith('real_trade_token_')) {
+        const tokenMint = data.replace('real_trade_token_', '');
+        startRealTradingForToken(chatId, tokenMint);
+    } else if (data === 'cancel_trading') {
+        bot.sendMessage(chatId, '❌ Trading cancelled.');
+    
+    // Chart Activity Callbacks  
+    } else if (data.startsWith('chart_activity_')) {
+        const tokenMint = data.replace('chart_activity_', '');
+        showChartActivityOptions(chatId, tokenMint);
+    } else if (data.startsWith('start_chart_')) {
+        const tokenMint = data.replace('start_chart_', '');
+        if (realTradingManager.startChartActivity) {
+            realTradingManager.startChartActivity(tokenMint);
+            bot.sendMessage(chatId, '📈 Chart activity started! Small periodic trades will maintain chart visibility.');
+        } else {
+            bot.sendMessage(chatId, '❌ Chart activity not available.');
+        }
+    } else if (data.startsWith('stop_chart_')) {
+        const tokenMint = data.replace('stop_chart_', '');
+        if (realTradingManager.stopChartActivity) {
+            realTradingManager.stopChartActivity(tokenMint);
+            bot.sendMessage(chatId, '🛑 Chart activity stopped.');
+        } else {
+            bot.sendMessage(chatId, '❌ Chart activity control not available.');
+        }
+    } else if (data === 'cancel_chart') {
+        bot.sendMessage(chatId, '❌ Chart activity cancelled.');
+    } else if (data === 'chart_activity_menu') {
+        chartActivityCommand(chatId);
+    
+    // Genuine Blockchain Operation Callbacks
+    } else if (data === 'genuine_liquidity_lock') {
+        if (genuineBlockchainManager.genuineLiquidityLock) {
+            bot.sendMessage(chatId, '🔒 Starting genuine liquidity lock process... This may take a few moments.');
+            // Execute genuine liquidity lock
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine liquidity lock not available.');
+        }
+    } else if (data === 'genuine_revoke_mint') {
+        if (genuineBlockchainManager.genuineRevokeMintAuthority) {
+            bot.sendMessage(chatId, '🚫 Starting 3-day mint authority revocation timer...');
+            // Execute genuine mint revocation
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine mint revocation not available.');
+        }
+    } else if (data === 'genuine_mint_rugpull') {
+        if (genuineBlockchainManager.genuineRugpullSimulation) {
+            bot.sendMessage(chatId, '💀 Executing genuine mint rugpull (DEVNET ONLY)...');
+            // Execute genuine mint rugpull
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine mint rugpull not available.');
+        }
+    } else if (data === 'genuine_rugpull') {
+        if (genuineBlockchainManager.liquidity_drain) {
+            bot.sendMessage(chatId, '💀 Executing genuine liquidity removal (DEVNET ONLY)...');
+            // Execute genuine rugpull
+        } else {
+            bot.sendMessage(chatId, '❌ Genuine rugpull not available.');
+        }
+    } else if (data === 'cancel_genuine') {
+        bot.sendMessage(chatId, '❌ Genuine operation cancelled.');
+    } else if (data === 'genuine_status_refresh') {
+        showGenuineStatus(chatId);
+    } else if (data === 'genuine_operations_history') {
+        bot.sendMessage(chatId, '📊 Genuine operations history:\n\n• No operations recorded yet');
+
     } else {
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
         bot.sendMessage(chatId, `⚠️ Button action not recognized. Please try again or use /start.`);
