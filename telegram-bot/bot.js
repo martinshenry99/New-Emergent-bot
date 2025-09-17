@@ -1768,6 +1768,85 @@ async function generateTrendingMemeToken() {
     };
 }
 
+// ===== QUICK AIRDROP ALL DEVNET WALLETS =====
+async function executeQuickAirdropAll(chatId) {
+    try {
+        bot.sendMessage(chatId, `🪂 **Quick Airdrop Starting...**
+
+🎯 Requesting 1 SOL for all 5 devnet wallets
+⏳ This may take 30-60 seconds...
+🔄 Processing airdrops in sequence...`);
+
+        const devnetWallets = enhancedWalletManager.getWallets('devnet');
+        let successCount = 0;
+        let failCount = 0;
+        let totalReceived = 0;
+        const results = [];
+
+        for (let i = 0; i < Math.min(devnetWallets.length, 5); i++) {
+            const wallet = devnetWallets[i];
+            try {
+                bot.sendMessage(chatId, `🔄 **Processing Wallet ${wallet.id}...**
+📡 Requesting airdrop from Solana devnet faucet...`);
+
+                const airdropResult = await enhancedWalletManager.requestDevnetAirdrop(wallet.id);
+                
+                if (airdropResult.success) {
+                    successCount++;
+                    totalReceived += 1;
+                    results.push(`✅ Wallet ${wallet.id}: +1 SOL (${airdropResult.newBalance.toFixed(4)} SOL total)`);
+                } else {
+                    failCount++;
+                    results.push(`❌ Wallet ${wallet.id}: Failed - ${airdropResult.error}`);
+                }
+
+                // Small delay between requests
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+            } catch (error) {
+                failCount++;
+                results.push(`❌ Wallet ${wallet.id}: Error - ${error.message}`);
+            }
+        }
+
+        // Final summary
+        let summaryMessage = `🎉 **Quick Airdrop Complete!**
+
+📊 **Summary:**
+✅ Successful: ${successCount}/5 wallets
+❌ Failed: ${failCount}/5 wallets
+💰 Total SOL Received: ${totalReceived} SOL
+
+📋 **Detailed Results:**
+${results.join('\n')}
+
+🔄 Balances updated automatically.`;
+
+        bot.sendMessage(chatId, summaryMessage, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '💰 View Updated Balances', callback_data: 'refresh_all_balances' },
+                        { text: '🚀 Create Token', callback_data: 'manual_launch' }
+                    ],
+                    [
+                        { text: '🔙 Back to Start', callback_data: 'back_to_start' }
+                    ]
+                ]
+            }
+        });
+
+    } catch (error) {
+        console.error('Quick airdrop error:', error);
+        bot.sendMessage(chatId, `❌ **Quick Airdrop Failed**
+
+Error: ${error.message}
+
+Please try again or use individual wallet airdrops.`);
+    }
+}
+
 // ===== FINAL AI IMAGE GENERATION (STEP 11) =====
 async function handleFinalImageGeneration(chatId, userId, session) {
     try {
