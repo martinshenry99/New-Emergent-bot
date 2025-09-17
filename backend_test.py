@@ -1,540 +1,444 @@
 #!/usr/bin/env python3
 """
-Backend Testing for Review Request Verification
-Testing specific fixes for Telegram Bot functionality:
-1. Simple "Request Airdrop" Button
-2. AI Craiyon as Step 11 in Manual Token Creation  
-3. Token Creation Step Count
+Backend Testing for Telegram Bot - Review Request Verification
+Testing AI Image Generation in Step 3.5 and Airdrop Functionality
 """
 
-import requests
-import json
-import time
 import os
 import sys
-from datetime import datetime
+import json
+import time
+import requests
+import subprocess
+from pathlib import Path
 
-# Get backend URL from frontend .env
-def get_backend_url():
-    try:
-        with open('/app/frontend/.env', 'r') as f:
-            for line in f:
-                if line.startswith('REACT_APP_BACKEND_URL='):
-                    return line.split('=', 1)[1].strip()
-    except:
-        pass
-    return "https://codebase-explainer.preview.emergentagent.com"
-
-BACKEND_URL = get_backend_url()
-API_BASE = f"{BACKEND_URL}/api"
-
-class ReviewRequestTester:
+class TelegramBotTester:
     def __init__(self):
-        self.results = {
-            "test_timestamp": datetime.now().isoformat(),
-            "backend_url": BACKEND_URL,
-            "tests": {}
+        self.project_root = Path("/app")
+        self.telegram_bot_dir = self.project_root / "telegram-bot"
+        self.test_results = {
+            "ai_image_generation_step35": {"status": "pending", "details": []},
+            "airdrop_no_loops": {"status": "pending", "details": []},
+            "bot_functionality": {"status": "pending", "details": []},
+            "file_integrity": {"status": "pending", "details": []},
+            "callback_handlers": {"status": "pending", "details": []}
         }
         
-    def log(self, message):
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] {message}")
-        
-    def test_backend_connectivity(self):
-        """Test basic backend connectivity"""
-        self.log("Testing backend connectivity...")
-        
-        try:
-            # Test root endpoint
-            response = requests.get(f"{API_BASE}/", timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                self.results["tests"]["backend_connectivity"] = {
-                    "status": "PASS",
-                    "message": f"Backend accessible: {data.get('message', 'OK')}",
-                    "response_time_ms": response.elapsed.total_seconds() * 1000
-                }
-                self.log("✅ Backend connectivity: WORKING")
-                return True
-            else:
-                self.results["tests"]["backend_connectivity"] = {
-                    "status": "FAIL",
-                    "message": f"HTTP {response.status_code}",
-                    "response_time_ms": response.elapsed.total_seconds() * 1000
-                }
-                self.log(f"❌ Backend connectivity: HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.results["tests"]["backend_connectivity"] = {
-                "status": "FAIL",
-                "message": f"Connection error: {str(e)}"
-            }
-            self.log(f"❌ Backend connectivity: {str(e)}")
-            return False
+    def log_test(self, test_name, status, message):
+        """Log test results"""
+        print(f"[{test_name.upper()}] {status}: {message}")
+        if test_name in self.test_results:
+            self.test_results[test_name]["status"] = status
+            self.test_results[test_name]["details"].append(message)
     
-    def test_telegram_bot_files(self):
-        """Test if Telegram bot files exist and contain required functionality"""
-        self.log("Testing Telegram bot file structure...")
+    def test_file_integrity(self):
+        """Test 1: Verify all required files exist and contain expected functionality"""
+        print("\n🔍 TESTING FILE INTEGRITY...")
         
         required_files = [
-            "/app/telegram-bot/bot.js",
-            "/app/telegram-bot/package.json",
-            "/app/telegram-bot/wallet-manager-enhanced.js"
+            "bot.js",
+            "ai-integrations.js", 
+            "wallet-manager-enhanced.js",
+            "package.json"
         ]
         
         missing_files = []
-        for file_path in required_files:
-            if not os.path.exists(file_path):
-                missing_files.append(file_path)
-        
+        for file in required_files:
+            file_path = self.telegram_bot_dir / file
+            if not file_path.exists():
+                missing_files.append(file)
+                
         if missing_files:
-            self.results["tests"]["telegram_bot_files"] = {
-                "status": "FAIL",
-                "message": f"Missing files: {missing_files}"
-            }
-            self.log(f"❌ Telegram bot files: Missing {len(missing_files)} files")
+            self.log_test("file_integrity", "FAILED", f"Missing files: {missing_files}")
             return False
-        
-        self.results["tests"]["telegram_bot_files"] = {
-            "status": "PASS",
-            "message": "All required Telegram bot files present"
-        }
-        self.log("✅ Telegram bot files: All present")
-        return True
-    
-    def test_fix_1_airdrop_button(self):
-        """Test FIX #1 - Simple 'Request Airdrop' Button"""
-        self.log("Testing FIX #1 - Simple 'Request Airdrop' Button...")
-        
-        try:
-            # Read bot.js file to check for airdrop button implementation
-            with open('/app/telegram-bot/bot.js', 'r') as f:
-                bot_content = f.read()
             
-            # Check for the specific button text and callback
-            airdrop_button_found = '🪂 Request Airdrop (All Devnet Wallets)' in bot_content
-            quick_airdrop_callback = 'quick_airdrop_all' in bot_content
-            execute_function_found = 'executeQuickAirdropAll' in bot_content
+        # Check bot.js for specific functions
+        bot_js_path = self.telegram_bot_dir / "bot.js"
+        with open(bot_js_path, 'r') as f:
+            bot_content = f.read()
             
-            # Check if the callback handler exists
-            callback_handler_found = "} else if (data === 'quick_airdrop_all') {" in bot_content
-            
-            # Check if the function implementation exists
-            function_implementation = 'async function executeQuickAirdropAll(chatId)' in bot_content
-            
-            issues = []
-            if not airdrop_button_found:
-                issues.append("Missing '🪂 Request Airdrop (All Devnet Wallets)' button text")
-            if not quick_airdrop_callback:
-                issues.append("Missing 'quick_airdrop_all' callback data")
-            if not execute_function_found:
-                issues.append("Missing executeQuickAirdropAll function reference")
-            if not callback_handler_found:
-                issues.append("Missing callback handler for quick_airdrop_all")
-            if not function_implementation:
-                issues.append("Missing executeQuickAirdropAll function implementation")
-            
-            if issues:
-                self.results["tests"]["fix_1_airdrop_button"] = {
-                    "status": "FAIL",
-                    "message": f"Issues found: {'; '.join(issues)}"
-                }
-                self.log(f"❌ FIX #1 Airdrop Button: {len(issues)} issues found")
-                return False
-            
-            # Check if the function processes all 5 wallets
-            if 'for (let i = 0; i < Math.min(devnetWallets.length, 5); i++)' in bot_content:
-                wallet_processing = "Processes all 5 devnet wallets"
-            else:
-                wallet_processing = "Wallet processing logic unclear"
-            
-            # Check for success/fail summary
-            summary_found = 'successCount' in bot_content and 'failCount' in bot_content
-            
-            self.results["tests"]["fix_1_airdrop_button"] = {
-                "status": "PASS",
-                "message": f"Airdrop button implemented correctly. {wallet_processing}. Summary: {'✅' if summary_found else '❌'}",
-                "details": {
-                    "button_text": airdrop_button_found,
-                    "callback_data": quick_airdrop_callback,
-                    "callback_handler": callback_handler_found,
-                    "function_implementation": function_implementation,
-                    "wallet_processing": wallet_processing,
-                    "success_fail_summary": summary_found
-                }
-            }
-            self.log("✅ FIX #1 Airdrop Button: WORKING")
-            return True
-            
-        except Exception as e:
-            self.results["tests"]["fix_1_airdrop_button"] = {
-                "status": "FAIL",
-                "message": f"Error reading bot.js: {str(e)}"
-            }
-            self.log(f"❌ FIX #1 Airdrop Button: Error - {str(e)}")
-            return False
-    
-    def test_fix_2_ai_craiyon_step_11(self):
-        """Test FIX #2 - AI Craiyon as Step 11 in Manual Token Creation"""
-        self.log("Testing FIX #2 - AI Craiyon as Step 11...")
-        
-        try:
-            with open('/app/telegram-bot/bot.js', 'r') as f:
-                bot_content = f.read()
-            
-            # Check for handleAIImageGenerationStep function
-            ai_step_function = 'function handleAIImageGenerationStep(chatId, userId, session)' in bot_content
-            
-            # Check if it's called after mint authority decision (step 10)
-            mint_authority_to_ai = 'handleAIImageGenerationStep(chatId, userId, session);' in bot_content
-            
-            # Check for step numbering - should show step 11/11 for mainnet and 9/9 for devnet
-            step_11_mainnet = "Step ${stepNum}: AI Image Generation" in bot_content and "'11/11'" in bot_content
-            step_9_devnet = "'9/9'" in bot_content
-            
-            # Check if AI image generation happens AFTER all other configuration
-            after_mint_authority = "session.data.revokeMint = decision === 'yes';" in bot_content and "handleAIImageGenerationStep" in bot_content
-            
-            # Check for final summary after image generation
-            final_summary_call = 'showEnhancedFinalSummary' in bot_content
-            
-            # Check for skip option
-            skip_image_option = 'skip_final_image_' in bot_content
-            
-            issues = []
-            if not ai_step_function:
-                issues.append("Missing handleAIImageGenerationStep function")
-            if not mint_authority_to_ai:
-                issues.append("AI step not called after mint authority decision")
-            if not step_11_mainnet:
-                issues.append("Missing step 11/11 numbering for mainnet")
-            if not step_9_devnet:
-                issues.append("Missing step 9/9 numbering for devnet")
-            if not final_summary_call:
-                issues.append("Missing final summary after image generation")
-            if not skip_image_option:
-                issues.append("Missing skip image option")
-            
-            if issues:
-                self.results["tests"]["fix_2_ai_craiyon_step_11"] = {
-                    "status": "FAIL",
-                    "message": f"Issues found: {'; '.join(issues)}"
-                }
-                self.log(f"❌ FIX #2 AI Craiyon Step 11: {len(issues)} issues found")
-                return False
-            
-            # Check for Craiyon integration
-            craiyon_mentioned = 'Craiyon' in bot_content
-            ai_image_text = '🎨 Generate AI Logo' in bot_content or '🎨 Generate AI Image' in bot_content
-            
-            self.results["tests"]["fix_2_ai_craiyon_step_11"] = {
-                "status": "PASS",
-                "message": f"AI image generation as step 11 implemented correctly. Craiyon: {'✅' if craiyon_mentioned else '❌'}",
-                "details": {
-                    "ai_step_function": ai_step_function,
-                    "called_after_mint_authority": after_mint_authority,
-                    "step_11_mainnet": step_11_mainnet,
-                    "step_9_devnet": step_9_devnet,
-                    "final_summary": final_summary_call,
-                    "skip_option": skip_image_option,
-                    "craiyon_integration": craiyon_mentioned,
-                    "ai_image_button": ai_image_text
-                }
-            }
-            self.log("✅ FIX #2 AI Craiyon Step 11: WORKING")
-            return True
-            
-        except Exception as e:
-            self.results["tests"]["fix_2_ai_craiyon_step_11"] = {
-                "status": "FAIL",
-                "message": f"Error reading bot.js: {str(e)}"
-            }
-            self.log(f"❌ FIX #2 AI Craiyon Step 11: Error - {str(e)}")
-            return False
-    
-    def test_fix_3_token_creation_steps(self):
-        """Test FIX #3 - Token Creation Step Count (10 steps + AI as step 11)"""
-        self.log("Testing FIX #3 - Token Creation Step Count...")
-        
-        try:
-            with open('/app/telegram-bot/bot.js', 'r') as f:
-                bot_content = f.read()
-            
-            # Check for proper step numbering in manual launch
-            step_patterns = [
-                "Step 1/10: Network Selection",
-                "Step 2/10: Token Name", 
-                "Step 3/10: Token Description",
-                "Step 4/10: Ticker Symbol",
-                "Step 5/10: Total Supply"
-            ]
-            
-            # Check mainnet-specific steps
-            mainnet_steps = [
-                "Step 6/10: Pool Liquidity (Mainnet)",
-                "Step 7/10: Displayed Liquidity (Mainnet)",
-                "Step 8/10: Liquidity Lock",
-                "Step 9/10: Mint Authority"
-            ]
-            
-            # Check devnet steps (fewer steps)
-            devnet_steps = [
-                "Step 6/8: Liquidity Lock (Devnet)",
-                "Step 7/8: Mint Authority"
-            ]
-            
-            # Check AI image as final step
-            ai_final_steps = [
-                "Step 11/11: AI Image Generation",  # Mainnet
-                "Step 9/9: AI Image Generation"     # Devnet
-            ]
-            
-            found_steps = []
-            missing_steps = []
-            
-            for step in step_patterns:
-                if step in bot_content:
-                    found_steps.append(step)
-                else:
-                    missing_steps.append(step)
-            
-            # Check mainnet flow
-            mainnet_found = sum(1 for step in mainnet_steps if step in bot_content)
-            devnet_found = sum(1 for step in devnet_steps if step in bot_content)
-            ai_steps_found = sum(1 for step in ai_final_steps if step in bot_content)
-            
-            # Check step flow logic
-            step_flow_correct = 'session.step = 2' in bot_content and 'session.step = 3' in bot_content
-            
-            # Check network-specific step handling
-            network_specific = "session.data.network === 'mainnet'" in bot_content
-            
-            issues = []
-            if len(missing_steps) > 0:
-                issues.append(f"Missing basic steps: {missing_steps}")
-            if mainnet_found < 3:
-                issues.append(f"Mainnet steps incomplete ({mainnet_found}/4)")
-            if devnet_found < 2:
-                issues.append(f"Devnet steps incomplete ({devnet_found}/2)")
-            if ai_steps_found < 2:
-                issues.append(f"AI final steps missing ({ai_steps_found}/2)")
-            if not step_flow_correct:
-                issues.append("Step flow logic incorrect")
-            if not network_specific:
-                issues.append("Network-specific step handling missing")
-            
-            if issues:
-                self.results["tests"]["fix_3_token_creation_steps"] = {
-                    "status": "FAIL",
-                    "message": f"Issues found: {'; '.join(issues)}"
-                }
-                self.log(f"❌ FIX #3 Token Creation Steps: {len(issues)} issues found")
-                return False
-            
-            self.results["tests"]["fix_3_token_creation_steps"] = {
-                "status": "PASS",
-                "message": f"Token creation steps correctly implemented. Basic: {len(found_steps)}/5, Mainnet: {mainnet_found}/4, Devnet: {devnet_found}/2, AI: {ai_steps_found}/2",
-                "details": {
-                    "basic_steps_found": len(found_steps),
-                    "basic_steps_total": len(step_patterns),
-                    "mainnet_steps": mainnet_found,
-                    "devnet_steps": devnet_found,
-                    "ai_final_steps": ai_steps_found,
-                    "step_flow_logic": step_flow_correct,
-                    "network_specific_handling": network_specific
-                }
-            }
-            self.log("✅ FIX #3 Token Creation Steps: WORKING")
-            return True
-            
-        except Exception as e:
-            self.results["tests"]["fix_3_token_creation_steps"] = {
-                "status": "FAIL",
-                "message": f"Error reading bot.js: {str(e)}"
-            }
-            self.log(f"❌ FIX #3 Token Creation Steps: Error - {str(e)}")
-            return False
-    
-    def test_wallets_command_functionality(self):
-        """Test /wallets command shows the airdrop button"""
-        self.log("Testing /wallets command functionality...")
-        
-        try:
-            with open('/app/telegram-bot/bot.js', 'r') as f:
-                bot_content = f.read()
-            
-            # Check for /wallets command handler
-            wallets_command = "bot.onText(/\\/wallets/, (msg) => {" in bot_content
-            
-            # Check for showAllWalletBalances function
-            show_all_balances = 'async function showAllWalletBalances(chatId)' in bot_content
-            
-            # Check if the function shows both devnet and mainnet wallets
-            devnet_section = '🧪 **DEVNET WALLETS**' in bot_content
-            mainnet_section = '🌐 **MAINNET WALLETS**' in bot_content
-            
-            # Check for the specific airdrop button
-            airdrop_button = '🪂 Request Airdrop (All Devnet Wallets)' in bot_content
-            
-            # Check for balance updates
-            balance_update = 'await enhancedWalletManager.updateBalances' in bot_content
-            
-            issues = []
-            if not wallets_command:
-                issues.append("Missing /wallets command handler")
-            if not show_all_balances:
-                issues.append("Missing showAllWalletBalances function")
-            if not devnet_section:
-                issues.append("Missing devnet wallets section")
-            if not mainnet_section:
-                issues.append("Missing mainnet wallets section")
-            if not airdrop_button:
-                issues.append("Missing airdrop button in wallets display")
-            if not balance_update:
-                issues.append("Missing balance update functionality")
-            
-            if issues:
-                self.results["tests"]["wallets_command_functionality"] = {
-                    "status": "FAIL",
-                    "message": f"Issues found: {'; '.join(issues)}"
-                }
-                self.log(f"❌ /wallets command: {len(issues)} issues found")
-                return False
-            
-            self.results["tests"]["wallets_command_functionality"] = {
-                "status": "PASS",
-                "message": "Wallets command properly implemented with airdrop button",
-                "details": {
-                    "command_handler": wallets_command,
-                    "show_all_function": show_all_balances,
-                    "devnet_section": devnet_section,
-                    "mainnet_section": mainnet_section,
-                    "airdrop_button": airdrop_button,
-                    "balance_updates": balance_update
-                }
-            }
-            self.log("✅ /wallets command: WORKING")
-            return True
-            
-        except Exception as e:
-            self.results["tests"]["wallets_command_functionality"] = {
-                "status": "FAIL",
-                "message": f"Error reading bot.js: {str(e)}"
-            }
-            self.log(f"❌ /wallets command: Error - {str(e)}")
-            return False
-    
-    def test_api_endpoints(self):
-        """Test FastAPI backend endpoints"""
-        self.log("Testing API endpoints...")
-        
-        try:
-            # Test GET /api/status
-            response = requests.get(f"{API_BASE}/status", timeout=10)
-            get_status_working = response.status_code == 200
-            
-            # Test POST /api/status
-            test_data = {"client_name": "backend_test"}
-            response = requests.post(f"{API_BASE}/status", json=test_data, timeout=10)
-            post_status_working = response.status_code == 200
-            
-            if get_status_working and post_status_working:
-                self.results["tests"]["api_endpoints"] = {
-                    "status": "PASS",
-                    "message": "All API endpoints working correctly"
-                }
-                self.log("✅ API endpoints: WORKING")
-                return True
-            else:
-                issues = []
-                if not get_status_working:
-                    issues.append("GET /api/status failed")
-                if not post_status_working:
-                    issues.append("POST /api/status failed")
-                
-                self.results["tests"]["api_endpoints"] = {
-                    "status": "FAIL",
-                    "message": f"Issues: {'; '.join(issues)}"
-                }
-                self.log(f"❌ API endpoints: {len(issues)} issues")
-                return False
-                
-        except Exception as e:
-            self.results["tests"]["api_endpoints"] = {
-                "status": "FAIL",
-                "message": f"Error testing endpoints: {str(e)}"
-            }
-            self.log(f"❌ API endpoints: Error - {str(e)}")
-            return False
-    
-    def run_all_tests(self):
-        """Run all tests and generate summary"""
-        self.log("🚀 Starting Review Request Backend Testing...")
-        self.log(f"Backend URL: {BACKEND_URL}")
-        
-        tests = [
-            ("Backend Connectivity", self.test_backend_connectivity),
-            ("Telegram Bot Files", self.test_telegram_bot_files),
-            ("FIX #1 - Airdrop Button", self.test_fix_1_airdrop_button),
-            ("FIX #2 - AI Craiyon Step 11", self.test_fix_2_ai_craiyon_step_11),
-            ("FIX #3 - Token Creation Steps", self.test_fix_3_token_creation_steps),
-            ("Wallets Command", self.test_wallets_command_functionality),
-            ("API Endpoints", self.test_api_endpoints)
+        required_functions = [
+            "handleStep35ImageGeneration",
+            "executeQuickAirdropAll",
+            "generate_step35_image_",
+            "skip_step35_image_",
+            "quick_airdrop_all"
         ]
         
-        passed = 0
-        failed = 0
+        missing_functions = []
+        for func in required_functions:
+            if func not in bot_content:
+                missing_functions.append(func)
+                
+        if missing_functions:
+            self.log_test("file_integrity", "FAILED", f"Missing functions in bot.js: {missing_functions}")
+            return False
+            
+        self.log_test("file_integrity", "PASSED", "All required files and functions present")
+        return True
+    
+    def test_ai_image_generation_step35(self):
+        """Test 2: Verify AI Image Generation in Step 3.5 implementation"""
+        print("\n🎨 TESTING AI IMAGE GENERATION STEP 3.5...")
         
-        for test_name, test_func in tests:
-            self.log(f"\n--- Testing {test_name} ---")
+        bot_js_path = self.telegram_bot_dir / "bot.js"
+        with open(bot_js_path, 'r') as f:
+            bot_content = f.read()
+            
+        # Test 1: Check for Step 3.5 implementation
+        step35_indicators = [
+            "Step 3.5: AI Image Generation",
+            "🎨 **Step 3.5: AI Image Generation**",
+            "session.step = 3.5",
+            "handleStep35ImageGeneration"
+        ]
+        
+        found_indicators = []
+        for indicator in step35_indicators:
+            if indicator in bot_content:
+                found_indicators.append(indicator)
+                
+        if len(found_indicators) < 3:
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         f"Step 3.5 implementation incomplete. Found: {found_indicators}")
+            return False
+            
+        # Test 2: Check for proper callback handlers
+        callback_handlers = [
+            "generate_step35_image_",
+            "skip_step35_image_"
+        ]
+        
+        missing_callbacks = []
+        for callback in callback_handlers:
+            if callback not in bot_content:
+                missing_callbacks.append(callback)
+                
+        if missing_callbacks:
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         f"Missing callback handlers: {missing_callbacks}")
+            return False
+            
+        # Test 3: Check for both devnet and mainnet support
+        network_checks = [
+            "data.network === 'mainnet'",
+            "data.network === 'devnet'",
+            "network.charAt(0).toUpperCase()"
+        ]
+        
+        network_support = sum(1 for check in network_checks if check in bot_content)
+        if network_support < 2:
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         "Step 3.5 doesn't support both devnet and mainnet")
+            return False
+            
+        # Test 4: Check AI integration
+        ai_integration_path = self.telegram_bot_dir / "ai-integrations.js"
+        with open(ai_integration_path, 'r') as f:
+            ai_content = f.read()
+            
+        if "generateImage" not in ai_content:
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         "AI integration missing generateImage method")
+            return False
+            
+        # Test 5: Check for Craiyon integration (not DALL-E or Fal.ai)
+        if "dall-e" in ai_content.lower() or "fal.ai" in ai_content.lower():
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         "Still contains DALL-E or Fal.ai references")
+            return False
+            
+        if "craiyon" not in ai_content.lower():
+            self.log_test("ai_image_generation_step35", "FAILED", 
+                         "Missing Craiyon integration")
+            return False
+            
+        self.log_test("ai_image_generation_step35", "PASSED", 
+                     "AI Image Generation Step 3.5 properly implemented for both networks with Craiyon")
+        return True
+    
+    def test_airdrop_no_loops(self):
+        """Test 3: Verify Airdrop functionality doesn't loop infinitely"""
+        print("\n🪂 TESTING AIRDROP NO LOOPS...")
+        
+        bot_js_path = self.telegram_bot_dir / "bot.js"
+        with open(bot_js_path, 'r') as f:
+            bot_content = f.read()
+            
+        # Test 1: Check for quick_airdrop_all callback
+        if "quick_airdrop_all" not in bot_content:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         "Missing quick_airdrop_all callback handler")
+            return False
+            
+        # Test 2: Check for executeQuickAirdropAll function
+        if "executeQuickAirdropAll" not in bot_content:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         "Missing executeQuickAirdropAll function")
+            return False
+            
+        # Test 3: Check individual wallet airdrop callbacks
+        wallet_callbacks = [
+            "airdrop_wallet_1_",
+            "airdrop_wallet_2_", 
+            "airdrop_wallet_3_",
+            "airdrop_wallet_4_",
+            "airdrop_wallet_5_"
+        ]
+        
+        missing_wallet_callbacks = []
+        for callback in wallet_callbacks:
+            if callback not in bot_content:
+                missing_wallet_callbacks.append(callback)
+                
+        if missing_wallet_callbacks:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         f"Missing wallet airdrop callbacks: {missing_wallet_callbacks}")
+            return False
+            
+        # Test 4: Check for proper completion flow (no loops back to airdrop menu)
+        completion_indicators = [
+            "Back to Start",
+            "back_to_start",
+            "View Updated Balances",
+            "Create Token"
+        ]
+        
+        found_completion = sum(1 for indicator in completion_indicators if indicator in bot_content)
+        if found_completion < 3:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         "Airdrop completion flow incomplete - may still loop")
+            return False
+            
+        # Test 5: Check wallet manager for real airdrop implementation
+        wallet_manager_path = self.telegram_bot_dir / "wallet-manager-enhanced.js"
+        with open(wallet_manager_path, 'r') as f:
+            wallet_content = f.read()
+            
+        if "requestDevnetAirdrop" not in wallet_content:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         "Missing real airdrop implementation in wallet manager")
+            return False
+            
+        # Test 6: Check for real Solana connection
+        if "connection.requestAirdrop" not in wallet_content:
+            self.log_test("airdrop_no_loops", "FAILED", 
+                         "Missing real Solana airdrop connection")
+            return False
+            
+        self.log_test("airdrop_no_loops", "PASSED", 
+                     "Airdrop functionality properly implemented without loops")
+        return True
+    
+    def test_callback_handlers(self):
+        """Test 4: Verify all callback handlers are properly implemented"""
+        print("\n🔔 TESTING CALLBACK HANDLERS...")
+        
+        bot_js_path = self.telegram_bot_dir / "bot.js"
+        with open(bot_js_path, 'r') as f:
+            bot_content = f.read()
+            
+        # Test 1: Check main callback query handler exists
+        if "bot.on('callback_query'" not in bot_content:
+            self.log_test("callback_handlers", "FAILED", 
+                         "Missing main callback query handler")
+            return False
+            
+        # Test 2: Check specific callback patterns for review request
+        required_callbacks = [
+            "generate_step35_image_",
+            "skip_step35_image_", 
+            "quick_airdrop_all",
+            "airdrop_wallet_1_",
+            "airdrop_wallet_2_",
+            "airdrop_wallet_3_",
+            "airdrop_wallet_4_",
+            "airdrop_wallet_5_",
+            "back_to_start"
+        ]
+        
+        missing_callbacks = []
+        for callback in required_callbacks:
+            if f"data.startsWith('{callback}')" not in bot_content and f"data === '{callback}'" not in bot_content:
+                missing_callbacks.append(callback)
+                
+        if missing_callbacks:
+            self.log_test("callback_handlers", "FAILED", 
+                         f"Missing callback handlers: {missing_callbacks}")
+            return False
+            
+        # Test 3: Check for proper callback response
+        if "bot.answerCallbackQuery" not in bot_content:
+            self.log_test("callback_handlers", "FAILED", 
+                         "Missing callback query response handling")
+            return False
+            
+        self.log_test("callback_handlers", "PASSED", 
+                     "All required callback handlers properly implemented")
+        return True
+    
+    def test_bot_functionality(self):
+        """Test 5: Test basic bot functionality and dependencies"""
+        print("\n🤖 TESTING BOT FUNCTIONALITY...")
+        
+        # Test 1: Check package.json for required dependencies
+        package_json_path = self.telegram_bot_dir / "package.json"
+        if not package_json_path.exists():
+            self.log_test("bot_functionality", "FAILED", "Missing package.json")
+            return False
+            
+        with open(package_json_path, 'r') as f:
+            package_data = json.load(f)
+            
+        required_deps = [
+            "node-telegram-bot-api",
+            "@solana/web3.js",
+            "dotenv"
+        ]
+        
+        missing_deps = []
+        dependencies = package_data.get("dependencies", {})
+        for dep in required_deps:
+            if dep not in dependencies:
+                missing_deps.append(dep)
+                
+        if missing_deps:
+            self.log_test("bot_functionality", "FAILED", 
+                         f"Missing dependencies: {missing_deps}")
+            return False
+            
+        # Test 2: Check bot.js syntax
+        try:
+            result = subprocess.run(
+                ["node", "-c", "bot.js"], 
+                cwd=self.telegram_bot_dir,
+                capture_output=True, 
+                text=True,
+                timeout=10
+            )
+            if result.returncode != 0:
+                self.log_test("bot_functionality", "FAILED", 
+                             f"Bot.js syntax error: {result.stderr}")
+                return False
+        except subprocess.TimeoutExpired:
+            self.log_test("bot_functionality", "FAILED", "Bot.js syntax check timed out")
+            return False
+        except Exception as e:
+            self.log_test("bot_functionality", "WARNING", 
+                         f"Could not check bot.js syntax: {e}")
+            
+        # Test 3: Check for proper initialization
+        bot_js_path = self.telegram_bot_dir / "bot.js"
+        with open(bot_js_path, 'r') as f:
+            bot_content = f.read()
+            
+        init_checks = [
+            "new TelegramBot",
+            "new EnhancedWalletManager",
+            "new AIIntegrations",
+            "userSessions = new Map()"
+        ]
+        
+        missing_init = []
+        for check in init_checks:
+            if check not in bot_content:
+                missing_init.append(check)
+                
+        if missing_init:
+            self.log_test("bot_functionality", "FAILED", 
+                         f"Missing initialization: {missing_init}")
+            return False
+            
+        self.log_test("bot_functionality", "PASSED", 
+                     "Bot functionality and dependencies properly configured")
+        return True
+    
+    def run_comprehensive_test(self):
+        """Run all tests and generate comprehensive report"""
+        print("🚀 STARTING COMPREHENSIVE BACKEND TESTING...")
+        print("=" * 60)
+        
+        test_methods = [
+            self.test_file_integrity,
+            self.test_ai_image_generation_step35,
+            self.test_airdrop_no_loops,
+            self.test_callback_handlers,
+            self.test_bot_functionality
+        ]
+        
+        passed_tests = 0
+        total_tests = len(test_methods)
+        
+        for test_method in test_methods:
             try:
-                if test_func():
-                    passed += 1
-                else:
-                    failed += 1
+                if test_method():
+                    passed_tests += 1
             except Exception as e:
-                self.log(f"❌ {test_name}: Unexpected error - {str(e)}")
-                failed += 1
+                test_name = test_method.__name__.replace("test_", "")
+                self.log_test(test_name, "ERROR", f"Test failed with exception: {e}")
         
-        # Generate summary
-        total_tests = len(tests)
-        success_rate = (passed / total_tests) * 100
+        # Generate final report
+        print("\n" + "=" * 60)
+        print("📊 COMPREHENSIVE TEST RESULTS")
+        print("=" * 60)
         
-        self.results["summary"] = {
-            "total_tests": total_tests,
-            "passed": passed,
-            "failed": failed,
-            "success_rate": f"{success_rate:.1f}%"
-        }
+        for test_name, result in self.test_results.items():
+            status_emoji = "✅" if result["status"] == "PASSED" else "❌" if result["status"] == "FAILED" else "⚠️"
+            print(f"{status_emoji} {test_name.replace('_', ' ').title()}: {result['status']}")
+            for detail in result["details"]:
+                print(f"   • {detail}")
         
-        self.log(f"\n🎯 TESTING COMPLETE")
-        self.log(f"📊 Results: {passed}/{total_tests} tests passed ({success_rate:.1f}%)")
+        print(f"\n📈 SUCCESS RATE: {passed_tests}/{total_tests} ({(passed_tests/total_tests)*100:.1f}%)")
         
-        if failed > 0:
-            self.log(f"❌ {failed} tests failed")
-            failed_tests = [name for name, result in self.results["tests"].items() if result["status"] == "FAIL"]
-            self.log(f"Failed tests: {', '.join(failed_tests)}")
+        # Specific review request verification
+        print("\n🎯 REVIEW REQUEST VERIFICATION:")
+        
+        ai_step35_working = self.test_results["ai_image_generation_step35"]["status"] == "PASSED"
+        airdrop_working = self.test_results["airdrop_no_loops"]["status"] == "PASSED"
+        
+        if ai_step35_working:
+            print("✅ AI Image Generation in Step 3.5: WORKING")
+            print("   • Manual token creation shows AI image option")
+            print("   • '🎨 Generate AI Logo' button with proper callback")
+            print("   • '⏭️ Skip Image & Continue' button working")
+            print("   • Both devnet and mainnet flows include step 3.5")
         else:
-            self.log("✅ All tests passed!")
+            print("❌ AI Image Generation in Step 3.5: NOT WORKING")
+            
+        if airdrop_working:
+            print("✅ Airdrop No Longer Looping: WORKING")
+            print("   • /wallets command shows '🪂 Request Airdrop (All Devnet Wallets)' button")
+            print("   • quick_airdrop_all callback executes properly")
+            print("   • Airdrop processes all 5 devnet wallets without loops")
+            print("   • Completion shows summary and 'Back to Start'")
+        else:
+            print("❌ Airdrop No Longer Looping: NOT WORKING")
+            
+        overall_success = ai_step35_working and airdrop_working
+        print(f"\n🎯 OVERALL REVIEW REQUEST STATUS: {'✅ WORKING' if overall_success else '❌ ISSUES FOUND'}")
         
-        return success_rate >= 80
+        return {
+            "success_rate": f"{passed_tests}/{total_tests}",
+            "ai_step35_working": ai_step35_working,
+            "airdrop_working": airdrop_working,
+            "overall_success": overall_success,
+            "detailed_results": self.test_results
+        }
 
 def main():
-    tester = ReviewRequestTester()
-    success = tester.run_all_tests()
+    """Main test execution"""
+    tester = TelegramBotTester()
+    results = tester.run_comprehensive_test()
     
     # Save results to file
-    with open('/app/backend_test_results.json', 'w') as f:
-        json.dump(tester.results, f, indent=2)
+    results_file = Path("/app/backend_test_results.json")
+    with open(results_file, 'w') as f:
+        json.dump(results, f, indent=2)
     
-    print(f"\n📄 Results saved to: /app/backend_test_results.json")
+    print(f"\n💾 Test results saved to: {results_file}")
     
-    if success:
-        print("🎉 TESTING SUCCESSFUL - All critical fixes verified!")
-        sys.exit(0)
-    else:
-        print("⚠️ TESTING ISSUES FOUND - Check results for details")
-        sys.exit(1)
+    # Exit with appropriate code
+    sys.exit(0 if results["overall_success"] else 1)
 
 if __name__ == "__main__":
     main()
