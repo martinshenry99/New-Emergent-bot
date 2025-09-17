@@ -1,0 +1,209 @@
+{
+  "summary": {
+    "total_tests": 33,
+    "passed": 32,
+    "failed": 1,
+    "warnings": 0,
+    "success_rate": "97.0%"
+  },
+  "results": [
+    {
+      "test": "Bot.js file exists",
+      "status": "PASS",
+      "details": "Found at /app/telegram-bot/bot.js",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "AI integrations file exists",
+      "status": "PASS",
+      "details": "Found at /app/telegram-bot/ai-integrations.js",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "/auto_brand command handler",
+      "status": "PASS",
+      "details": "Command handler found in bot.js",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "startEnhancedAutoBrand function",
+      "status": "PASS",
+      "details": "Function exists",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Callback handler: create_ai_token_",
+      "status": "PASS",
+      "details": "Handler found in callback query",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Callback handler: regenerate_ai_",
+      "status": "PASS",
+      "details": "Handler found in callback query",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Callback handler: create_trend_token_",
+      "status": "PASS",
+      "details": "Handler found in callback query",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Callback handler: regenerate_trend_",
+      "status": "PASS",
+      "details": "Handler found in callback query",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "executeAITokenCreation function exists",
+      "status": "PASS",
+      "details": "Function declaration found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Session management in executeAITokenCreation",
+      "status": "FAIL",
+      "details": "Session type setting missing",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "User session storage",
+      "status": "PASS",
+      "details": "Session storage found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Helper function: startTrendAwareAI",
+      "status": "PASS",
+      "details": "Function found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Helper function: explainTrendAI",
+      "status": "PASS",
+      "details": "Function found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Helper function: executeEnhancedAITokenCreation",
+      "status": "PASS",
+      "details": "Function found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Helper function: executeTrendAwareTokenCreation",
+      "status": "PASS",
+      "details": "Function found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Network handler: ai_network_devnet_",
+      "status": "PASS",
+      "details": "Handler found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Network handler: ai_network_mainnet_",
+      "status": "PASS",
+      "details": "Handler found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Step 3.5 handler: generate_step35_image_",
+      "status": "PASS",
+      "details": "Handler found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Step 3.5 handler: skip_step35_image_",
+      "status": "PASS",
+      "details": "Handler found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "handleStep35ImageGeneration function",
+      "status": "PASS",
+      "details": "Function found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "userSessions Map declaration",
+      "status": "PASS",
+      "details": "Map found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Session validation checks",
+      "status": "PASS",
+      "details": "Found 19 validation checks",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "AIIntegrations class",
+      "status": "PASS",
+      "details": "Class found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Craiyon integration",
+      "status": "PASS",
+      "details": "Craiyon references found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "DALL-E removal",
+      "status": "PASS",
+      "details": "No DALL-E references found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Fal.ai removal",
+      "status": "PASS",
+      "details": "No Fal.ai references found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Unhandled callback message",
+      "status": "PASS",
+      "details": "Error message found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Callback handler else clause",
+      "status": "PASS",
+      "details": "Proper else handling found",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Bot.js syntax validation",
+      "status": "PASS",
+      "details": "No syntax errors",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "executeAITokenCreation integration",
+      "status": "PASS",
+      "details": "Called 3 times",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "executeEnhancedAITokenCreation integration",
+      "status": "PASS",
+      "details": "Called 5 times",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "executeTrendAwareTokenCreation integration",
+      "status": "PASS",
+      "details": "Called 5 times",
+      "timestamp": "2025-09-17 13:16:58"
+    },
+    {
+      "test": "Overall AI integration",
+      "status": "PASS",
+      "details": "All AI functions integrated",
+      "timestamp": "2025-09-17 13:16:58"
+    }
+  ]
+}
