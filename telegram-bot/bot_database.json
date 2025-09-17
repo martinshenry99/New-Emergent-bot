@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "sketch barrel ship buffalo simple treat ask cloth invest scissors pepper miracle",
-      "publicKey": "67NoN3WaA2n9Eum9PS65SzSbwG42zbaHbuY9FwDf8BeK",
-      "createdAt": "2025-09-17T02:37:40.328Z"
+      "mnemonic": "print curious scale exile help rail miracle engage brisk peanut chat inmate",
+      "publicKey": "83VYTFFrBPfGcAc5jkf1Ucgi1VTeaQqUwHy5U2qJL212",
+      "createdAt": "2025-09-17T03:21:43.516Z"
     },
     "wallet2": {
-      "mnemonic": "liar grace gospel focus music oak creek rookie sentence couple resist unhappy",
-      "publicKey": "2VMYicw6gKsD2WzJ1yPMN6wdA25cQhypoL2RnKozgQmn",
-      "createdAt": "2025-09-17T02:37:40.442Z"
+      "mnemonic": "retire tell hour viable evolve uphold pioneer upon dinosaur glad jealous situate",
+      "publicKey": "EiYo8d7cHmr5HTZFd4rPmX6RMYiyhR3qDWfh9cJGpudt",
+      "createdAt": "2025-09-17T03:21:43.613Z"
     },
     "wallet3": {
-      "mnemonic": "mule fitness energy dirt oil raise any old awful patrol permit fetch",
-      "publicKey": "8zg9K1z2N3M3ReCjvEGUtNywV4Ku9rUP7pucJTxoHdWG",
-      "createdAt": "2025-09-17T02:37:40.505Z"
+      "mnemonic": "surprise dad cannon visa actress entry globe once else quit relief multiply",
+      "publicKey": "GQFnoJKyhdKxqhUj7qFEk7oZXDkVTzzTBNEZiRwYpqC1",
+      "createdAt": "2025-09-17T03:21:43.644Z"
     },
     "wallet4": {
-      "mnemonic": "galaxy taste quote tower level travel patrol torch manual move wall approve",
-      "publicKey": "5WUM8na6oX9ufqnGz6CSRAah7PWhESSv6BqQVv1aY6nh",
-      "createdAt": "2025-09-17T02:37:40.522Z"
+      "mnemonic": "crunch august effort note guitar social minute play input cave bubble knee",
+      "publicKey": "5d7Qz3NBrbrtwi3junewHDCAPwo2AutJMbUzhFCca2PZ",
+      "createdAt": "2025-09-17T03:21:43.675Z"
     },
     "wallet5": {
-      "mnemonic": "resist fiscal metal income fitness axis genuine trade spawn surprise celery rapid",
-      "publicKey": "HZKkuFw9DuXMAemEdHmspd57FEoSjrE1mJiHX3gkvEcw",
-      "createdAt": "2025-09-17T02:37:40.647Z"
+      "mnemonic": "chef abuse coffee arch hair then foot wonder strike rebuild sing slender",
+      "publicKey": "HPzhFoxfpNWNNDndpTrFGwCGfPWXZ5hqbeEB1RVbiNU9",
+      "createdAt": "2025-09-17T03:21:43.761Z"
     }
   },
   "mainnetWallets": {},
