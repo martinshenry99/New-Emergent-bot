@@ -1017,6 +1017,23 @@ Please enter your ticker symbol:`);
                 userSessions.set(userId, session);
             }
         }
+    
+    // Enhanced AI Branding Handlers
+    } else if (data.startsWith('enhanced_ai_')) {
+        const sessionUserId = data.replace('enhanced_ai_', '');
+        if (sessionUserId === userId.toString()) {
+            startTrendAwareAI(chatId, userId);
+        }
+    } else if (data.startsWith('classic_ai_')) {
+        const sessionUserId = data.replace('classic_ai_', '');
+        if (sessionUserId === userId.toString()) {
+            startAutoBrand(chatId, userId);
+        }
+    } else if (data.startsWith('explain_trend_ai_')) {
+        const sessionUserId = data.replace('explain_trend_ai_', '');
+        if (sessionUserId === userId.toString()) {
+            explainTrendAI(chatId);
+        }
 
     } else {
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
