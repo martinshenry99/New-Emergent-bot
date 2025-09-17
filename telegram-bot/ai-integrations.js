@@ -130,6 +130,76 @@ Respond in JSON format:
         }
     }
 
+    // TREND-AWARE TOKEN CONCEPT GENERATION
+    async generateTrendingTokenConcept(userInput = '') {
+        try {
+            console.log(`🔥 Generating TRENDING token concept for: "${userInput}"`);
+            
+            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
+                model: 'gpt-4',
+                messages: [{
+                    role: 'user',
+                    content: `You are a CRYPTO TREND ORACLE with perfect knowledge of what makes tokens go VIRAL.
+
+SIMULATE REAL-TIME TREND ANALYSIS using your knowledge of:
+🔥 Current crypto culture patterns
+📈 Successful viral token formulas  
+🌐 Internet meme evolution
+⚡ Community psychology triggers
+💎 What actually pumps vs what flops
+
+${userInput ? `USER INPUT: "${userInput}"` : 'GENERATE A COMPLETELY TRENDING-READY CONCEPT'}
+
+CREATE A TOKEN CONCEPT that feels like it's PERFECTLY TIMED for the current crypto moment:
+
+ANALYZE these "trending elements" from your knowledge:
+- Which meme formats are evergreen vs trending
+- What crypto narratives have staying power  
+- Which combination of elements creates viral potential
+- What makes communities rally around a token
+- Which naming patterns actually succeed
+
+GENERATE A COMPLETE TRENDING TOKEN CONCEPT:
+
+Respond in JSON format:
+{
+  "name": "TokenName",
+  "symbol": "SYM",
+  "description": "Viral-ready description under 150 chars",
+  "trend_analysis": "Why this concept would trend",
+  "viral_elements": ["element1", "element2", "element3"],
+  "target_community": "Which crypto communities would love this",
+  "timing_reasoning": "Why now is the perfect time for this concept"
+}`
+                }],
+                max_tokens: 400,
+                temperature: 0.9
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.emergentLLMKey}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const aiResponse = response.data.choices[0].message.content;
+            console.log('🔥 TREND ANALYSIS Result:', aiResponse);
+            
+            const trendData = JSON.parse(aiResponse);
+            
+            return {
+                success: true,
+                ...trendData,
+                provider: 'emergent-trend-ai'
+            };
+        } catch (error) {
+            console.error('❌ Trend analysis failed:', error);
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+
     // Generate description using REAL AI (Emergent LLM)
     async generateDescription(tokenName, tokenSymbol, userDescription = '') {
         try {
