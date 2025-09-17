@@ -155,6 +155,36 @@ Choose network for your AI-generated token:
     });
 }
 
+function startEnhancedAutoBrand(chatId, userId) {
+    bot.sendMessage(chatId, `🔥 **ENHANCED AI TOKEN CREATOR**
+
+**NEW:** AI with Simulated Trend Analysis!
+
+🧠 **How it works:**
+• AI analyzes viral patterns from its knowledge
+• Simulates trending crypto culture
+• Creates tokens that "feel" perfectly timed
+• Uses proven viral formulas (DOGE, PEPE, BONK patterns)
+• No external APIs needed!
+
+**Choose your AI approach:**`, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🔥 Trend-Aware AI (New!)', callback_data: `enhanced_ai_${userId}` },
+                    { text: '🤖 Classic AI Brand', callback_data: `classic_ai_${userId}` }
+                ],
+                [
+                    { text: '❓ How Trend AI Works', callback_data: `explain_trend_ai_${userId}` }
+                ],
+                [
+                    { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                ]
+            ]
+        }
+    });
+}
+
 // Enhanced Wallet Commands - Show ALL balances
 bot.onText(/\/wallets/, (msg) => {
     const chatId = msg.chat.id;
