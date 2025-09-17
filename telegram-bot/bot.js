@@ -1097,16 +1097,16 @@ Error: ${error.message}
 • Check if devnet faucet is available
 • Use a different wallet
 
-🔄 **Retry Options:**`, {
+🔄 **Next Steps:**`, {
             parse_mode: 'Markdown',
             reply_markup: {
                 inline_keyboard: [
                     [
-                        { text: '🔄 Try Again', callback_data: `airdrop_wallet_${walletNumber}_${network}` },
-                        { text: '🪂 Different Wallet', callback_data: `airdrop_${network}` }
+                        { text: '💰 Check Wallets', callback_data: `wallets_${network}` },
+                        { text: '🚀 Create Token', callback_data: 'manual_launch' }
                     ],
                     [
-                        { text: '💰 Check Wallets', callback_data: `wallets_${network}` }
+                        { text: '🔙 Back to Start', callback_data: 'back_to_start' }
                     ]
                 ]
             }
