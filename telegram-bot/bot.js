@@ -155,10 +155,10 @@ Choose network for your AI-generated token:
     });
 }
 
-// Enhanced Wallet Commands
+// Enhanced Wallet Commands - Show ALL balances
 bot.onText(/\/wallets/, (msg) => {
     const chatId = msg.chat.id;
-    chooseNetworkForWallets(chatId);
+    showAllWalletBalances(chatId);
 });
 
 bot.onText(/\/seed_wallets/, (msg) => {
