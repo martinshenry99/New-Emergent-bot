@@ -215,6 +215,71 @@ bot.onText(/\/status/, (msg) => {
     showGenuineStatus(chatId);
 });
 
+async function showAllWalletBalances(chatId) {
+    try {
+        let balanceMessage = `💰 **ALL WALLET BALANCES**\n\n`;
+        
+        // Devnet Wallets
+        balanceMessage += `🧪 **DEVNET WALLETS** (Testing Network)\n`;
+        const devnetWallets = enhancedWalletManager.getAllWallets('devnet');
+        let devnetTotal = 0;
+        
+        if (devnetWallets && devnetWallets.length > 0) {
+            for (const wallet of devnetWallets) {
+                const balance = wallet.balance || 0;
+                devnetTotal += balance;
+                balanceMessage += `💰 Wallet ${wallet.id}: \`${wallet.publicKey.substring(0, 8)}...\` - **${balance.toFixed(4)} SOL**\n`;
+            }
+            balanceMessage += `📊 **Total Devnet:** ${devnetTotal.toFixed(4)} SOL\n\n`;
+        } else {
+            balanceMessage += `❌ No devnet wallets found\n\n`;
+        }
+        
+        // Mainnet Wallets
+        balanceMessage += `🌐 **MAINNET WALLETS** (Live Network)\n`;
+        const mainnetWallets = enhancedWalletManager.getAllWallets('mainnet');
+        let mainnetTotal = 0;
+        
+        if (mainnetWallets && mainnetWallets.length > 0) {
+            for (const wallet of mainnetWallets) {
+                const balance = wallet.balance || 0;
+                mainnetTotal += balance;
+                balanceMessage += `💰 Wallet ${wallet.id}: \`${wallet.publicKey.substring(0, 8)}...\` - **${balance.toFixed(4)} SOL**\n`;
+            }
+            balanceMessage += `📊 **Total Mainnet:** ${mainnetTotal.toFixed(4)} SOL\n\n`;
+        } else {
+            balanceMessage += `⚠️ No mainnet wallets configured\n*Use manual setup for mainnet wallets*\n\n`;
+        }
+        
+        balanceMessage += `💎 **GRAND TOTAL:** ${(devnetTotal + mainnetTotal).toFixed(4)} SOL\n`;
+        balanceMessage += `🔄 **Last Updated:** ${new Date().toLocaleString()}\n\n`;
+        balanceMessage += `💡 **Quick Actions:**`;
+        
+        bot.sendMessage(chatId, balanceMessage, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🧪 Devnet Actions', callback_data: 'wallets_devnet' },
+                        { text: '🌐 Mainnet Actions', callback_data: 'wallets_mainnet' }
+                    ],
+                    [
+                        { text: '🪂 Airdrop (Devnet)', callback_data: 'airdrop_devnet' },
+                        { text: '🌱 Seed Wallets', callback_data: 'choose_network_seed' }
+                    ],
+                    [
+                        { text: '🔄 Refresh Balances', callback_data: 'refresh_all_balances' }
+                    ]
+                ]
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error showing all wallet balances:', error);
+        bot.sendMessage(chatId, '❌ Error loading wallet balances. Please try again.');
+    }
+}
+
 function chooseNetworkForWallets(chatId) {
     bot.sendMessage(chatId, `💰 View Wallet Balances
 
