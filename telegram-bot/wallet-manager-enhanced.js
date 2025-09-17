@@ -86,6 +86,56 @@ class EnhancedWalletManager {
         await this.updateBalances(network);
     }
 
+    loadWalletsFromEnv(network) {
+        if (network !== 'devnet') return null;
+        
+        try {
+            const envWallets = [];
+            for (let i = 1; i <= 5; i++) {
+                const mnemonic = process.env[`WALLET_${i}_MNEMONIC`];
+                if (mnemonic) {
+                    envWallets.push({ mnemonic, id: i });
+                }
+            }
+            
+            if (envWallets.length === 5) {
+                console.log('📂 Found all 5 wallet mnemonics in .env - using for persistence');
+                return envWallets;
+            }
+        } catch (error) {
+            console.error('Error loading wallets from .env:', error);
+        }
+        
+        return null;
+    }
+
+    async loadWalletsFromEnv(network) {
+        const wallets = network === 'devnet' ? this.devnetWallets : this.mainnetWallets;
+        
+        for (let i = 1; i <= 5; i++) {
+            const mnemonic = process.env[`WALLET_${i}_MNEMONIC`];
+            if (mnemonic) {
+                const seed = await bip39.mnemonicToSeed(mnemonic);
+                const derivedSeed = derivePath(process.env.DERIVATION_PATH || "m/44'/501'/0'/0'", seed.toString('hex')).key;
+                const keypair = Keypair.fromSeed(derivedSeed);
+                
+                const wallet = {
+                    id: i,
+                    keypair: keypair,
+                    publicKey: keypair.publicKey.toString(),
+                    mnemonic: mnemonic,
+                    balance: 0
+                };
+                
+                wallets.push(wallet);
+                console.log(`💰 ${network.charAt(0).toUpperCase() + network.slice(1)} Wallet ${i}: ${keypair.publicKey.toString()} (FROM .ENV - PERSISTENT)`);
+            }
+        }
+        
+        // Update balances
+        await this.updateBalances(network);
+    }
+
     async generateNewWallets(network) {
         const wallets = network === 'devnet' ? this.devnetWallets : this.mainnetWallets;
         const walletData = {};
