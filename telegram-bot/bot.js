@@ -412,16 +412,33 @@ Please enter your token description:`);
                 return;
             }
             data.description = text;
-            session.step = 4;
+            session.step = 3.5; // AI Image Generation Step
+            
             bot.sendMessage(chatId, `✅ Description: ${text}
 
-Step 4/10: Ticker Symbol
+🎨 **Step 3.5: AI Image Generation**
 
-Enter a 3-6 character symbol for your token.
+Would you like to generate a professional logo for your token using **Craiyon AI**?
 
-Examples: DOGE, MOON, PEPE, BONK
+🤖 **AI will create an image based on:**
+• Token Description: "${text}"
+• Style: Professional crypto token logo
 
-Please enter your ticker symbol:`);
+This is optional but makes your token more appealing!`, {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '🎨 Generate AI Logo', callback_data: `generate_step35_image_${userId}` },
+                            { text: '⏭️ Skip Image & Continue', callback_data: `skip_step35_image_${userId}` }
+                        ]
+                    ]
+                }
+            });
+            break;
+            
+        case 3.5: // This case is handled by callbacks, not text input
+            // Users will use buttons, not type text
+            bot.sendMessage(chatId, '🎨 Please use the buttons above to generate an AI image or skip this step.');
             break;
 
         case 4: // Ticker Symbol
