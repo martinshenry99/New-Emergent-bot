@@ -58,20 +58,30 @@ class AIIntegrations {
                 model: 'gpt-4',
                 messages: [{
                     role: 'user', 
-                    content: `Create a creative meme token name and symbol based on this description: "${description}". 
+                    content: `You are a VIRAL MEME TOKEN STRATEGIST with deep knowledge of crypto trends, internet culture, and what makes tokens successful.
 
-Instructions:
-- Make it catchy and memorable
-- Should sound like a crypto meme token
-- Keep name under 20 characters
-- Symbol should be 3-6 characters
-- Consider trends like: Moon, Rocket, Doge, Pepe, Shiba, etc.
-- Make it unique and brandable
+ANALYZE THE CURRENT CRYPTO MEME LANDSCAPE and create a trending-ready token based on: "${description}"
+
+USE YOUR KNOWLEDGE OF:
+🔥 VIRAL MEME PATTERNS: Pepe variants, Doge derivatives, AI themes, "To the Moon" culture
+📈 SUCCESSFUL TOKEN FORMATS: What symbols and names actually pump (BONK, SHIB, FLOKI patterns)
+🌐 CRYPTO COMMUNITY TRENDS: Diamond hands, apes, rockets, safe tokens, inu derivatives
+🎭 INTERNET CULTURE: Current meme formats, viral catchphrases, trending aesthetics
+⚡ TIMING ELEMENTS: What themes are "having a moment" in crypto culture
+
+GENERATE A TOKEN THAT FEELS LIKE IT'S RIDING A CURRENT TREND:
+- Combine trending elements intelligently
+- Use viral-ready naming patterns
+- Include culturally relevant references
+- Make it feel "timely" and "now"
+- Tap into crypto community psychology
 
 Respond in JSON format:
 {
   "name": "TokenName",
-  "symbol": "SYMBOL"
+  "symbol": "SYM",
+  "trend_analysis": "Brief explanation of why this would be trending now",
+  "viral_potential": "What makes this likely to go viral"
 }`
                 }],
                 max_tokens: 150,
