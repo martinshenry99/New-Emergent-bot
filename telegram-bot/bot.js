@@ -217,6 +217,10 @@ bot.onText(/\/status/, (msg) => {
 
 async function showAllWalletBalances(chatId) {
     try {
+        // Update balances first
+        await enhancedWalletManager.updateBalances('devnet');
+        await enhancedWalletManager.updateBalances('mainnet');
+        
         let balanceMessage = `💰 **ALL WALLET BALANCES**\n\n`;
         
         // Devnet Wallets
