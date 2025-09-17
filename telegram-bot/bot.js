@@ -1764,19 +1764,23 @@ async function generateTrendingMemeToken() {
     };
 }
 
-// ===== AI IMAGE GENERATION FOR MANUAL LAUNCH =====
-async function handleImageGeneration(chatId, userId, session) {
+// ===== FINAL AI IMAGE GENERATION (STEP 11) =====
+async function handleFinalImageGeneration(chatId, userId, session) {
     try {
-        bot.sendMessage(chatId, `🎨 **Generating AI Image...**
+        bot.sendMessage(chatId, `🎨 **Generating Professional AI Logo...**
 
 🤖 Using Craiyon AI to create your token logo
-📝 Based on: "${session.data.description}"
+📝 Token: ${session.data.name} (${session.data.symbol})
+📋 Description: "${session.data.description}"
 
 ⏳ This may take 30-60 seconds...
-🎨 Creating unique artwork for your token...`);
+🎨 Creating unique professional artwork for your token...`);
 
+        // Create a comprehensive prompt for better image generation
+        const imagePrompt = `Professional crypto token logo for "${session.data.name}" (${session.data.symbol}). ${session.data.description}. Modern, clean, professional design suitable for cryptocurrency.`;
+        
         // Use the real AI integration for image generation
-        const imageResult = await aiIntegrations.generateImage(session.data.description);
+        const imageResult = await aiIntegrations.generateImage(imagePrompt);
         
         await new Promise(resolve => setTimeout(resolve, 3000));
 
@@ -1784,48 +1788,38 @@ async function handleImageGeneration(chatId, userId, session) {
             // Store the image URL in session data
             session.data.imageUrl = imageResult.images[0].url;
             session.data.hasAIImage = true;
-            session.step = 4;
 
-            bot.sendMessage(chatId, `🎉 **AI Image Generated Successfully!**
+            bot.sendMessage(chatId, `🎉 **Professional AI Logo Generated!**
 
-✅ Description: ${session.data.description}
-🎨 Image: Generated with Craiyon AI
-🖼️ Your token now has a unique AI-generated logo!
+✅ Token: ${session.data.name} (${session.data.symbol})
+🎨 Logo: Generated with Craiyon AI
+🖼️ Your token now has a unique professional logo!
 
-Step 4/10: Ticker Symbol
+Proceeding to final token creation...`);
 
-Enter a 3-6 character symbol for your token.
-
-Examples: DOGE, MOON, PEPE, BONK
-
-Please enter your ticker symbol:`);
+            // Wait a moment then show final summary
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            showEnhancedFinalSummary(chatId, userId, session.data);
         } else {
             throw new Error('Image generation failed');
         }
 
-        userSessions.set(userId, session);
-
     } catch (error) {
-        console.error('Image generation error:', error);
+        console.error('Final image generation error:', error);
         
         // Fallback - continue without image
-        session.step = 4;
-        bot.sendMessage(chatId, `❌ **Image Generation Failed**
+        bot.sendMessage(chatId, `❌ **AI Logo Generation Failed**
 
 The AI image service is temporarily unavailable.
 
-✅ Description: ${session.data.description}
-📝 Continuing without image
+✅ Token: ${session.data.name} (${session.data.symbol})
+📝 Proceeding without logo
 
-Step 4/10: Ticker Symbol
+Creating your token now...`);
 
-Enter a 3-6 character symbol for your token.
-
-Examples: DOGE, MOON, PEPE, BONK
-
-Please enter your ticker symbol:`);
-
-        userSessions.set(userId, session);
+        // Continue to final summary without image
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        showEnhancedFinalSummary(chatId, userId, session.data);
     }
 }
 
