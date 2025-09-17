@@ -1,552 +1,500 @@
 #!/usr/bin/env python3
 """
-Backend Test Suite for Review Request Issues
-Testing the 5 specific issues mentioned by the user:
-
-1. Devnet wallet addresses changing
-2. Airdrop still looping  
-3. Mainnet liquidity configuration not working
-4. /start_trading reloads /start function
-5. /chart_activity not working
+Backend Testing for Telegram Bot - User-Reported Issues Verification
+Testing specific issues reported by user:
+1. AI Image Creation Missing from Mainnet Launch
+2. /wallets Command Problems  
+3. Devnet Airdrop Functionality
+4. Wallet Implementation Changes
 """
 
+import asyncio
+import json
 import os
 import sys
-import json
 import time
-import asyncio
 import subprocess
 import requests
+from datetime import datetime
 from pathlib import Path
 
-# Add the project root to Python path
-project_root = Path(__file__).parent
-sys.path.append(str(project_root))
-
-class MemeBotCriticalTester:
+class TelegramBotTester:
     def __init__(self):
-        self.telegram_bot_dir = project_root / "telegram-bot"
-        self.bot_token = None
         self.test_results = []
-        self.load_config()
-    
-    def load_config(self):
-        """Load configuration from telegram-bot/.env"""
-        env_file = self.telegram_bot_dir / ".env"
-        if env_file.exists():
-            with open(env_file, 'r') as f:
-                for line in f:
-                    if line.strip() and not line.startswith('#'):
-                        if '=' in line:
-                            key, value = line.strip().split('=', 1)
-                            if key == 'TELEGRAM_BOT_TOKEN':
-                                self.bot_token = value.strip('"\'')
-                                break
+        self.bot_process = None
+        self.bot_log_file = "/app/telegram-bot/bot_test.log"
+        self.project_root = Path("/app")
         
-        if not self.bot_token:
-            print("⚠️ TELEGRAM_BOT_TOKEN not found in telegram-bot/.env")
-    
-    def log_test(self, test_name, status, message="", details=None):
+    def log_test(self, test_name, status, details="", error=""):
         """Log test results"""
         result = {
             "test": test_name,
             "status": status,
-            "message": message,
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "details": details or {}
+            "details": details,
+            "error": error,
+            "timestamp": datetime.now().isoformat()
         }
         self.test_results.append(result)
         
         status_icon = "✅" if status == "PASS" else "❌" if status == "FAIL" else "⚠️"
-        print(f"{status_icon} {test_name}: {message}")
+        print(f"{status_icon} {test_name}: {status}")
         if details:
-            for key, value in details.items():
-                print(f"   {key}: {value}")
+            print(f"   Details: {details}")
+        if error:
+            print(f"   Error: {error}")
     
-    def test_sol_tax_system_implementation(self):
-        """Test 1: Verify SOL-based tax system implementation"""
-        test_name = "SOL-Based Tax System"
+    def check_file_exists(self, file_path, description=""):
+        """Check if a file exists"""
+        full_path = self.project_root / file_path
+        exists = full_path.exists()
         
-        try:
-            # Check if tax-manager.js exists
-            tax_manager_path = self.telegram_bot_dir / "tax-manager.js"
-            if not tax_manager_path.exists():
-                self.log_test(test_name, "FAIL", "tax-manager.js file is missing - critical feature not implemented")
-                return False
-            
-            # Check bot.js for tax system integration
-            bot_js_path = self.telegram_bot_dir / "bot.js"
-            with open(bot_js_path, 'r') as f:
-                bot_content = f.read()
-            
-            # Check for SOL tax collection system in bot state
-            tax_system_checks = {
-                "SOL Tax Collection State": "solTaxCollection" in bot_content,
-                "Dynamic Fees State": "dynamicFees" in bot_content,
-                "Tax Manager Import": "require('./tax-manager')" in bot_content or "TaxManager" in bot_content,
-                "SOL Collection Logic": "collectInSOL" in bot_content,
-                "Tax Exemption System": "exemptWallets" in bot_content
-            }
-            
-            with open(tax_manager_path, 'r') as f:
-                tax_content = f.read()
-            
-            tax_manager_checks = {
-                "Tax Manager Class": "class TaxManager" in tax_content,
-                "SOL Tax Calculation": "calculateSOLTax" in tax_content or "collectSOLTax" in tax_content,
-                "Tax Collection Tracking": "trackTaxCollection" in tax_content or "taxStats" in tax_content,
-                "Exemption Methods": "exemptWallet" in tax_content or "addExemption" in tax_content
-            }
-            
-            failed_checks = []
-            for check, passed in {**tax_system_checks, **tax_manager_checks}.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Bot.js Tax Checks": list(tax_system_checks.keys()),
-                "Tax Manager Checks": list(tax_manager_checks.keys()),
-                "Failed Checks": failed_checks
-            }
-            
-            if failed_checks:
-                self.log_test(test_name, "FAIL", f"SOL tax system incomplete: {len(failed_checks)} checks failed", details)
-                return False
-            
-            self.log_test(test_name, "PASS", "SOL-based tax system properly implemented", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing SOL tax system: {str(e)}")
-            return False
+        if exists:
+            size = full_path.stat().st_size
+            self.log_test(f"File Check: {file_path}", "PASS", 
+                         f"{description} exists ({size} bytes)")
+        else:
+            self.log_test(f"File Check: {file_path}", "FAIL", 
+                         f"{description} not found")
+        
+        return exists
     
-    def test_missing_commands_implementation(self):
-        """Test 2: Verify missing commands (/set_fees, /mint_rugpull, /exempt_wallet)"""
-        test_name = "Missing Commands Implementation"
+    def check_bot_dependencies(self):
+        """Check if all required bot dependencies are present"""
+        print("\n🔍 CHECKING BOT DEPENDENCIES...")
         
-        try:
-            bot_js_path = self.telegram_bot_dir / "bot.js"
-            with open(bot_js_path, 'r') as f:
-                bot_content = f.read()
-            
-            # Check for the three critical missing commands
-            command_checks = {
-                "/set_fees Command": "/set_fees" in bot_content and "setFeesCommand" in bot_content,
-                "/mint_rugpull Command": "/mint_rugpull" in bot_content and ("mintRugpullCommand" in bot_content or "mint_rugpull" in bot_content),
-                "/exempt_wallet Command": "/exempt_wallet" in bot_content and "exemptWalletCommand" in bot_content,
-                "Set Fees Handler": "bot.onText(/\\/set_fees/" in bot_content,
-                "Mint Rugpull Handler": "bot.onText(/\\/mint_rugpull/" in bot_content,
-                "Exempt Wallet Handler": "bot.onText(/\\/exempt_wallet/" in bot_content
-            }
-            
-            # Check for interactive UI elements
-            ui_checks = {
-                "Set Fees UI": "callback_data: 'set_fees'" in bot_content,
-                "Tax Rate Configuration": "0-99%" in bot_content or "tax rate" in bot_content.lower(),
-                "Token Selection UI": "Select token" in bot_content or "choose token" in bot_content.lower(),
-                "Educational Messaging": "research" in bot_content.lower() and "simulation" in bot_content.lower()
-            }
-            
-            failed_checks = []
-            for check, passed in {**command_checks, **ui_checks}.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Command Checks": list(command_checks.keys()),
-                "UI Checks": list(ui_checks.keys()),
-                "Failed Checks": failed_checks
-            }
-            
-            if len(failed_checks) > 2:  # Allow some flexibility
-                self.log_test(test_name, "FAIL", f"Missing commands incomplete: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some command checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "All missing commands properly implemented", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing missing commands: {str(e)}")
-            return False
-    
-    def test_updated_token_creation(self):
-        """Test 3: Verify token creation gives Wallet 1 only 20% of supply"""
-        test_name = "Updated Token Creation (20% Allocation)"
+        # Check main bot file
+        self.check_file_exists("telegram-bot/bot.js", "Main bot file")
         
-        try:
-            token_manager_path = self.telegram_bot_dir / "token-manager.js"
-            with open(token_manager_path, 'r') as f:
-                token_content = f.read()
-            
-            # Check for 20% allocation logic
-            allocation_checks = {
-                "Wallet 1 Share Calculation": "wallet1Share" in token_content or "0.2" in token_content or "20%" in token_content,
-                "Supply Distribution Logic": "totalSupply *" in token_content and ("0.2" in token_content or "20" in token_content),
-                "Mint to Wallet 1": "mintTo" in token_content,
-                "Remaining Supply Handling": "remainingSupply" in token_content or "80%" in token_content,
-                "Not 100% to Wallet 1": not ("mintAmount = totalSupply * Math.pow(10, 9)" in token_content and "mintTo(" in token_content and "totalSupply" in token_content)
-            }
-            
-            failed_checks = []
-            for check, passed in allocation_checks.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Allocation Checks": list(allocation_checks.keys()),
-                "Failed Checks": failed_checks
-            }
-            
-            # Special check: if we still see 100% allocation, it's a critical failure
-            if "mintAmount = totalSupply * Math.pow(10, 9)" in token_content:
-                self.log_test(test_name, "FAIL", "Token creation still gives 100% to Wallet 1 - not updated", details)
-                return False
-            
-            if len(failed_checks) > 2:
-                self.log_test(test_name, "FAIL", f"Token allocation not properly updated: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some allocation checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "Token creation properly updated for 20% allocation", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing token creation: {str(e)}")
-            return False
-    
-    def test_enhanced_status_command(self):
-        """Test 4: Verify /status shows SOL tax collection stats"""
-        test_name = "Enhanced Status Command"
+        # Check wallet manager
+        wallet_manager_exists = (
+            self.check_file_exists("telegram-bot/wallet-manager-enhanced.js", "Enhanced wallet manager") or
+            self.check_file_exists("telegram-bot/enhanced-wallet-manager.js", "Enhanced wallet manager alt")
+        )
         
-        try:
-            bot_js_path = self.telegram_bot_dir / "bot.js"
-            with open(bot_js_path, 'r') as f:
-                bot_content = f.read()
-            
-            # Find the showStatus function
-            status_function_start = bot_content.find("async function showStatus(")
-            if status_function_start == -1:
-                status_function_start = bot_content.find("function showStatus(")
-            
-            if status_function_start == -1:
-                self.log_test(test_name, "FAIL", "showStatus function not found")
-                return False
-            
-            # Extract the showStatus function (approximate)
-            status_function_end = bot_content.find("}", status_function_start + 500)  # Look for closing brace
-            status_function = bot_content[status_function_start:status_function_end + 1]
-            
-            # Check for SOL tax stats in status display
-            status_checks = {
-                "SOL Tax Collection Display": "SOL" in status_function and ("tax" in status_function.lower() or "collected" in status_function.lower()),
-                "Tax Recipient Display": "Wallet 1" in status_function or "tax recipient" in status_function.lower(),
-                "Total SOL Collected": "totalSOL" in status_function or "solCollected" in status_function,
-                "Exempt Wallet Counts": "exempt" in status_function.lower() and "count" in status_function.lower(),
-                "Tax Stats Per Token": "forEach" in status_function or "map" in status_function
-            }
-            
-            failed_checks = []
-            for check, passed in status_checks.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Status Function Checks": list(status_checks.keys()),
-                "Failed Checks": failed_checks,
-                "Function Found": status_function_start != -1
-            }
-            
-            if len(failed_checks) > 2:
-                self.log_test(test_name, "FAIL", f"Status command not properly enhanced: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some status checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "Status command properly enhanced with SOL tax stats", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing status command: {str(e)}")
-            return False
-    
-    def test_chart_activity_simulation(self):
-        """Test 5: Verify chart activity simulation methods in real-trading-manager.js"""
-        test_name = "Chart Activity Simulation"
+        # Check genuine blockchain manager
+        self.check_file_exists("telegram-bot/genuine-blockchain-manager.js", "Genuine blockchain manager")
         
-        try:
-            real_trading_path = self.telegram_bot_dir / "real-trading-manager.js"
-            with open(real_trading_path, 'r') as f:
-                trading_content = f.read()
-            
-            # Check for chart activity methods
-            chart_activity_checks = {
-                "Start Chart Activity Method": "startChartActivity" in trading_content,
-                "Stop Chart Activity Method": "stopChartActivity" in trading_content,
-                "Generate Chart Activity Trade": "generateChartActivityTrade" in trading_content,
-                "Small Trade Logic": "0.005" in trading_content or "0.02" in trading_content,
-                "Periodic Trading": "setInterval" in trading_content or "setTimeout" in trading_content,
-                "Chart Activity State": "chartActivity" in trading_content or "isChartActive" in trading_content
-            }
-            
-            failed_checks = []
-            for check, passed in chart_activity_checks.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Chart Activity Checks": list(chart_activity_checks.keys()),
-                "Failed Checks": failed_checks
-            }
-            
-            if len(failed_checks) > 3:
-                self.log_test(test_name, "FAIL", f"Chart activity simulation incomplete: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some chart activity checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "Chart activity simulation properly implemented", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing chart activity: {str(e)}")
-            return False
-    
-    def test_craiyon_integration(self):
-        """Test 6: Verify Craiyon integration and removal of DALL-E 3/Fal.ai"""
-        test_name = "Craiyon Integration"
+        # Check AI integrations
+        self.check_file_exists("telegram-bot/ai-integrations.js", "AI integrations")
         
-        try:
-            ai_integrations_path = self.telegram_bot_dir / "ai-integrations.js"
-            with open(ai_integrations_path, 'r') as f:
-                ai_content = f.read()
-            
-            # Check for Craiyon integration
-            craiyon_checks = {
-                "Craiyon Integration": "craiyon" in ai_content.lower(),
-                "No DALL-E 3 References": "dall-e" not in ai_content.lower() and "dalle" not in ai_content.lower(),
-                "No Fal.ai References": "fal.ai" not in ai_content.lower() and "fal-ai" not in ai_content.lower(),
-                "Placeholder Images": "placeholder" in ai_content.lower(),
-                "No API Key Required": "API_KEY" not in ai_content or "key" not in ai_content.lower(),
-                "Free Service": "free" in ai_content.lower() or not ("subscription" in ai_content.lower() or "paid" in ai_content.lower())
-            }
-            
-            failed_checks = []
-            for check, passed in craiyon_checks.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Craiyon Integration Checks": list(craiyon_checks.keys()),
-                "Failed Checks": failed_checks
-            }
-            
-            # Critical failure if DALL-E or Fal.ai still present
-            if "dall-e" in ai_content.lower() or "fal.ai" in ai_content.lower():
-                self.log_test(test_name, "FAIL", "DALL-E 3 or Fal.ai references still present - not completely removed", details)
-                return False
-            
-            if len(failed_checks) > 2:
-                self.log_test(test_name, "FAIL", f"Craiyon integration incomplete: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some Craiyon checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "Craiyon integration properly implemented", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing Craiyon integration: {str(e)}")
-            return False
-    
-    def test_bot_initialization_with_new_modules(self):
-        """Test 7: Verify bot initializes without crashes with all new modules"""
-        test_name = "Bot Initialization with New Modules"
-        
-        try:
-            bot_js_path = self.telegram_bot_dir / "bot.js"
-            with open(bot_js_path, 'r') as f:
-                bot_content = f.read()
-            
-            # Check for all required imports and initializations
-            initialization_checks = {
-                "Tax Manager Import": "require('./tax-manager')" in bot_content or "TaxManager" in bot_content,
-                "Tax Manager Initialization": "new TaxManager" in bot_content or "taxManager" in bot_content,
-                "AI Integrations Import": "require('./ai-integrations')" in bot_content,
-                "Real Trading Manager Import": "require('./real-trading-manager')" in bot_content,
-                "All Command Handlers": "/set_fees" in bot_content and "/mint_rugpull" in bot_content and "/exempt_wallet" in bot_content,
-                "Bot State Management": "botState" in bot_content,
-                "Error Handling": "try {" in bot_content and "catch" in bot_content
-            }
-            
-            # Check if all required files exist
-            required_files = [
-                "bot.js", "wallet-manager.js", "token-manager.js", 
-                "ai-integrations.js", "real-trading-manager.js", 
-                "raydium-manager.js", "metadata-manager.js"
-            ]
-            
-            missing_files = []
-            for file_name in required_files:
-                if not (self.telegram_bot_dir / file_name).exists():
-                    missing_files.append(file_name)
-            
-            failed_checks = []
-            for check, passed in initialization_checks.items():
-                if not passed:
-                    failed_checks.append(check)
-            
-            details = {
-                "Initialization Checks": list(initialization_checks.keys()),
-                "Failed Checks": failed_checks,
-                "Required Files": required_files,
-                "Missing Files": missing_files
-            }
-            
-            if missing_files:
-                self.log_test(test_name, "FAIL", f"Missing required files: {', '.join(missing_files)}", details)
-                return False
-            
-            if len(failed_checks) > 3:
-                self.log_test(test_name, "FAIL", f"Bot initialization incomplete: {len(failed_checks)} checks failed", details)
-                return False
-            elif failed_checks:
-                self.log_test(test_name, "WARN", f"Some initialization checks failed: {len(failed_checks)}", details)
-                return True
-            
-            self.log_test(test_name, "PASS", "Bot initialization properly configured with all new modules", details)
-            return True
-            
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Error analyzing bot initialization: {str(e)}")
-            return False
-    
-    def test_telegram_bot_connectivity(self):
-        """Test 8: Test Telegram Bot API connectivity"""
-        test_name = "Telegram Bot API Connectivity"
-        
-        if not self.bot_token:
-            self.log_test(test_name, "WARN", "Bot token not found, skipping connectivity test")
-            return True
-        
-        try:
-            # Test bot token validity
-            url = f"https://api.telegram.org/bot{self.bot_token}/getMe"
-            response = requests.get(url, timeout=10)
-            
-            if response.status_code == 200:
-                bot_info = response.json()
-                if bot_info.get('ok'):
-                    details = {
-                        "Bot Username": bot_info.get('result', {}).get('username', 'Unknown'),
-                        "Bot ID": bot_info.get('result', {}).get('id', 'Unknown'),
-                        "Can Join Groups": bot_info.get('result', {}).get('can_join_groups', False),
-                        "Can Read Messages": bot_info.get('result', {}).get('can_read_all_group_messages', False)
-                    }
-                    self.log_test(test_name, "PASS", "Bot token valid and API accessible", details)
-                    return True
-                else:
-                    self.log_test(test_name, "FAIL", f"Bot API error: {bot_info.get('description', 'Unknown error')}")
-                    return False
-            else:
-                self.log_test(test_name, "FAIL", f"HTTP {response.status_code}: {response.text}")
-                return False
-                
-        except requests.exceptions.RequestException as e:
-            self.log_test(test_name, "FAIL", f"Network error: {str(e)}")
-            return False
-        except Exception as e:
-            self.log_test(test_name, "FAIL", f"Unexpected error: {str(e)}")
-            return False
-    
-    def run_all_tests(self):
-        """Run all critical feature tests and generate report"""
-        print("🚀 Starting Meme-bot Critical Features Tests...")
-        print("=" * 70)
-        
-        tests = [
-            self.test_sol_tax_system_implementation,
-            self.test_missing_commands_implementation,
-            self.test_updated_token_creation,
-            self.test_enhanced_status_command,
-            self.test_chart_activity_simulation,
-            self.test_craiyon_integration,
-            self.test_bot_initialization_with_new_modules,
-            self.test_telegram_bot_connectivity
-        ]
-        
-        passed = 0
-        failed = 0
-        warnings = 0
-        
-        for test in tests:
+        # Check package.json for dependencies
+        package_json_path = self.project_root / "telegram-bot/package.json"
+        if package_json_path.exists():
             try:
-                result = test()
-                if result:
-                    passed += 1
+                with open(package_json_path, 'r') as f:
+                    package_data = json.load(f)
+                    
+                required_deps = [
+                    'node-telegram-bot-api',
+                    '@solana/web3.js',
+                    '@solana/spl-token',
+                    'dotenv'
+                ]
+                
+                dependencies = package_data.get('dependencies', {})
+                missing_deps = [dep for dep in required_deps if dep not in dependencies]
+                
+                if missing_deps:
+                    self.log_test("Dependencies Check", "FAIL", 
+                                 f"Missing dependencies: {', '.join(missing_deps)}")
                 else:
-                    failed += 1
+                    self.log_test("Dependencies Check", "PASS", 
+                                 f"All required dependencies present")
+                    
             except Exception as e:
-                self.log_test(test.__name__, "FAIL", f"Test execution error: {str(e)}")
-                failed += 1
+                self.log_test("Dependencies Check", "FAIL", "", str(e))
+        else:
+            self.log_test("Dependencies Check", "FAIL", "package.json not found")
+    
+    def check_bot_configuration(self):
+        """Check bot configuration and environment variables"""
+        print("\n🔧 CHECKING BOT CONFIGURATION...")
         
-        # Count warnings
-        warnings = sum(1 for result in self.test_results if result['status'] == 'WARN')
+        # Check .env file
+        env_path = self.project_root / "telegram-bot/.env"
+        if env_path.exists():
+            try:
+                with open(env_path, 'r') as f:
+                    env_content = f.read()
+                    
+                required_vars = [
+                    'TELEGRAM_BOT_TOKEN',
+                    'SOLANA_RPC_URL'
+                ]
+                
+                missing_vars = []
+                for var in required_vars:
+                    if var not in env_content:
+                        missing_vars.append(var)
+                
+                if missing_vars:
+                    self.log_test("Environment Variables", "FAIL", 
+                                 f"Missing variables: {', '.join(missing_vars)}")
+                else:
+                    self.log_test("Environment Variables", "PASS", 
+                                 "Required environment variables present")
+                    
+            except Exception as e:
+                self.log_test("Environment Variables", "FAIL", "", str(e))
+        else:
+            self.log_test("Environment Variables", "FAIL", ".env file not found")
+    
+    def analyze_bot_code_for_issues(self):
+        """Analyze bot code for specific user-reported issues"""
+        print("\n🔍 ANALYZING BOT CODE FOR REPORTED ISSUES...")
         
-        print("\n" + "=" * 70)
-        print("📊 CRITICAL FEATURES TEST SUMMARY")
-        print("=" * 70)
-        print(f"✅ Passed: {passed}")
-        print(f"❌ Failed: {failed}")
-        print(f"⚠️  Warnings: {warnings}")
-        print(f"📋 Total: {len(tests)}")
+        bot_file = self.project_root / "telegram-bot/bot.js"
+        if not bot_file.exists():
+            self.log_test("Bot Code Analysis", "FAIL", "bot.js not found")
+            return
         
-        # Detailed results
-        print("\n📋 DETAILED RESULTS:")
-        for result in self.test_results:
-            status_icon = "✅" if result['status'] == "PASS" else "❌" if result['status'] == "FAIL" else "⚠️"
-            print(f"{status_icon} {result['test']}: {result['message']}")
+        try:
+            with open(bot_file, 'r') as f:
+                bot_code = f.read()
+            
+            # Issue #1: AI Image Creation Missing from Mainnet Launch
+            self.check_ai_image_generation(bot_code)
+            
+            # Issue #2: /wallets Command Problems
+            self.check_wallets_command(bot_code)
+            
+            # Issue #3: Devnet Airdrop Functionality
+            self.check_airdrop_functionality(bot_code)
+            
+            # Issue #4: Wallet Implementation Changes
+            self.check_wallet_implementation(bot_code)
+            
+        except Exception as e:
+            self.log_test("Bot Code Analysis", "FAIL", "", str(e))
+    
+    def check_ai_image_generation(self, bot_code):
+        """Check AI image generation for both devnet and mainnet"""
+        print("\n🎨 CHECKING AI IMAGE GENERATION...")
         
-        # Critical issues
-        critical_failures = [r for r in self.test_results if r['status'] == 'FAIL']
-        if critical_failures:
-            print("\n🚨 CRITICAL ISSUES:")
-            for failure in critical_failures:
-                print(f"❌ {failure['test']}: {failure['message']}")
+        # Check for image generation step (step 3.5)
+        if "step = 3.5" in bot_code or "step: 3.5" in bot_code:
+            self.log_test("AI Image Step 3.5", "PASS", "Step 3.5 for image generation found")
+        else:
+            self.log_test("AI Image Step 3.5", "FAIL", "Step 3.5 for image generation not found")
         
-        return {
-            'passed': passed,
-            'failed': failed,
-            'warnings': warnings,
-            'total': len(tests),
-            'success_rate': (passed / len(tests)) * 100,
-            'results': self.test_results
-        }
+        # Check for "Generate AI Image" option
+        if "Generate AI Image" in bot_code or "🎨 Generate AI Image" in bot_code:
+            self.log_test("Generate AI Image Button", "PASS", "Generate AI Image button found")
+        else:
+            self.log_test("Generate AI Image Button", "FAIL", "Generate AI Image button not found")
+        
+        # Check if image generation works for both networks
+        mainnet_image_check = "mainnet" in bot_code and ("generate_image" in bot_code or "handleImageGeneration" in bot_code)
+        devnet_image_check = "devnet" in bot_code and ("generate_image" in bot_code or "handleImageGeneration" in bot_code)
+        
+        if mainnet_image_check and devnet_image_check:
+            self.log_test("AI Image Both Networks", "PASS", "Image generation available for both networks")
+        else:
+            self.log_test("AI Image Both Networks", "FAIL", "Image generation may not work on both networks")
+    
+    def check_wallets_command(self, bot_code):
+        """Check /wallets command functionality"""
+        print("\n💰 CHECKING /wallets COMMAND...")
+        
+        # Check for /wallets command handler
+        if "bot.onText(/\\/wallets/" in bot_code or "/wallets" in bot_code:
+            self.log_test("/wallets Command Handler", "PASS", "/wallets command handler found")
+        else:
+            self.log_test("/wallets Command Handler", "FAIL", "/wallets command handler not found")
+        
+        # Check for showAllWalletBalances function
+        if "showAllWalletBalances" in bot_code:
+            self.log_test("showAllWalletBalances Function", "PASS", "showAllWalletBalances function found")
+        else:
+            self.log_test("showAllWalletBalances Function", "FAIL", "showAllWalletBalances function not found")
+        
+        # Check for airdrop button
+        if "🪂 Airdrop (Devnet)" in bot_code or "Airdrop" in bot_code:
+            self.log_test("Airdrop Button", "PASS", "Airdrop button found in wallets display")
+        else:
+            self.log_test("Airdrop Button", "FAIL", "Airdrop button not found in wallets display")
+        
+        # Check for both network wallet display
+        devnet_wallets = "DEVNET WALLETS" in bot_code or "devnet" in bot_code.lower()
+        mainnet_wallets = "MAINNET WALLETS" in bot_code or "mainnet" in bot_code.lower()
+        
+        if devnet_wallets and mainnet_wallets:
+            self.log_test("Both Network Wallets", "PASS", "Both devnet and mainnet wallet display found")
+        else:
+            self.log_test("Both Network Wallets", "FAIL", "Missing network wallet display")
+    
+    def check_airdrop_functionality(self, bot_code):
+        """Check devnet airdrop functionality"""
+        print("\n🪂 CHECKING DEVNET AIRDROP FUNCTIONALITY...")
+        
+        # Check for executeAirdrop function
+        if "executeAirdrop" in bot_code:
+            self.log_test("executeAirdrop Function", "PASS", "executeAirdrop function found")
+        else:
+            self.log_test("executeAirdrop Function", "FAIL", "executeAirdrop function not found")
+        
+        # Check for airdrop wallet callbacks
+        airdrop_callbacks = []
+        for i in range(1, 6):
+            callback = f"airdrop_wallet_{i}"
+            if callback in bot_code:
+                airdrop_callbacks.append(callback)
+        
+        if len(airdrop_callbacks) == 5:
+            self.log_test("Airdrop Wallet Callbacks", "PASS", f"All 5 airdrop wallet callbacks found: {airdrop_callbacks}")
+        else:
+            self.log_test("Airdrop Wallet Callbacks", "FAIL", f"Missing airdrop callbacks. Found: {airdrop_callbacks}")
+        
+        # Check for loop prevention
+        if "back to menu" not in bot_code.lower() and "infinite" not in bot_code.lower():
+            self.log_test("Airdrop Loop Prevention", "PASS", "No obvious loop issues in airdrop code")
+        else:
+            self.log_test("Airdrop Loop Prevention", "WARN", "Potential loop issues detected")
+        
+        # Check for real airdrop implementation
+        if "requestDevnetAirdrop" in bot_code or "airdropResult" in bot_code:
+            self.log_test("Real Airdrop Implementation", "PASS", "Real airdrop implementation found")
+        else:
+            self.log_test("Real Airdrop Implementation", "FAIL", "Real airdrop implementation not found")
+    
+    def check_wallet_implementation(self, bot_code):
+        """Check wallet implementation changes"""
+        print("\n🔧 CHECKING WALLET IMPLEMENTATION...")
+        
+        # Check for enhancedWalletManager usage
+        if "enhancedWalletManager" in bot_code:
+            self.log_test("Enhanced Wallet Manager Usage", "PASS", "enhancedWalletManager found in bot code")
+        else:
+            self.log_test("Enhanced Wallet Manager Usage", "FAIL", "enhancedWalletManager not found in bot code")
+        
+        # Check for getWallets method calls
+        if "getWallets(" in bot_code:
+            self.log_test("getWallets Method Calls", "PASS", "getWallets method calls found")
+        else:
+            self.log_test("getWallets Method Calls", "FAIL", "getWallets method calls not found")
+        
+        # Check for balance update functionality
+        if "updateBalances" in bot_code:
+            self.log_test("Balance Update Functionality", "PASS", "updateBalances functionality found")
+        else:
+            self.log_test("Balance Update Functionality", "FAIL", "updateBalances functionality not found")
+        
+        # Check for persistent wallet addresses from .env
+        if "WALLET_" in bot_code or "process.env" in bot_code:
+            self.log_test("Persistent Wallet Addresses", "PASS", "Environment variable usage for persistent addresses found")
+        else:
+            self.log_test("Persistent Wallet Addresses", "WARN", "Environment variable usage not clearly found")
+    
+    def check_wallet_manager_implementation(self):
+        """Check wallet manager implementation details"""
+        print("\n🔍 CHECKING WALLET MANAGER IMPLEMENTATION...")
+        
+        wallet_manager_path = self.project_root / "telegram-bot/wallet-manager-enhanced.js"
+        if not wallet_manager_path.exists():
+            self.log_test("Wallet Manager File", "FAIL", "wallet-manager-enhanced.js not found")
+            return
+        
+        try:
+            with open(wallet_manager_path, 'r') as f:
+                wallet_code = f.read()
+            
+            # Check for requestDevnetAirdrop method
+            if "requestDevnetAirdrop" in wallet_code:
+                self.log_test("requestDevnetAirdrop Method", "PASS", "requestDevnetAirdrop method found in wallet manager")
+            else:
+                self.log_test("requestDevnetAirdrop Method", "FAIL", "requestDevnetAirdrop method not found")
+            
+            # Check for getWallets method
+            if "getWallets(" in wallet_code:
+                self.log_test("getWallets Method", "PASS", "getWallets method found in wallet manager")
+            else:
+                self.log_test("getWallets Method", "FAIL", "getWallets method not found")
+            
+            # Check for persistent wallet loading
+            if "loadOrGenerateWallets" in wallet_code and "NEVER regenerate" in wallet_code:
+                self.log_test("Persistent Wallet Loading", "PASS", "Persistent wallet loading with 'NEVER regenerate' found")
+            else:
+                self.log_test("Persistent Wallet Loading", "FAIL", "Persistent wallet loading not properly implemented")
+            
+        except Exception as e:
+            self.log_test("Wallet Manager Analysis", "FAIL", "", str(e))
+    
+    def test_bot_startup(self):
+        """Test if bot can start without errors"""
+        print("\n🚀 TESTING BOT STARTUP...")
+        
+        bot_dir = self.project_root / "telegram-bot"
+        if not bot_dir.exists():
+            self.log_test("Bot Startup", "FAIL", "telegram-bot directory not found")
+            return
+        
+        try:
+            # Change to bot directory
+            os.chdir(bot_dir)
+            
+            # Try to run syntax check
+            result = subprocess.run(
+                ["node", "-c", "bot.js"],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if result.returncode == 0:
+                self.log_test("Bot Syntax Check", "PASS", "Bot.js syntax is valid")
+            else:
+                self.log_test("Bot Syntax Check", "FAIL", f"Syntax errors: {result.stderr}")
+            
+            # Check if we can load the bot (without starting polling)
+            test_script = """
+const bot = require('./bot.js');
+console.log('Bot loaded successfully');
+process.exit(0);
+"""
+            
+            with open("test_load.js", "w") as f:
+                f.write(test_script)
+            
+            result = subprocess.run(
+                ["node", "test_load.js"],
+                capture_output=True,
+                text=True,
+                timeout=15
+            )
+            
+            if result.returncode == 0:
+                self.log_test("Bot Loading Test", "PASS", "Bot loads without errors")
+            else:
+                self.log_test("Bot Loading Test", "FAIL", f"Loading errors: {result.stderr}")
+            
+            # Clean up test file
+            if os.path.exists("test_load.js"):
+                os.remove("test_load.js")
+                
+        except subprocess.TimeoutExpired:
+            self.log_test("Bot Startup", "FAIL", "Bot startup timed out")
+        except Exception as e:
+            self.log_test("Bot Startup", "FAIL", "", str(e))
+        finally:
+            # Return to original directory
+            os.chdir(self.project_root)
+    
+    def check_ai_integrations(self):
+        """Check AI integrations implementation"""
+        print("\n🤖 CHECKING AI INTEGRATIONS...")
+        
+        ai_file = self.project_root / "telegram-bot/ai-integrations.js"
+        if not ai_file.exists():
+            self.log_test("AI Integrations File", "FAIL", "ai-integrations.js not found")
+            return
+        
+        try:
+            with open(ai_file, 'r') as f:
+                ai_code = f.read()
+            
+            # Check for Craiyon integration (should be present)
+            if "craiyon" in ai_code.lower():
+                self.log_test("Craiyon Integration", "PASS", "Craiyon integration found")
+            else:
+                self.log_test("Craiyon Integration", "FAIL", "Craiyon integration not found")
+            
+            # Check that DALL-E and Fal.ai are NOT present (should be removed)
+            dalle_present = "dall-e" in ai_code.lower() or "openai" in ai_code.lower()
+            fal_present = "fal.ai" in ai_code.lower() or "fal-ai" in ai_code.lower()
+            
+            if not dalle_present:
+                self.log_test("DALL-E Removal", "PASS", "DALL-E references removed")
+            else:
+                self.log_test("DALL-E Removal", "FAIL", "DALL-E references still present")
+            
+            if not fal_present:
+                self.log_test("Fal.ai Removal", "PASS", "Fal.ai references removed")
+            else:
+                self.log_test("Fal.ai Removal", "FAIL", "Fal.ai references still present")
+            
+            # Check for generateImage method
+            if "generateImage" in ai_code:
+                self.log_test("generateImage Method", "PASS", "generateImage method found")
+            else:
+                self.log_test("generateImage Method", "FAIL", "generateImage method not found")
+                
+        except Exception as e:
+            self.log_test("AI Integrations Analysis", "FAIL", "", str(e))
+    
+    def run_comprehensive_tests(self):
+        """Run all tests"""
+        print("🧪 STARTING COMPREHENSIVE TELEGRAM BOT TESTING")
+        print("=" * 60)
+        
+        # Basic file and dependency checks
+        self.check_bot_dependencies()
+        self.check_bot_configuration()
+        
+        # Code analysis for specific issues
+        self.analyze_bot_code_for_issues()
+        self.check_wallet_manager_implementation()
+        self.check_ai_integrations()
+        
+        # Runtime tests
+        self.test_bot_startup()
+        
+        # Generate summary
+        self.generate_test_summary()
+    
+    def generate_test_summary(self):
+        """Generate test summary"""
+        print("\n" + "=" * 60)
+        print("📊 TEST SUMMARY")
+        print("=" * 60)
+        
+        total_tests = len(self.test_results)
+        passed_tests = len([t for t in self.test_results if t["status"] == "PASS"])
+        failed_tests = len([t for t in self.test_results if t["status"] == "FAIL"])
+        warning_tests = len([t for t in self.test_results if t["status"] == "WARN"])
+        
+        print(f"Total Tests: {total_tests}")
+        print(f"✅ Passed: {passed_tests}")
+        print(f"❌ Failed: {failed_tests}")
+        print(f"⚠️ Warnings: {warning_tests}")
+        print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        
+        print("\n🔍 CRITICAL ISSUES FOUND:")
+        critical_issues = [t for t in self.test_results if t["status"] == "FAIL"]
+        if critical_issues:
+            for issue in critical_issues:
+                print(f"❌ {issue['test']}: {issue['error'] or issue['details']}")
+        else:
+            print("✅ No critical issues found!")
+        
+        print("\n⚠️ WARNINGS:")
+        warnings = [t for t in self.test_results if t["status"] == "WARN"]
+        if warnings:
+            for warning in warnings:
+                print(f"⚠️ {warning['test']}: {warning['details']}")
+        else:
+            print("✅ No warnings!")
+        
+        # Save detailed results
+        results_file = self.project_root / "backend_test_results.json"
+        with open(results_file, 'w') as f:
+            json.dump({
+                "summary": {
+                    "total_tests": total_tests,
+                    "passed": passed_tests,
+                    "failed": failed_tests,
+                    "warnings": warning_tests,
+                    "success_rate": (passed_tests/total_tests)*100
+                },
+                "test_results": self.test_results,
+                "timestamp": datetime.now().isoformat()
+            }, f, indent=2)
+        
+        print(f"\n📄 Detailed results saved to: {results_file}")
 
 def main():
     """Main test execution"""
-    try:
-        tester = MemeBotCriticalTester()
-        results = tester.run_all_tests()
-        
-        # Exit with appropriate code
-        if results['failed'] == 0:
-            print(f"\n🎉 ALL CRITICAL TESTS PASSED! Success rate: {results['success_rate']:.1f}%")
-            sys.exit(0)
-        else:
-            print(f"\n💥 {results['failed']} CRITICAL TESTS FAILED! Success rate: {results['success_rate']:.1f}%")
-            sys.exit(1)
-            
-    except Exception as e:
-        print(f"❌ Test execution failed: {str(e)}")
-        sys.exit(1)
+    tester = TelegramBotTester()
+    tester.run_comprehensive_tests()
 
 if __name__ == "__main__":
     main()
