@@ -1020,34 +1020,6 @@ Should we revoke mint authority after creation?
     });
 }
 
-function handleAIImageGenerationStep(chatId, userId, session) {
-    const stepNum = session.data.network === 'mainnet' ? '11/11' : '9/9';
-    
-    bot.sendMessage(chatId, `✅ Mint Authority: ${session.data.revokeMint ? 'Will be revoked' : 'Retained'}
-
-Step ${stepNum}: AI Image Generation
-
-🎨 **Final Touch: Token Logo**
-
-Would you like to generate a professional logo for your token using AI?
-
-🤖 **Craiyon AI** will create a unique image based on your token:
-• Name: ${session.data.name}
-• Symbol: ${session.data.symbol}
-• Description: ${session.data.description}
-
-This is optional but makes your token more professional!`, {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    { text: '🎨 Generate AI Logo', callback_data: `final_generate_image_${userId}` },
-                    { text: '⏭️ Skip & Create Token', callback_data: `skip_final_image_${userId}` }
-                ]
-            ]
-        }
-    });
-}
-
 function showEnhancedFinalSummary(chatId, userId, data) {
     const network = data.network.charAt(0).toUpperCase() + data.network.slice(1);
     
