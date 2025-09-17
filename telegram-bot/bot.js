@@ -656,8 +656,8 @@ Please enter your token name:`);
             const session = userSessions.get(userId);
             if (session) {
                 session.data.revokeMint = decision === 'yes';
-                // Go to step 11 - AI Image Generation
-                handleAIImageGenerationStep(chatId, userId, session);
+                // Go directly to final summary (no step 11)
+                showEnhancedFinalSummary(chatId, userId, session.data);
             }
         }
 
