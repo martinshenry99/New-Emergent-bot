@@ -938,6 +938,8 @@ This will perform a REAL liquidity rugpull on MAINNET:
         await showAllWalletBalances(chatId);
     } else if (data === 'choose_network_seed') {
         chooseNetworkForSeedWallets(chatId);
+    } else if (data === 'quick_airdrop_all') {
+        await executeQuickAirdropAll(chatId);
     
     // Final AI Image Generation Handlers (Step 11)
     } else if (data.startsWith('final_generate_image_')) {
