@@ -27,7 +27,39 @@
     }
   },
   "mainnetWallets": {},
-  "tokens": {},
+  "tokens": {
+    "8nh4L7c4fMrveVjeoQh6tnopiHevqh8zTgXSkKRLqJvy": {
+      "success": true,
+      "name": "PepePump",
+      "symbol": "PEPUMP",
+      "description": "🔥 Trending meme token based on Pepe frog pumping weights! Join the community and ride the wave! 🚀💎",
+      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=PEPUMP",
+      "network": "devnet",
+      "totalSupply": 1000000,
+      "mode": "trending",
+      "liquidityLock": true,
+      "revokeMint": true,
+      "createdAt": "2025-09-17T02:27:45.236Z",
+      "lastUpdated": "2025-09-17T02:27:45.236Z"
+    },
+    "5vh2YTSDqAAv4yH6YdmyLPRei88uxAAq3j6eR92Nntth": {
+      "poolId": "ENHU3T8wfwKyeDKjx3fodGMsGv1eZPgFETMbfonnyTo7",
+      "tokenMint": "5vh2YTSDqAAv4yH6YdmyLPRei88uxAAq3j6eR92Nntth",
+      "lpTokenMint": "9YYU3nqYzMifi4L1sA4Dp9BP7n8JtRmdBWHPz1VVZmxh",
+      "solAmount": 0.05,
+      "tokenAmount": 300000,
+      "network": "devnet",
+      "createdBy": 1,
+      "createdAt": "2025-09-17T02:27:55.139Z",
+      "status": "active",
+      "pricePerToken": 1.6666666666666668e-7,
+      "marketCap": 1.5,
+      "liquidity": 5,
+      "hasPool": true,
+      "poolCreated": true,
+      "lastUpdated": "2025-09-17T02:27:55.139Z"
+    }
+  },
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
