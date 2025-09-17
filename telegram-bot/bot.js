@@ -35,6 +35,10 @@ console.log('💾 Database system: Enabled');
 console.log('🌐 Networks: Devnet + Mainnet');
 console.log('💰 Reserve system: 0.05 SOL minimum');
 console.log('🔒 Liquidity lock: 24 hours');
+console.log('📈 Real Trading Manager: Integrated');
+console.log('🔗 Genuine Blockchain Manager: Integrated');
+console.log('⚡ Chart Activity: Available');
+console.log('🛠️ All command integrations: Complete');
 
 // Start command
 bot.onText(/\/start/, (msg) => {
