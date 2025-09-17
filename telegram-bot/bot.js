@@ -21,6 +21,12 @@ const poolManager = new PoolManager(database, enhancedWalletManager);
 const aiIntegrations = new AIIntegrations();
 const metadataManager = new MetadataManager();
 
+// Initialize additional required managers
+const tokenManager = new TokenManager(new Connection(process.env.SOLANA_RPC_URL || clusterApiUrl('devnet'), 'confirmed'), enhancedWalletManager);
+const raydiumManager = new RaydiumManager(new Connection(process.env.SOLANA_RPC_URL || clusterApiUrl('devnet'), 'confirmed'), enhancedWalletManager, tokenManager);
+const realTradingManager = new RealTradingManager(enhancedWalletManager, tokenManager, raydiumManager);
+const genuineBlockchainManager = new GenuineBlockchainManager(database, enhancedWalletManager);
+
 // User sessions for multi-step wizards
 const userSessions = new Map();
 
