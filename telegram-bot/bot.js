@@ -2093,6 +2093,162 @@ The trend-aware AI encountered an error: ${error.message}
     }
 }
 
+// ===== ENHANCED AI TOKEN CREATION (CLASSIC AI WITH REAL GPT-4) =====
+async function executeEnhancedAITokenCreation(chatId, userId, network, userInput = '') {
+    try {
+        bot.sendMessage(chatId, `🤖 **ENHANCED AI TOKEN CREATION**
+
+🧠 Using REAL GPT-4 for intelligent token branding...
+🎨 Generating unique name, symbol & description...
+🖼️ Creating AI-powered logo with Craiyon...
+
+⏳ This may take 30-60 seconds...`);
+
+        // Use REAL AI for token name generation
+        const nameResult = await aiIntegrations.generateTokenName(userInput || 'Create an innovative meme token');
+        
+        if (nameResult.success) {
+            // Generate description using REAL AI
+            const descResult = await aiIntegrations.generateDescription(nameResult.name, nameResult.symbol, userInput);
+            
+            if (descResult.success) {
+                // Generate AI image
+                const imageResult = await aiIntegrations.generateImage(descResult.description);
+                
+                const summary = `🎉 **REAL AI GENERATION COMPLETE!**
+
+🚀 **Generated Token:**
+• **Name:** ${nameResult.name}
+• **Symbol:** $${nameResult.symbol}
+• **Description:** ${descResult.description}
+• **Logo:** ${imageResult.success ? '🎨 AI Generated' : '📝 Text-based'}
+
+🤖 **AI Provider:** ${nameResult.provider || 'Emergent GPT-4'}
+🎨 **Image Provider:** ${imageResult.provider || 'Craiyon AI'}
+
+**Ready to create this AI-powered token?**`;
+
+                bot.sendMessage(chatId, summary, {
+                    parse_mode: 'Markdown',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '🚀 Create This Token', callback_data: `create_ai_token_${userId}` },
+                                { text: '🎲 Regenerate', callback_data: `regenerate_ai_${userId}` }
+                            ],
+                            [
+                                { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                            ]
+                        ]
+                    }
+                });
+
+                // Store the AI result for creation
+                userSessions.set(userId, {
+                    type: 'ai_confirmed',
+                    data: {
+                        network: network,
+                        name: nameResult.name,
+                        symbol: nameResult.symbol,
+                        description: descResult.description,
+                        imageUrl: imageResult.success ? imageResult.images[0].url : null,
+                        hasAIImage: imageResult.success,
+                        aiGenerated: true,
+                        provider: nameResult.provider || 'emergent-ai'
+                    }
+                });
+
+            } else {
+                throw new Error('Description generation failed');
+            }
+        } else {
+            throw new Error('Token name generation failed');
+        }
+
+    } catch (error) {
+        console.error('Enhanced AI token creation error:', error);
+        bot.sendMessage(chatId, `❌ **AI Generation Failed**
+
+Error: ${error.message}
+
+This might be due to:
+• AI service temporarily unavailable
+• Network connectivity issues
+• API rate limits
+
+**Fallback Options:**`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🔄 Try Again', callback_data: `ai_network_${network}_${userId}` },
+                        { text: '🛠️ Manual Launch', callback_data: 'manual_launch' }
+                    ],
+                    [
+                        { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
+// ===== MAINNET LIQUIDITY INPUT FOR AI =====
+function requestMainnetLiquidityForAI(chatId, userId) {
+    bot.sendMessage(chatId, `💰 **Mainnet Liquidity Configuration**
+
+🌐 **Real SOL Required for Mainnet Token:**
+
+You're creating a LIVE token with real value. Please specify:
+
+**How much real SOL do you want to add as initial liquidity?**
+
+💡 **Recommendations:**
+• **Minimum:** 0.1 SOL (~$20)
+• **Recommended:** 0.5-1 SOL (~$100-200)
+• **Serious Launch:** 2-5 SOL (~$400-1000)
+
+⚠️ **This is REAL money - choose carefully!**
+
+Please enter the amount of SOL (example: 0.5):`, {
+        parse_mode: 'Markdown'
+    });
+
+    // Set session for liquidity input
+    userSessions.set(userId, {
+        type: 'ai_liquidity_input',
+        step: 'awaiting_sol_amount',
+        data: { network: 'mainnet' }
+    });
+}
+
+function requestMainnetLiquidityForTrendAI(chatId, userId) {
+    bot.sendMessage(chatId, `💰 **Mainnet Liquidity for Trend-Aware Token**
+
+🔥 **Creating a LIVE trending token with real value!**
+
+**How much real SOL for initial liquidity?**
+
+💡 **Trend Token Recommendations:**
+• **Test Launch:** 0.2-0.5 SOL (~$40-100)
+• **Confident Launch:** 1-2 SOL (~$200-400)  
+• **Major Launch:** 3-5 SOL (~$600-1000)
+
+🎯 **Higher liquidity = More credibility for trending tokens**
+
+⚠️ **This is REAL money on mainnet!**
+
+Please enter SOL amount (example: 1.0):`, {
+        parse_mode: 'Markdown'
+    });
+
+    // Set session for liquidity input
+    userSessions.set(userId, {
+        type: 'trend_ai_liquidity_input',
+        step: 'awaiting_sol_amount',
+        data: { network: 'mainnet' }
+    });
+}
+
 // ===== STEP 3.5 AI IMAGE GENERATION =====
 async function handleStep35ImageGeneration(chatId, userId, session) {
     try {
