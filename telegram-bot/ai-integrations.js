@@ -1,4 +1,7 @@
 const axios = require('axios');
+const { exec } = require('child_process');
+const { promisify } = require('util');
+const execAsync = promisify(exec);
 const fs = require('fs').promises;
 const path = require('path');
 
