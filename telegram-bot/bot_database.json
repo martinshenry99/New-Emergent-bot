@@ -1,65 +1,33 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "gallery dice dirt blanket flush rubber random message gun cricket wedding resist",
-      "publicKey": "D7S5GzNhfLaQJmCn9e4fKv1snvt29WiM3AjsR8nTUqsS",
-      "createdAt": "2025-09-17T02:03:54.526Z"
+      "mnemonic": "sketch barrel ship buffalo simple treat ask cloth invest scissors pepper miracle",
+      "publicKey": "67NoN3WaA2n9Eum9PS65SzSbwG42zbaHbuY9FwDf8BeK",
+      "createdAt": "2025-09-17T02:37:40.328Z"
     },
     "wallet2": {
-      "mnemonic": "hurt push brief arch arm debris wait sibling swim hint bulb nose",
-      "publicKey": "4zajWMUqE7Sn8J5Hkbfi7S3QQcxkNiYDyZLyMbt52exS",
-      "createdAt": "2025-09-17T02:03:54.707Z"
+      "mnemonic": "liar grace gospel focus music oak creek rookie sentence couple resist unhappy",
+      "publicKey": "2VMYicw6gKsD2WzJ1yPMN6wdA25cQhypoL2RnKozgQmn",
+      "createdAt": "2025-09-17T02:37:40.442Z"
     },
     "wallet3": {
-      "mnemonic": "airport unlock mistake ball digital giant degree sunny just walnut note vehicle",
-      "publicKey": "AsGHiA4qWEiS5ueNtb3yhHFoxY8MPokBahk4nUuxGmbs",
-      "createdAt": "2025-09-17T02:03:54.726Z"
+      "mnemonic": "mule fitness energy dirt oil raise any old awful patrol permit fetch",
+      "publicKey": "8zg9K1z2N3M3ReCjvEGUtNywV4Ku9rUP7pucJTxoHdWG",
+      "createdAt": "2025-09-17T02:37:40.505Z"
     },
     "wallet4": {
-      "mnemonic": "pulp element envelope submit sample donor street chunk brick clap original fee",
-      "publicKey": "7vVrCJdXjaywPMjZop7cXNhwkvhmjgx4JuWDhbVHRw9K",
-      "createdAt": "2025-09-17T02:03:54.767Z"
+      "mnemonic": "galaxy taste quote tower level travel patrol torch manual move wall approve",
+      "publicKey": "5WUM8na6oX9ufqnGz6CSRAah7PWhESSv6BqQVv1aY6nh",
+      "createdAt": "2025-09-17T02:37:40.522Z"
     },
     "wallet5": {
-      "mnemonic": "olive ritual fresh course stool memory letter tonight quit silly parent travel",
-      "publicKey": "DsaX8Sgv4jDxJeukXEDb1hLZaABLpPNktErbw1nsnQ2a",
-      "createdAt": "2025-09-17T02:03:54.798Z"
+      "mnemonic": "resist fiscal metal income fitness axis genuine trade spawn surprise celery rapid",
+      "publicKey": "HZKkuFw9DuXMAemEdHmspd57FEoSjrE1mJiHX3gkvEcw",
+      "createdAt": "2025-09-17T02:37:40.647Z"
     }
   },
   "mainnetWallets": {},
-  "tokens": {
-    "8nh4L7c4fMrveVjeoQh6tnopiHevqh8zTgXSkKRLqJvy": {
-      "success": true,
-      "name": "PepePump",
-      "symbol": "PEPUMP",
-      "description": "🔥 Trending meme token based on Pepe frog pumping weights! Join the community and ride the wave! 🚀💎",
-      "imageUrl": "https://via.placeholder.com/512x512/FF6B6B/FFFFFF?text=PEPUMP",
-      "network": "devnet",
-      "totalSupply": 1000000,
-      "mode": "trending",
-      "liquidityLock": true,
-      "revokeMint": true,
-      "createdAt": "2025-09-17T02:27:45.236Z",
-      "lastUpdated": "2025-09-17T02:27:45.236Z"
-    },
-    "5vh2YTSDqAAv4yH6YdmyLPRei88uxAAq3j6eR92Nntth": {
-      "poolId": "ENHU3T8wfwKyeDKjx3fodGMsGv1eZPgFETMbfonnyTo7",
-      "tokenMint": "5vh2YTSDqAAv4yH6YdmyLPRei88uxAAq3j6eR92Nntth",
-      "lpTokenMint": "9YYU3nqYzMifi4L1sA4Dp9BP7n8JtRmdBWHPz1VVZmxh",
-      "solAmount": 0.05,
-      "tokenAmount": 300000,
-      "network": "devnet",
-      "createdBy": 1,
-      "createdAt": "2025-09-17T02:27:55.139Z",
-      "status": "active",
-      "pricePerToken": 1.6666666666666668e-7,
-      "marketCap": 1.5,
-      "liquidity": 5,
-      "hasPool": true,
-      "poolCreated": true,
-      "lastUpdated": "2025-09-17T02:27:55.139Z"
-    }
-  },
+  "tokens": {},
   "settings": {
     "lockDuration": 86400000,
     "minimumReserveSol": 0.05
