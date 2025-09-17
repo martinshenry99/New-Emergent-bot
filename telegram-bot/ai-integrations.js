@@ -135,23 +135,43 @@ Respond in JSON format:
         try {
             console.log(`🤖 Generating AI description for: ${tokenName} (${tokenSymbol})`);
             
-            const prompt = userDescription ? 
-                `Create a compelling meme token description for "${tokenName}" ($${tokenSymbol}) based on this concept: "${userDescription}". Make it exciting, fun, and crypto-native with appropriate emojis.` :
-                `Create an exciting meme token description for "${tokenName}" ($${tokenSymbol}). Make it catchy, fun, and include crypto memes and emojis.`;
+            const enhancedPrompt = userDescription ? 
+                `You are a CRYPTO MARKETING GENIUS who understands what makes communities go WILD.
+
+Create a VIRAL meme token description for "${tokenName}" ($${tokenSymbol}) based on: "${userDescription}"
+
+CHANNEL THE ENERGY OF SUCCESSFUL TOKENS like DOGE, SHIB, PEPE, BONK:
+🚀 Use proven viral patterns and language
+💎 Tap into crypto community psychology  
+🔥 Include elements that make people want to share
+⚡ Reference trending crypto themes and culture
+🌙 Build FOMO and community excitement
+🎯 Make it feel like "the next big thing"
+
+VIRAL ELEMENTS TO CONSIDER:
+- Diamond hands mentality
+- "To the moon" culture  
+- Community-driven messaging
+- Underdog-to-success narrative
+- Meme culture references
+- Crypto native slang` :
+                `You are a VIRAL TOKEN COPYWRITER. Create an explosive description for "${tokenName}" ($${tokenSymbol}) that feels like it's about to MOON.
+
+Use your knowledge of what makes crypto communities go crazy - reference successful patterns from DOGE, SHIB, PEPE era.`;
             
             const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
                 model: 'gpt-4',
                 messages: [{
                     role: 'user', 
-                    content: prompt + `
+                    content: enhancedPrompt + `
 
-Instructions:
+REQUIREMENTS:
 - Keep it under 200 characters
-- Include relevant emojis
-- Make it sound like a genuine meme coin project
-- Add excitement and community vibes
-- Include crypto slang if appropriate
-- End with a call to action or hype phrase
+- Include strategic emojis that create excitement
+- Use language that makes people want to buy immediately
+- Reference crypto culture and viral patterns
+- End with a powerful call to action
+- Make it feel like "this is THE moment to get in"
 
 Respond with just the description text, no JSON.`
                 }],
