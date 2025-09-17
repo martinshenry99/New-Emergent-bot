@@ -1003,7 +1003,8 @@ function showEnhancedFinalSummary(chatId, userId, data) {
 
 🔧 **Settings:**
 • Liquidity Lock: ${data.liquidityLock ? '✅ 24 hours' : '❌ No lock'}
-• Mint Authority: ${data.revokeMint ? '✅ Will be revoked' : '❌ Retained'}`;
+• Mint Authority: ${data.revokeMint ? '✅ Will be revoked' : '❌ Retained'}
+• Token Image: ${data.hasAIImage ? '🎨 AI Generated' : data.imageUrl ? '🖼️ Custom Image' : '📝 No Image'}`;
 
     if (data.network === 'mainnet' && data.realSol) {
         summary += `
