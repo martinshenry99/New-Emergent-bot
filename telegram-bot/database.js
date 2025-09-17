@@ -69,6 +69,11 @@ class DatabaseManager {
     getTokenData(tokenMint) {
         return this.data.tokens[tokenMint];
     }
+    
+    // Alias for getTokenData (consistency)
+    getToken(tokenMint) {
+        return this.data.tokens[tokenMint];
+    }
 
     getAllTokens() {
         return Object.values(this.data.tokens);
