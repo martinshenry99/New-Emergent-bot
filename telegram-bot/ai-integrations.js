@@ -49,11 +49,58 @@ class AIIntegrations {
         }
     }
 
-    // Generate token name using meme-style algorithm
+    // Generate token name using REAL AI (Emergent LLM)
     async generateTokenName(description) {
         try {
-            console.log(`🏷️ Generating meme token name for: "${description}"`);
+            console.log(`🤖 Generating AI token name for: "${description}"`);
             
+            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
+                model: 'gpt-4',
+                messages: [{
+                    role: 'user', 
+                    content: `Create a creative meme token name and symbol based on this description: "${description}". 
+
+Instructions:
+- Make it catchy and memorable
+- Should sound like a crypto meme token
+- Keep name under 20 characters
+- Symbol should be 3-6 characters
+- Consider trends like: Moon, Rocket, Doge, Pepe, Shiba, etc.
+- Make it unique and brandable
+
+Respond in JSON format:
+{
+  "name": "TokenName",
+  "symbol": "SYMBOL"
+}`
+                }],
+                max_tokens: 150,
+                temperature: 0.8
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.emergentLLMKey}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const aiResponse = response.data.choices[0].message.content;
+            console.log('🤖 AI Response:', aiResponse);
+            
+            // Parse AI response
+            const aiData = JSON.parse(aiResponse);
+            
+            return {
+                success: true,
+                name: aiData.name,
+                symbol: aiData.symbol,
+                description: `AI-generated meme token: ${description}`,
+                provider: 'emergent-ai'
+            };
+        } catch (error) {
+            console.error('❌ AI token name generation failed:', error);
+            
+            // Fallback to random generation
+            console.log('🔄 Falling back to random generation...');
             const memePrefixes = ['Moon', 'Rocket', 'Diamond', 'Doge', 'Pepe', 'Shiba', 'Chad', 'Wojak', 'Bonk', 'Safe'];
             const memeSuffixes = ['Coin', 'Token', 'Moon', 'Inu', 'Cat', 'Dog', 'X', 'Mars', 'Floki', 'Elon'];
             
@@ -67,13 +114,8 @@ class AIIntegrations {
                 success: true,
                 name: generatedName,
                 symbol: generatedSymbol,
-                description: `Meme token: ${description}`
-            };
-        } catch (error) {
-            console.error('❌ Token name generation failed:', error);
-            return {
-                success: false,
-                error: error.message
+                description: `Meme token: ${description}`,
+                provider: 'fallback-random'
             };
         }
     }
