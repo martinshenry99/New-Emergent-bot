@@ -2516,6 +2516,92 @@ function handleAILiquidityInput(chatId, userId, text, session) {
     }
 }
 
+// ===== MISSING HELPER FUNCTIONS =====
+function startTrendAwareAI(chatId, userId) {
+    userSessions.set(userId, {
+        type: 'trend_ai_branding',
+        step: 1,
+        data: {}
+    });
+
+    bot.sendMessage(chatId, `🔥 **TREND-AWARE AI TOKEN CREATOR**
+
+🧠 **Advanced AI Analysis:**
+• Simulates viral pattern recognition
+• Analyzes crypto community psychology
+• Creates tokens that "feel" perfectly timed
+• Uses knowledge of successful token formulas
+
+**Choose your network:**`, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🧪 Devnet (Free Testing)', callback_data: `ai_network_devnet_${userId}` },
+                    { text: '🌐 Mainnet (Real Launch)', callback_data: `ai_network_mainnet_${userId}` }
+                ],
+                [
+                    { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                ]
+            ]
+        }
+    });
+}
+
+function explainTrendAI(chatId) {
+    bot.sendMessage(chatId, `🧠 **How Trend-Aware AI Works**
+
+**No External APIs Needed!**
+GPT-4 uses its vast training knowledge to simulate trend analysis:
+
+🔥 **Viral Pattern Recognition:**
+• Analyzes successful meme token patterns (DOGE, SHIB, PEPE)
+• Understands what makes communities rally
+• Recognizes timing patterns for different themes
+
+📊 **Crypto Psychology Simulation:**
+• Knows what language creates FOMO
+• Understands community triggers
+• Applies proven viral formulas
+
+🎯 **Intelligent Synthesis:**
+• Combines trending elements smartly
+• Creates tokens that feel "naturally viral"
+• Uses timing intelligence from training data
+
+**Result:** Tokens that feel perfectly timed without needing real-time data!`, {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🔥 Try Trend-Aware AI', callback_data: `enhanced_ai_${chatId}` },
+                    { text: '🔙 Back', callback_data: `enhanced_ai_${chatId}` }
+                ]
+            ]
+        }
+    });
+}
+
+function chooseNetworkForSeedWallets(chatId) {
+    bot.sendMessage(chatId, `🌱 **Seed Wallets with SOL**
+
+Choose network to add initial SOL to your wallets:
+
+🧪 **Devnet** - Free SOL from faucet
+🌐 **Mainnet** - Requires real SOL deposit`, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🧪 Seed Devnet Wallets', callback_data: 'seed_devnet_wallets' },
+                    { text: '🌐 Seed Mainnet Wallets', callback_data: 'seed_mainnet_wallets' }
+                ],
+                [
+                    { text: '🔙 Back to Wallets', callback_data: 'refresh_all_balances' }
+                ]
+            ]
+        }
+    });
+}
+
 // ===== STEP 3.5 AI IMAGE GENERATION =====
 async function handleStep35ImageGeneration(chatId, userId, session) {
     try {
