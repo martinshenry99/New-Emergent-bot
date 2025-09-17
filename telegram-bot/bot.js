@@ -897,6 +897,10 @@ This will perform a REAL liquidity rugpull on MAINNET:
         showGenuineStatus(chatId);
     } else if (data === 'genuine_operations_history') {
         bot.sendMessage(chatId, '📊 Genuine operations history:\n\n• No operations recorded yet');
+    } else if (data === 'refresh_all_balances') {
+        await showAllWalletBalances(chatId);
+    } else if (data === 'choose_network_seed') {
+        chooseNetworkForSeedWallets(chatId);
 
     } else {
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
