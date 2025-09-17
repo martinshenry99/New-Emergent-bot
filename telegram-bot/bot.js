@@ -1014,16 +1014,18 @@ Your wallet now has additional SOL for:
 • Trading operations
 
 🔗 **View on Explorer:**
-[View Transaction](https://explorer.solana.com/tx/${airdropResult.signature}?cluster=devnet)`, {
+[View Transaction](https://explorer.solana.com/tx/${airdropResult.signature}?cluster=devnet)
+
+**Airdrop completed successfully!** ✅ Use /start to continue.`, {
             parse_mode: 'Markdown',
             reply_markup: {
                 inline_keyboard: [
                     [
                         { text: '💰 Check Balance', callback_data: `wallets_${network}` },
-                        { text: '🪂 Another Airdrop', callback_data: `airdrop_${network}` }
+                        { text: '🚀 Create Token', callback_data: 'manual_launch' }
                     ],
                     [
-                        { text: '🚀 Create Token', callback_data: 'manual_launch' }
+                        { text: '🔙 Back to Start', callback_data: 'back_to_start' }
                     ]
                 ]
             }
