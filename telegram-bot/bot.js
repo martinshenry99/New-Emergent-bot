@@ -721,15 +721,28 @@ Please enter your token name:`);
             }
         }
 
-    // Network Selection for AI Branding
+    // Network Selection for AI Branding (FIXED - REMOVED OLD GENERIC AI)
     } else if (data.startsWith('ai_network_')) {
         const [, , network, sessionUserId] = data.split('_');
         if (sessionUserId === userId.toString()) {
             const session = userSessions.get(userId);
             if (session) {
-                session.data.network = network;
-                session.step = 2;
-                await executeAIBranding(chatId, userId, 'trending', network);
+                // This is now handled by the new AI network handlers below
+                console.log('⚠️ Using deprecated ai_network_ callback - redirecting to new handlers');
+                
+                if (network === 'devnet') {
+                    if (session.type === 'trend_ai_branding') {
+                        executeTrendAwareTokenCreation(chatId, userId, 'devnet');
+                    } else {
+                        executeEnhancedAITokenCreation(chatId, userId, 'devnet');
+                    }
+                } else if (network === 'mainnet') {
+                    if (session.type === 'trend_ai_branding') {
+                        requestMainnetLiquidityForTrendAI(chatId, userId);
+                    } else {
+                        requestMainnetLiquidityForAI(chatId, userId);
+                    }
+                }
             }
         }
 
