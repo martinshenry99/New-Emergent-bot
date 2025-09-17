@@ -155,6 +155,88 @@ Choose network for your AI-generated token:
     });
 }
 
+function startTrendAwareAI(chatId, userId) {
+    userSessions.set(userId, {
+        type: 'trend_ai_branding',
+        step: 1,
+        data: {}
+    });
+
+    bot.sendMessage(chatId, `🔥 **TREND-AWARE AI TOKEN CREATOR**
+
+🧠 **Enhanced AI with Simulated Trend Analysis**
+
+Step 1/2: Network Selection
+
+Choose network for your trend-aware AI token:
+
+🧪 Devnet - Free testing with trend AI
+🌐 Mainnet - Live token with trend analysis
+
+⚠️ Mainnet tokens require real SOL investment`, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🧪 Devnet (Free)', callback_data: `ai_network_devnet_${userId}` },
+                    { text: '🌐 Mainnet (Live)', callback_data: `ai_network_mainnet_${userId}` }
+                ],
+                [
+                    { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                ]
+            ]
+        }
+    });
+}
+
+function explainTrendAI(chatId) {
+    bot.sendMessage(chatId, `🧠 **How Trend-Aware AI Works**
+
+🔥 **Revolutionary AI Technology:**
+
+**🎯 Simulated Trend Analysis:**
+• AI analyzes patterns from successful meme tokens (DOGE, PEPE, BONK)
+• Identifies viral characteristics and timing patterns
+• Creates tokens that "feel" perfectly timed for trends
+
+**🧠 Knowledge-Based Intelligence:**
+• Uses extensive training data on crypto culture
+• Understands meme psychology and viral mechanics
+• No external APIs needed - all intelligence is built-in
+
+**🚀 Proven Viral Formulas:**
+• Animal + Action combinations (like DOGE)
+• Internet culture references (like PEPE)
+• Community-driven themes (like BONK)
+• Scarcity and exclusivity psychology
+
+**💎 What Makes It Special:**
+• Creates tokens that feel "naturally viral"
+• Perfect timing simulation based on historical data
+• Combines multiple successful meme patterns
+• AI-generated logos that match the vibe
+
+**🎨 Complete Package:**
+• Token name, symbol, and description
+• AI-generated logo via Craiyon
+• Market psychology optimization
+• Community appeal maximization
+
+Ready to create your trend-aware token?`, {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: '🔥 Create Trend Token', callback_data: `enhanced_ai_${chatId}` },
+                    { text: '🤖 Classic AI Instead', callback_data: `classic_ai_${chatId}` }
+                ],
+                [
+                    { text: '🔙 Back to Menu', callback_data: 'ai_auto_brand' }
+                ]
+            ]
+        }
+    });
+}
+
 function startEnhancedAutoBrand(chatId, userId) {
     bot.sendMessage(chatId, `🔥 **ENHANCED AI TOKEN CREATOR**
 
