@@ -1976,6 +1976,97 @@ Please try again or use individual wallet airdrops.`);
     }
 }
 
+// ===== TREND-AWARE AI TOKEN CREATION =====
+async function executeTrendAwareTokenCreation(chatId, userId, network, userInput = '') {
+    try {
+        bot.sendMessage(chatId, `🔥 **TREND-AWARE AI ANALYZING...**
+
+🤖 Simulating trending crypto landscape analysis...
+📊 Processing viral meme patterns...
+🎯 Identifying perfect timing opportunities...
+
+⏳ This may take 30-60 seconds...`);
+
+        // Use the new trend analysis AI
+        const trendResult = await aiIntegrations.generateTrendingTokenConcept(userInput);
+        
+        if (trendResult.success) {
+            // Display the trend analysis to user
+            const trendSummary = `🎉 **TREND ANALYSIS COMPLETE!**
+
+🚀 **Generated Token:**
+• **Name:** ${trendResult.name}
+• **Symbol:** $${trendResult.symbol}
+• **Description:** ${trendResult.description}
+
+🔥 **Trend Analysis:**
+${trendResult.trend_analysis}
+
+🎯 **Viral Elements:**
+${trendResult.viral_elements ? trendResult.viral_elements.map(el => `• ${el}`).join('\n') : '• Optimized for viral spread'}
+
+👥 **Target Community:** ${trendResult.target_community || 'Crypto meme enthusiasts'}
+
+⚡ **Why Now:** ${trendResult.timing_reasoning}
+
+**Ready to create this trending token?**`;
+
+            bot.sendMessage(chatId, trendSummary, {
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '🚀 Create This Token', callback_data: `create_trend_token_${userId}` },
+                            { text: '🎲 Generate Different Concept', callback_data: `regenerate_trend_${userId}` }
+                        ],
+                        [
+                            { text: '✏️ Modify Concept', callback_data: `modify_trend_${userId}` },
+                            { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                        ]
+                    ]
+                }
+            });
+
+            // Store the trend result for potential creation
+            userSessions.set(userId, {
+                type: 'trend_confirmed',
+                data: {
+                    network: network,
+                    name: trendResult.name,
+                    symbol: trendResult.symbol,
+                    description: trendResult.description,
+                    trendAnalysis: trendResult.trend_analysis,
+                    aiGenerated: true,
+                    hasAIImage: false // Will generate image during creation
+                }
+            });
+
+        } else {
+            throw new Error('Trend analysis failed');
+        }
+
+    } catch (error) {
+        console.error('Trend-aware token creation error:', error);
+        bot.sendMessage(chatId, `❌ **Trend Analysis Failed**
+
+The trend-aware AI encountered an error: ${error.message}
+
+**Fallback Options:**`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '🤖 Try Classic AI Instead', callback_data: `classic_ai_${userId}` },
+                        { text: '🔄 Try Again', callback_data: `enhanced_ai_${userId}` }
+                    ],
+                    [
+                        { text: '❌ Cancel', callback_data: 'cancel_wizard' }
+                    ]
+                ]
+            }
+        });
+    }
+}
+
 // ===== STEP 3.5 AI IMAGE GENERATION =====
 async function handleStep35ImageGeneration(chatId, userId, session) {
     try {
