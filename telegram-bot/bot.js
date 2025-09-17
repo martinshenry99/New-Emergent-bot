@@ -410,40 +410,14 @@ Please enter your token description:`);
                 return;
             }
             data.description = text;
-            session.step = 3.5; // Intermediate step for image generation choice
-            
-            bot.sendMessage(chatId, `✅ Description: ${text}
-
-🎨 **Image Generation Option**
-
-Would you like to generate a logo/image for your token using AI?
-
-🤖 **Craiyon AI** will create an image based on your description:
-"${text}"
-
-This is optional but makes your token more appealing!`, {
-                reply_markup: {
-                    inline_keyboard: [
-                        [
-                            { text: '🎨 Generate AI Image', callback_data: `generate_image_${userId}` },
-                            { text: '⏭️ Skip Image Generation', callback_data: `skip_image_${userId}` }
-                        ]
-                    ]
-                }
-            });
-            break;
-            
-        case 3.5: // Handle image generation result (handled via callback)
-            // This case is handled by callbacks, skip to step 4
             session.step = 4;
-            bot.sendMessage(chatId, `✅ Description: ${data.description}
-${data.imageUrl ? `🎨 Image: Generated with AI` : '📝 No image selected'}
+            bot.sendMessage(chatId, `✅ Description: ${text}
 
 Step 4/10: Ticker Symbol
 
-3-6 uppercase letters (e.g., DOGE, PEPE, MOON)
+Enter a 3-6 character symbol for your token.
 
-💡 Tip: Make it memorable and related to your token
+Examples: DOGE, MOON, PEPE, BONK
 
 Please enter your ticker symbol:`);
             break;
