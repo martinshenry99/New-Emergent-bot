@@ -2118,11 +2118,46 @@ Select a token to start/stop chart activity:
 }
 
 function showChartActivityOptions(chatId, tokenMint) {
-    const tokenInfo = database.getToken ? database.getToken(tokenMint) : null;
-    const chartStatus = realTradingManager.getChartActivityStatus ? realTradingManager.getChartActivityStatus() : { isActive: false };
-    
-    if (!tokenInfo) {
-        bot.sendMessage(chatId, '❌ Token not found');
+    try {
+        let tokenInfo = null;
+        
+        // Try multiple methods to get token info
+        if (database.getToken) {
+            tokenInfo = database.getToken(tokenMint);
+        }
+        
+        if (!tokenInfo && database.getTokenData) {
+            tokenInfo = database.getTokenData(tokenMint);
+        }
+        
+        if (!tokenInfo) {
+            // Try to find by mint address in all tokens
+            const allTokens = database.getAllTokens ? database.getAllTokens() : [];
+            tokenInfo = allTokens.find(token => token.mintAddress === tokenMint || token.mint === tokenMint);
+        }
+        
+        console.log(`📊 Chart Activity Options - Token: ${tokenMint}, Found: ${!!tokenInfo}`);
+        
+        if (!tokenInfo) {
+            bot.sendMessage(chatId, `❌ **Token Information Not Found**
+            
+**Debug Info:**
+• Token Mint: \`${tokenMint}\`
+• Database method available: ${database.getToken ? 'Yes' : 'No'}
+• Total tokens in database: ${database.getAllTokens ? database.getAllTokens().length : 'N/A'}
+
+Please try creating a new token or contact support.`);
+            return;
+        }
+        
+        const chartStatus = realTradingManager.getChartActivityStatus ? realTradingManager.getChartActivityStatus() : { isActive: false };
+    } catch (error) {
+        console.error('Chart activity options error:', error);
+        bot.sendMessage(chatId, `❌ **Chart Activity Error**
+        
+Error: ${error.message}
+
+Please try again.`);
         return;
     }
 
