@@ -57,57 +57,65 @@ class AIIntegrations {
         try {
             console.log(`🤖 Generating AI token name for: "${description}"`);
             
-            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
-                model: 'gpt-4',
-                messages: [{
-                    role: 'user', 
-                    content: `You are a VIRAL MEME TOKEN STRATEGIST with deep knowledge of crypto trends, internet culture, and what makes tokens successful.
+            // Create Python script for Emergent LLM integration
+            const pythonScript = `
+import asyncio
+import json
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
-ANALYZE THE CURRENT CRYPTO MEME LANDSCAPE and create a trending-ready token based on: "${description}"
+async def generate_token_name():
+    try:
+        chat = LlmChat(
+            api_key="${this.emergentLLMKey}",
+            session_id="token-name-gen",
+            system_message="You are a crypto token naming expert."
+        ).with_model("openai", "gpt-4o")
+        
+        user_message = UserMessage(
+            text='''Create a creative meme token name and symbol based on this description: "${description}". 
 
-USE YOUR KNOWLEDGE OF:
-🔥 VIRAL MEME PATTERNS: Pepe variants, Doge derivatives, AI themes, "To the Moon" culture
-📈 SUCCESSFUL TOKEN FORMATS: What symbols and names actually pump (BONK, SHIB, FLOKI patterns)
-🌐 CRYPTO COMMUNITY TRENDS: Diamond hands, apes, rockets, safe tokens, inu derivatives
-🎭 INTERNET CULTURE: Current meme formats, viral catchphrases, trending aesthetics
-⚡ TIMING ELEMENTS: What themes are "having a moment" in crypto culture
-
-GENERATE A TOKEN THAT FEELS LIKE IT'S RIDING A CURRENT TREND:
-- Combine trending elements intelligently
-- Use viral-ready naming patterns
-- Include culturally relevant references
-- Make it feel "timely" and "now"
-- Tap into crypto community psychology
+Instructions:
+- Make it catchy and memorable
+- Should sound like a crypto meme token
+- Keep name under 20 characters
+- Symbol should be 3-6 characters
+- Consider trends like: Moon, Rocket, Doge, Pepe, Shiba, etc.
+- Make it unique and brandable
 
 Respond in JSON format:
 {
   "name": "TokenName",
-  "symbol": "SYM",
-  "trend_analysis": "Brief explanation of why this would be trending now",
-  "viral_potential": "What makes this likely to go viral"
-}`
-                }],
-                max_tokens: 150,
-                temperature: 0.8
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${this.emergentLLMKey}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+  "symbol": "SYMBOL"
+}'''
+        )
+        
+        response = await chat.send_message(user_message)
+        print(response)
+    except Exception as e:
+        print(f"ERROR: {e}")
 
-            const aiResponse = response.data.choices[0].message.content;
-            console.log('🤖 AI Response:', aiResponse);
+asyncio.run(generate_token_name())
+`;
+
+            // Write and execute Python script
+            await fs.writeFile('/tmp/token_name_gen.py', pythonScript);
+            const { stdout, stderr } = await execAsync('cd /app/telegram-bot && python /tmp/token_name_gen.py');
+            
+            if (stderr) {
+                throw new Error(`Python error: ${stderr}`);
+            }
+            
+            console.log('🤖 AI Response:', stdout);
             
             // Parse AI response
-            const aiData = JSON.parse(aiResponse);
+            const aiData = JSON.parse(stdout.trim());
             
             return {
                 success: true,
                 name: aiData.name,
                 symbol: aiData.symbol,
                 description: `AI-generated meme token: ${description}`,
-                provider: 'emergent-ai'
+                provider: 'emergent-llm'
             };
         } catch (error) {
             console.error('❌ AI token name generation failed:', error);
