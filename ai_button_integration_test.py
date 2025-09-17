@@ -101,7 +101,7 @@ class AIButtonIntegrationTester:
         ]
         
         for handler in critical_handlers:
-            if self.search_in_file(self.bot_file, f"} else if (data.startsWith('{handler}'))"):
+            if self.search_in_file(self.bot_file, "} else if (data.startsWith('" + handler + "'))"):
                 self.log_test(f"Callback handler: {handler}", "PASS", "Handler found in callback query")
             else:
                 self.log_test(f"Callback handler: {handler}", "FAIL", "Handler missing from callback query")
