@@ -155,7 +155,7 @@ class AIButtonIntegrationTester:
         ]
         
         for handler in network_handlers:
-            if self.search_in_file(self.bot_file, f"} else if (data.startsWith('{handler}'))"):
+            if self.search_in_file(self.bot_file, "} else if (data.startsWith('" + handler + "'))"):
                 self.log_test(f"Network handler: {handler}", "PASS", "Handler found")
             else:
                 self.log_test(f"Network handler: {handler}", "FAIL", "Handler missing")
