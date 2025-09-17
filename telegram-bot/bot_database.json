@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "arrow gym busy battle keen amazing glare dirt ordinary observe satoshi upon",
-      "publicKey": "8Ee1zfgMjqVceCUvqqWwe8hptEbvoqTAZZVbUrTN4GHh",
-      "createdAt": "2025-09-17T11:56:51.570Z"
+      "mnemonic": "moon acid alone violin save come thrive card agent series boost attend",
+      "publicKey": "9zCpoMMHB2kg3zJicSfpe1Cv4DfViHxvb8SjzWDEjnyk",
+      "createdAt": "2025-09-17T12:22:22.257Z"
     },
     "wallet2": {
-      "mnemonic": "oppose brass total require able real wrestle save trash agree edit priority",
-      "publicKey": "FLjsiWtUH53UcLAdAv8fi4HNLgg6HnbZUy3kpnzcXxQN",
-      "createdAt": "2025-09-17T11:56:51.733Z"
+      "mnemonic": "join length thumb student laugh breeze library slush empower tray shoe maid",
+      "publicKey": "emYzsUSQJiqHMHTSwZU5EAJRM1pgrMJkEDeRnkybXDB",
+      "createdAt": "2025-09-17T12:22:22.356Z"
     },
     "wallet3": {
-      "mnemonic": "garlic speak real faculty example very dish coffee eight what waste fun",
-      "publicKey": "7KLnyovXr1CovzWdE6CUtAmZE7QfdG7hA1V7FUM8dyPL",
-      "createdAt": "2025-09-17T11:56:51.780Z"
+      "mnemonic": "mixture present adapt welcome profit payment topple whale prize identify grant enlist",
+      "publicKey": "5xspcq5YBy7H5tDVJM83N8V1YMBTp558u3d8FWSy4hZG",
+      "createdAt": "2025-09-17T12:22:22.381Z"
     },
     "wallet4": {
-      "mnemonic": "city axis program fatigue utility purpose volume swarm thank piece rural axis",
-      "publicKey": "E22pS6XeZaxwmrEJFav83L8DamfY7zcg7VKog3VRK8tG",
-      "createdAt": "2025-09-17T11:56:51.810Z"
+      "mnemonic": "chronic identify mountain foam bulk smile lock galaxy humor timber gown crop",
+      "publicKey": "GRzUuX6FXuonCUyiJkEK2zLay2L6oV3a8otXfXgtehKz",
+      "createdAt": "2025-09-17T12:22:22.424Z"
     },
     "wallet5": {
-      "mnemonic": "city wasp also essence convince flush bounce sniff physical biology appear prosper",
-      "publicKey": "5sv6SAq8qMc3PC8qKPMvjVs16hNMW8uyVaAhFD8UKQ7b",
-      "createdAt": "2025-09-17T11:56:51.885Z"
+      "mnemonic": "eager final oppose lumber ghost congress animal scrap gap arrest faculty fluid",
+      "publicKey": "AsZTAWpK1E7siaikXi8HiiYGa3ybo1EDNMo6yyQR5e5A",
+      "createdAt": "2025-09-17T12:22:22.455Z"
     }
   },
   "mainnetWallets": {},
