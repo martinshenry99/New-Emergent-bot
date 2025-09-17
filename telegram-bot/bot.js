@@ -1085,6 +1085,44 @@ This will perform a REAL liquidity rugpull on MAINNET:
     } else if (data === 'quick_airdrop_all') {
         await executeQuickAirdropAll(chatId);
     
+    // AI Token Creation Button Handlers - CRITICAL FIX
+    } else if (data.startsWith('create_ai_token_')) {
+        const sessionUserId = data.replace('create_ai_token_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.type === 'ai_confirmed' && session.data) {
+                // Proceed with token creation using AI-generated data
+                await executeAITokenCreation(chatId, userId, session.data);
+            }
+        }
+    } else if (data.startsWith('regenerate_ai_')) {
+        const sessionUserId = data.replace('regenerate_ai_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                // Regenerate AI token with same network
+                executeEnhancedAITokenCreation(chatId, userId, session.data.network);
+            }
+        }
+    } else if (data.startsWith('create_trend_token_')) {
+        const sessionUserId = data.replace('create_trend_token_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.type === 'trend_confirmed' && session.data) {
+                // Proceed with trend token creation
+                await executeAITokenCreation(chatId, userId, session.data);
+            }
+        }
+    } else if (data.startsWith('regenerate_trend_')) {
+        const sessionUserId = data.replace('regenerate_trend_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.data) {
+                // Regenerate trend token with same network
+                executeTrendAwareTokenCreation(chatId, userId, session.data.network);
+            }
+        }
+    
     // Step 3.5 AI Image Generation Handlers
     } else if (data.startsWith('generate_step35_image_')) {
         const sessionUserId = data.replace('generate_step35_image_', '');
