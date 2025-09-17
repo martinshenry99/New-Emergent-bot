@@ -1914,19 +1914,51 @@ Please enter your ticker symbol:`);
 
 // ===== INTEGRATION FIX #1: START TRADING COMMAND =====
 function startRealTradingCommand(chatId) {
-    const createdPools = poolManager ? poolManager.getAllPools() : [];
-    
-    if (createdPools.length === 0) {
-        bot.sendMessage(chatId, `
-❌ *No Pools Found*
+    try {
+        let createdPools = [];
+        
+        // Try to get pools from poolManager
+        if (poolManager && poolManager.getAllPools) {
+            createdPools = poolManager.getAllPools();
+        }
+        
+        // Alternative: get from database tokens
+        if (createdPools.length === 0) {
+            const tokens = database.getAllTokens ? database.getAllTokens() : [];
+            createdPools = tokens.map(token => ({
+                tokenMint: token.mintAddress,
+                tokenName: token.name,
+                tokenSymbol: token.symbol
+            }));
+        }
+        
+        console.log(`🚀 Start Trading - Found ${createdPools.length} pools/tokens`);
+        
+        if (createdPools.length === 0) {
+            bot.sendMessage(chatId, `
+❌ **No Pools/Tokens Found**
 
-You need to create a pool first before starting trading.
+You need to create a token and pool first before starting trading.
 
-Steps:
+**Steps:**
 1. Use /launch to create a token
-2. Create a pool for your token  
-3. Then start trading!
-        `, { parse_mode: 'Markdown' });
+2. Complete the full token creation process (including pool creation)
+3. Then return to start trading
+
+**Debug Info:**
+• Pool Manager: ${poolManager ? 'Available' : 'Not available'}
+• Database tokens: ${database.getAllTokens ? database.getAllTokens().length : 'N/A'}
+• Real Trading Manager: ${realTradingManager ? 'Available' : 'Not available'}
+            `, { parse_mode: 'Markdown' });
+            return;
+        }
+    } catch (error) {
+        console.error('Start trading error:', error);
+        bot.sendMessage(chatId, `❌ **Start Trading Error**
+        
+Error: ${error.message}
+
+The trading system encountered an error. Please try again or contact support.`);
         return;
     }
 
