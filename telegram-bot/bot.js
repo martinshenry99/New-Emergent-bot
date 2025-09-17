@@ -1116,6 +1116,32 @@ Please enter your ticker symbol:`);
         if (sessionUserId === userId.toString()) {
             explainTrendAI(chatId);
         }
+    
+    // AI Network Selection Handlers (MISSING - CRITICAL FIX)
+    } else if (data.startsWith('ai_network_devnet_')) {
+        const sessionUserId = data.replace('ai_network_devnet_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.type === 'ai_branding') {
+                // Classic AI branding
+                executeEnhancedAITokenCreation(chatId, userId, 'devnet');
+            } else if (session && session.type === 'trend_ai_branding') {
+                // Trend-aware AI branding
+                executeTrendAwareTokenCreation(chatId, userId, 'devnet');
+            }
+        }
+    } else if (data.startsWith('ai_network_mainnet_')) {
+        const sessionUserId = data.replace('ai_network_mainnet_', '');
+        if (sessionUserId === userId.toString()) {
+            const session = userSessions.get(userId);
+            if (session && session.type === 'ai_branding') {
+                // Classic AI branding - request liquidity input first
+                requestMainnetLiquidityForAI(chatId, userId);
+            } else if (session && session.type === 'trend_ai_branding') {
+                // Trend-aware AI branding - request liquidity input first  
+                requestMainnetLiquidityForTrendAI(chatId, userId);
+            }
+        }
 
     } else {
         console.log(`⚠️ UNHANDLED CALLBACK: "${data}" from user ${userId}`);
