@@ -1734,16 +1734,20 @@ This will perform a genuine mint rugpull:
 • Uses REAL SOL
 • Irreversible damage
 
-🚨 **FOR EDUCATIONAL PURPOSES ONLY**
+🚨 **FOR EDUCATIONAL PURPOSES**
 This demonstrates how rugpulls work on blockchain.
 
-Only proceed on devnet for learning!
+**NETWORK SELECTION:**
+Choose network for this operation:
     `, {
         parse_mode: 'Markdown',
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: '💀 Execute (Devnet Only)', callback_data: 'genuine_mint_rugpull' },
+                    { text: '🧪 Execute on Devnet (Safe)', callback_data: 'genuine_mint_rugpull_devnet' },
+                    { text: '🌐 Execute on Mainnet (DANGER)', callback_data: 'genuine_mint_rugpull_mainnet' }
+                ],
+                [
                     { text: '❌ Cancel', callback_data: 'cancel_genuine' }
                 ]
             ]
