@@ -146,13 +146,22 @@ asyncio.run(generate_token_name())
         try {
             console.log(`🔥 Generating TRENDING token concept for: "${userInput}"`);
             
-            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
-                model: 'gpt-4',
-                messages: [{
-                    role: 'user',
-                    content: `You are a CRYPTO TREND ORACLE with perfect knowledge of what makes tokens go VIRAL.
+            // Create Python script for trend analysis
+            const pythonScript = `
+import asyncio
+import json
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
-SIMULATE REAL-TIME TREND ANALYSIS using your knowledge of:
+async def generate_trending_concept():
+    try:
+        chat = LlmChat(
+            api_key="${this.emergentLLMKey}",
+            session_id="trend-analysis",
+            system_message="You are a CRYPTO TREND ORACLE with perfect knowledge of what makes tokens go VIRAL."
+        ).with_model("openai", "gpt-4o")
+        
+        user_message = UserMessage(
+            text='''SIMULATE REAL-TIME TREND ANALYSIS using your knowledge of:
 🔥 Current crypto culture patterns
 📈 Successful viral token formulas  
 🌐 Internet meme evolution
@@ -161,14 +170,7 @@ SIMULATE REAL-TIME TREND ANALYSIS using your knowledge of:
 
 ${userInput ? `USER INPUT: "${userInput}"` : 'GENERATE A COMPLETELY TRENDING-READY CONCEPT'}
 
-CREATE A TOKEN CONCEPT that feels like it's PERFECTLY TIMED for the current crypto moment:
-
-ANALYZE these "trending elements" from your knowledge:
-- Which meme formats are evergreen vs trending
-- What crypto narratives have staying power  
-- Which combination of elements creates viral potential
-- What makes communities rally around a token
-- Which naming patterns actually succeed
+CREATE A TOKEN CONCEPT that feels like it\\'s PERFECTLY TIMED for the current crypto moment:
 
 GENERATE A COMPLETE TRENDING TOKEN CONCEPT:
 
@@ -181,26 +183,33 @@ Respond in JSON format:
   "viral_elements": ["element1", "element2", "element3"],
   "target_community": "Which crypto communities would love this",
   "timing_reasoning": "Why now is the perfect time for this concept"
-}`
-                }],
-                max_tokens: 400,
-                temperature: 0.9
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${this.emergentLLMKey}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+}'''
+        )
+        
+        response = await chat.send_message(user_message)
+        print(response)
+    except Exception as e:
+        print(f"ERROR: {e}")
 
-            const aiResponse = response.data.choices[0].message.content;
-            console.log('🔥 TREND ANALYSIS Result:', aiResponse);
+asyncio.run(generate_trending_concept())
+`;
+
+            // Write and execute Python script
+            await fs.writeFile('/tmp/trend_analysis.py', pythonScript);
+            const { stdout, stderr } = await execAsync('cd /app/telegram-bot && python /tmp/trend_analysis.py');
             
-            const trendData = JSON.parse(aiResponse);
+            if (stderr) {
+                throw new Error(`Python error: ${stderr}`);
+            }
+            
+            console.log('🔥 TREND ANALYSIS Result:', stdout);
+            
+            const trendData = JSON.parse(stdout.trim());
             
             return {
                 success: true,
                 ...trendData,
-                provider: 'emergent-trend-ai'
+                provider: 'emergent-llm'
             };
         } catch (error) {
             console.error('❌ Trend analysis failed:', error);
