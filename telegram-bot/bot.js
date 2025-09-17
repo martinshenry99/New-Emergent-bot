@@ -2008,16 +2008,50 @@ Use /stop_trading to stop anytime.
 
 // ===== INTEGRATION FIX #2: CHART ACTIVITY COMMAND =====
 function chartActivityCommand(chatId) {
-    const createdTokens = database.getAllTokens ? database.getAllTokens() : [];
-    
-    if (createdTokens.length === 0) {
-        bot.sendMessage(chatId, `
-❌ *No Tokens Found*
+    try {
+        // Try multiple methods to get tokens
+        let createdTokens = [];
+        
+        if (database.getAllTokens) {
+            createdTokens = database.getAllTokens();
+        }
+        
+        // Alternative: check if poolManager has tokens
+        if (createdTokens.length === 0 && poolManager) {
+            const pools = poolManager.getAllPools ? poolManager.getAllPools() : [];
+            createdTokens = pools.map(pool => ({
+                name: pool.tokenName || 'Unknown Token',
+                symbol: pool.tokenSymbol || 'TOKEN',
+                mintAddress: pool.tokenMint
+            }));
+        }
+        
+        console.log(`📊 Chart Activity - Found ${createdTokens.length} tokens`);
+        
+        if (createdTokens.length === 0) {
+            bot.sendMessage(chatId, `
+❌ **No Tokens Found**
 
 You need to create a token first before starting chart activity.
 
-Use /launch to create your first token!
-        `, { parse_mode: 'Markdown' });
+**Steps to create a token:**
+1. Use /launch to create your first token
+2. Complete the token creation process
+3. Then return to use chart activity
+
+**Debug Info:**
+• Database tokens: ${database.getAllTokens ? database.getAllTokens().length : 'N/A'}
+• Pool manager: ${poolManager ? 'Available' : 'Not available'}
+            `, { parse_mode: 'Markdown' });
+            return;
+        }
+    } catch (error) {
+        console.error('Chart activity error:', error);
+        bot.sendMessage(chatId, `❌ **Chart Activity Error**
+        
+Error: ${error.message}
+
+Please try again or contact support.`);
         return;
     }
 
