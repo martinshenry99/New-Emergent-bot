@@ -118,10 +118,10 @@ Choose which network to deploy your token on:
     });
 }
 
-// Auto Brand Command with Network Selection
+// Enhanced AI Auto Brand Command with Trend Analysis
 bot.onText(/\/auto_brand/, (msg) => {
     const chatId = msg.chat.id;
-    startAutoBrand(chatId, msg.from.id);
+    startEnhancedAutoBrand(chatId, msg.from.id);
 });
 
 function startAutoBrand(chatId, userId) {
