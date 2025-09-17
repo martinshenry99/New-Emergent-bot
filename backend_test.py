@@ -246,21 +246,21 @@ class TelegramBotTester:
             
         # Test 2: Check specific callback patterns for review request
         required_callbacks = [
-            "generate_step35_image_",
-            "skip_step35_image_", 
-            "quick_airdrop_all",
-            "airdrop_wallet_1_",
-            "airdrop_wallet_2_",
-            "airdrop_wallet_3_",
-            "airdrop_wallet_4_",
-            "airdrop_wallet_5_",
-            "back_to_start"
+            ("generate_step35_image_", "startsWith"),
+            ("skip_step35_image_", "startsWith"), 
+            ("quick_airdrop_all", "equals"),
+            ("airdrop_wallet_", "startsWith"),  # This handles all wallet numbers dynamically
+            ("back_to_start", "equals")
         ]
         
         missing_callbacks = []
-        for callback in required_callbacks:
-            if f"data.startsWith('{callback}')" not in bot_content and f"data === '{callback}'" not in bot_content:
-                missing_callbacks.append(callback)
+        for callback, check_type in required_callbacks:
+            if check_type == "startsWith":
+                if f"data.startsWith('{callback}')" not in bot_content:
+                    missing_callbacks.append(callback)
+            else:  # equals
+                if f"data === '{callback}'" not in bot_content:
+                    missing_callbacks.append(callback)
                 
         if missing_callbacks:
             self.log_test("callback_handlers", "FAILED", 
