@@ -120,25 +120,47 @@ Respond in JSON format:
         }
     }
 
-    // Generate meme-style description
-    async generateDescription(tokenName, tokenSymbol) {
+    // Generate description using REAL AI (Emergent LLM)
+    async generateDescription(tokenName, tokenSymbol, userDescription = '') {
         try {
-            console.log(`📝 Generating meme description for: ${tokenName} (${tokenSymbol})`);
+            console.log(`🤖 Generating AI description for: ${tokenName} (${tokenSymbol})`);
             
-            const memeDescriptions = [
-                `${tokenName} 🚀 Next 1000x meme coin on Solana! Diamond hands only! 💎🙌`,
-                `Welcome to ${tokenName} - where memes meet moon missions! 🌙 HODL strong! 💪`,
-                `${tokenName} ($${tokenSymbol}) - The ultimate degen play for true meme lords! 🔥`,
-                `Buckle up! ${tokenName} is going parabolic! 📈🚀 Not financial advice! 😎`,
-                `${tokenName} - Building the meme-verse, one token at a time! 🎭💫`,
-            ];
+            const prompt = userDescription ? 
+                `Create a compelling meme token description for "${tokenName}" ($${tokenSymbol}) based on this concept: "${userDescription}". Make it exciting, fun, and crypto-native with appropriate emojis.` :
+                `Create an exciting meme token description for "${tokenName}" ($${tokenSymbol}). Make it catchy, fun, and include crypto memes and emojis.`;
             
-            const randomDescription = memeDescriptions[Math.floor(Math.random() * memeDescriptions.length)];
+            const response = await axios.post('https://api.emergentmethods.ai/v1/chat/completions', {
+                model: 'gpt-4',
+                messages: [{
+                    role: 'user', 
+                    content: prompt + `
+
+Instructions:
+- Keep it under 200 characters
+- Include relevant emojis
+- Make it sound like a genuine meme coin project
+- Add excitement and community vibes
+- Include crypto slang if appropriate
+- End with a call to action or hype phrase
+
+Respond with just the description text, no JSON.`
+                }],
+                max_tokens: 100,
+                temperature: 0.9
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.emergentLLMKey}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const aiDescription = response.data.choices[0].message.content.trim();
+            console.log('🤖 AI Generated Description:', aiDescription);
             
             return {
                 success: true,
-                description: randomDescription,
-                provider: 'meme-generator'
+                description: aiDescription,
+                provider: 'emergent-ai'
             };
         } catch (error) {
             console.error('❌ Description generation failed:', error);
