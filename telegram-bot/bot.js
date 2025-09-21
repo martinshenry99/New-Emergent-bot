@@ -191,46 +191,31 @@ Choose network for your trend-aware AI token:
 function explainTrendAI(chatId) {
     bot.sendMessage(chatId, `🧠 **How Trend-Aware AI Works**
 
-🔥 **Revolutionary AI Technology:**
+**No External APIs Needed!**
+GPT-4 uses its vast training knowledge to simulate trend analysis:
 
-**🎯 Simulated Trend Analysis:**
-• AI analyzes patterns from successful meme tokens (DOGE, PEPE, BONK)
-• Identifies viral characteristics and timing patterns
-• Creates tokens that "feel" perfectly timed for trends
+🔥 **Viral Pattern Recognition:**
+• Analyzes successful meme token patterns (DOGE, SHIB, PEPE)
+• Understands what makes communities rally
+• Recognizes timing patterns for different themes
 
-**🧠 Knowledge-Based Intelligence:**
-• Uses extensive training data on crypto culture
-• Understands meme psychology and viral mechanics
-• No external APIs needed - all intelligence is built-in
+📊 **Crypto Psychology Simulation:**
+• Knows what language creates FOMO
+• Understands community triggers
+• Applies proven viral formulas
 
-**🚀 Proven Viral Formulas:**
-• Animal + Action combinations (like DOGE)
-• Internet culture references (like PEPE)
-• Community-driven themes (like BONK)
-• Scarcity and exclusivity psychology
-
-**💎 What Makes It Special:**
+🎯 **Intelligent Synthesis:**
+• Combines trending elements smartly
 • Creates tokens that feel "naturally viral"
-• Perfect timing simulation based on historical data
-• Combines multiple successful meme patterns
-• AI-generated logos that match the vibe
+• Uses timing intelligence from training data
 
-**🎨 Complete Package:**
-• Token name, symbol, and description
-• AI-generated logo via Craiyon
-• Market psychology optimization
-• Community appeal maximization
-
-Ready to create your trend-aware token?`, {
+**Result:** Tokens that feel perfectly timed without needing real-time data!`, {
         parse_mode: 'Markdown',
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: '🔥 Create Trend Token', callback_data: `enhanced_ai_${chatId}` },
-                    { text: '🤖 Classic AI Instead', callback_data: `classic_ai_${chatId}` }
-                ],
-                [
-                    { text: '🔙 Back to Menu', callback_data: 'ai_auto_brand' }
+                    { text: '🔥 Try Trend-Aware AI', callback_data: `enhanced_ai_${chatId}` },
+                    { text: '🔙 Back', callback_data: `enhanced_ai_${chatId}` }
                 ]
             ]
         }
