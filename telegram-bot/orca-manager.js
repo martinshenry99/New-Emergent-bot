@@ -56,8 +56,11 @@ class OrcaManager {
         // Sol token info
         this.SOL_TOKEN = new PublicKey('So11111111111111111111111111111111111111112');
         
-        // Initialize Anchor provider and context
-        this._initializeContext();
+        // Context will be initialized lazily when needed
+        this.ctx = null;
+        this.client = null;
+        
+        console.log('🌊 Orca Whirlpool Manager initialized (context will be loaded when needed)');
     }
 
     _getWhirlpoolsConfig() {
