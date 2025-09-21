@@ -23,8 +23,8 @@ const metadataManager = new MetadataManager();
 
 // Initialize additional required managers
 const tokenManager = new TokenManager(new Connection(process.env.SOLANA_RPC_URL || clusterApiUrl('devnet'), 'confirmed'), enhancedWalletManager);
-const raydiumManager = new RaydiumManager(new Connection(process.env.SOLANA_RPC_URL || clusterApiUrl('devnet'), 'confirmed'), enhancedWalletManager, tokenManager);
-const realTradingManager = new RealTradingManager(enhancedWalletManager, tokenManager, raydiumManager);
+const orcaManager = new OrcaManager(new Connection(process.env.SOLANA_RPC_URL || clusterApiUrl('devnet'), 'confirmed'), enhancedWalletManager, tokenManager);
+const realTradingManager = new RealTradingManager(enhancedWalletManager, tokenManager, orcaManager);
 const genuineBlockchainManager = new GenuineBlockchainManager(database, enhancedWalletManager);
 
 // User sessions for multi-step wizards
