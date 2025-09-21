@@ -261,7 +261,7 @@ class RealTradingManager {
                     // In real implementation, would check actual token balance first
                     const sellAmount = 50 + Math.random() * 100; // 50-150 tokens
                     
-                    const sellResult = await this.raydiumManager.executeSellSwap(
+                    const sellResult = await this.orcaManager.executeSellSwap(
                         tokenMint, 
                         sellAmount, 
                         walletId
