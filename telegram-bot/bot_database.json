@@ -1,29 +1,29 @@
 {
   "devnetWallets": {
     "wallet1": {
-      "mnemonic": "stone pepper else toddler raven expose lemon exchange speed broccoli quantum aware",
-      "publicKey": "5qhBrnK3rZwxu3iA199UZjbK7RHPLqWchp2arexTEquY",
-      "createdAt": "2025-09-17T13:11:00.235Z"
+      "mnemonic": "arrive fortune brain game learn pledge three wrestle source eye bird rifle",
+      "publicKey": "CKVsvD1xJFdwUP28wmYzq5iz1whkBzu17P5HbNJV9oLC",
+      "createdAt": "2025-09-21T12:06:40.769Z"
     },
     "wallet2": {
-      "mnemonic": "table ribbon evidence device cradle put jelly chest coyote color bubble weasel",
-      "publicKey": "2BsXAfGEMid5skP2aYQ3fL7jdvZUmwCpBgfqf34ntrZz",
-      "createdAt": "2025-09-17T13:11:00.277Z"
+      "mnemonic": "kiwi produce long equip coin where sentence arrange kick grief pyramid rather",
+      "publicKey": "2rHeDnKe6YxbGjii7wVrWEiENDo8A5NqAyutjNZ41TtN",
+      "createdAt": "2025-09-21T12:06:40.853Z"
     },
     "wallet3": {
-      "mnemonic": "curious wage involve village lobster divide just course truth canoe enemy where",
-      "publicKey": "GH3sq9D86uaMC84npjMnNgaFLJZwVGwzbcQbVoXsJLAN",
-      "createdAt": "2025-09-17T13:11:00.335Z"
+      "mnemonic": "stand chef flame circle air lift outside ten spike truck sport talk",
+      "publicKey": "2NwTTRrMrsAS49EhnD1hr15Fpt2BDw4piCRkfsQKSkMT",
+      "createdAt": "2025-09-21T12:06:40.870Z"
     },
     "wallet4": {
-      "mnemonic": "crater script soul oak fold job animal news short crush furnace hat",
-      "publicKey": "GUxbtuBY2csdhMn1vgAwWUADFXTt5mNH6VdG8pWKNCsP",
-      "createdAt": "2025-09-17T13:11:00.366Z"
+      "mnemonic": "square valley win black insect program chief select wine enrich harvest enact",
+      "publicKey": "Dh2a2Q5Jw8MqN5QwR4dkyoQ5uXh4wFzCUUYeidVXjAkJ",
+      "createdAt": "2025-09-21T12:06:40.886Z"
     },
     "wallet5": {
-      "mnemonic": "light fruit flush forest seven figure wood chaos state panther wall gallery",
-      "publicKey": "21AagF19eSgz6Emwex5z3KVq7TBoqZo47ett89cyfFS8",
-      "createdAt": "2025-09-17T13:11:00.396Z"
+      "mnemonic": "myth settle general pink lady brisk sock proof text mass drift patient",
+      "publicKey": "5568xhs9KvgQzKdP7QjDgnN5F6fme83p1ZSRvzWN519N",
+      "createdAt": "2025-09-21T12:06:40.902Z"
     }
   },
   "mainnetWallets": {},
