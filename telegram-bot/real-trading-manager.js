@@ -80,7 +80,7 @@ class RealTradingManager {
         return await this.orcaManager.getTokenBalance(tokenMint, walletId);
     }
 
-    // Execute a real trade using Raydium
+    // Execute a real trade using Orca Whirlpools
     async executeTrade(tradeParams) {
         if (!this.currentToken) {
             return {
