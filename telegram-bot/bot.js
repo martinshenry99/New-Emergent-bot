@@ -274,44 +274,6 @@ bot.onText(/\/set_fees/, (msg) => {
     chooseNetworkForSetFees(chatId);
 });
 
-// Start Trading Command - INTEGRATION FIX #1
-bot.onText(/\/start_trading/, (msg) => {
-    const chatId = msg.chat.id;
-    startRealTradingCommand(chatId);
-});
-
-// Chart Activity Command - INTEGRATION FIX #2  
-bot.onText(/\/chart_activity/, (msg) => {
-    const chatId = msg.chat.id;
-    chartActivityCommand(chatId);
-});
-
-// Genuine Blockchain Commands - INTEGRATION FIX #3
-bot.onText(/\/liquidity_lock/, (msg) => {
-    const chatId = msg.chat.id;
-    genuineLiquidityLockCommand(chatId);
-});
-
-bot.onText(/\/revoke_mint/, (msg) => {
-    const chatId = msg.chat.id;
-    genuineRevokeMintCommand(chatId);
-});
-
-bot.onText(/\/genuine_mint_rugpull/, (msg) => {
-    const chatId = msg.chat.id;
-    genuineMintRugpullCommand(chatId);
-});
-
-bot.onText(/\/genuine_rugpull/, (msg) => {
-    const chatId = msg.chat.id;
-    genuineRugpullCommand(chatId);
-});
-
-bot.onText(/\/status/, (msg) => {
-    const chatId = msg.chat.id;
-    showGenuineStatus(chatId);
-});
-
 async function showAllWalletBalances(chatId) {
     try {
         // Update balances first
