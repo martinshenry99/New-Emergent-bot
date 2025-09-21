@@ -77,7 +77,7 @@ class RealTradingManager {
 
     // Get actual token balance for a wallet
     async getTokenBalance(tokenMint, walletId) {
-        return await this.raydiumManager.getTokenBalance(tokenMint, walletId);
+        return await this.orcaManager.getTokenBalance(tokenMint, walletId);
     }
 
     // Execute a real trade using Raydium
