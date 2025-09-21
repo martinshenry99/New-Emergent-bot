@@ -121,6 +121,8 @@ class OrcaManager {
 
     // Create a new Orca Whirlpool
     async createPool(tokenMint, initialSOLAmount = 0.1, tickSpacing = 64) {
+        this._ensureContextInitialized(); // Ensure context is ready
+        
         const wallet = this.walletManager.getWallet(1);
         if (!wallet) {
             throw new Error('Wallet 1 not found');
