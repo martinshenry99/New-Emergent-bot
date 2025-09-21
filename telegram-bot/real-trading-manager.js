@@ -368,7 +368,7 @@ class RealTradingManager {
             if (trade.type === 'BUY') {
                 console.log(`📈 Chart activity BUY: ${trade.amount} SOL from wallet ${trade.walletId}`);
                 
-                const result = await this.raydiumManager.executeBuySwap(
+                const result = await this.orcaManager.executeBuySwap(
                     this.currentToken,
                     trade.amount,
                     trade.walletId
