@@ -9,7 +9,7 @@ const PoolManager = require('./pool-manager');
 const RealTradingManager = require('./real-trading-manager');
 const GenuineBlockchainManager = require('./genuine-blockchain-manager');
 const TokenManager = require('./token-manager');
-const RaydiumManager = require('./raydium-manager');
+const OrcaManager = require('./orca-manager');
 
 // Initialize Telegram Bot
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
