@@ -382,7 +382,7 @@ class RealTradingManager {
             } else {
                 console.log(`📈 Chart activity SELL: ${trade.amount} tokens from wallet ${trade.walletId}`);
                 
-                const result = await this.raydiumManager.executeSellSwap(
+                const result = await this.orcaManager.executeSellSwap(
                     this.currentToken,
                     trade.amount,
                     trade.walletId
