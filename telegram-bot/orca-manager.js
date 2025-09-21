@@ -74,6 +74,10 @@ class OrcaManager {
     }
 
     _initializeContext() {
+        if (this.ctx) {
+            return; // Already initialized
+        }
+
         try {
             // Create Anchor provider
             const wallet = this.walletManager.getWallet(1);
@@ -101,10 +105,17 @@ class OrcaManager {
             this.ctx = WhirlpoolContext.withProvider(provider, this.WHIRLPOOL_PROGRAM_ID);
             this.client = buildWhirlpoolClient(this.ctx);
             
-            console.log('🌊 Orca Whirlpool Manager initialized successfully');
+            console.log('🌊 Orca Whirlpool context initialized successfully');
         } catch (error) {
             console.error('❌ Failed to initialize Orca context:', error);
             throw error;
+        }
+    }
+
+    // Ensure context is initialized before operations
+    _ensureContextInitialized() {
+        if (!this.ctx) {
+            this._initializeContext();
         }
     }
 
