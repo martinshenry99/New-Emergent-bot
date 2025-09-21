@@ -13,7 +13,7 @@ class FastAPIBackendTester:
     def __init__(self):
         # Get backend URL from frontend .env
         frontend_env_path = Path("/app/frontend/.env")
-        self.backend_url = "https://codebase-explainer.preview.emergentagent.com"
+        self.backend_url = "https://orca-meme-bot.preview.emergentagent.com"
         
         if frontend_env_path.exists():
             with open(frontend_env_path, 'r') as f:
