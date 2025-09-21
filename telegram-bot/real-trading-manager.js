@@ -1,8 +1,8 @@
 class RealTradingManager {
-    constructor(walletManager, tokenManager, raydiumManager) {
+    constructor(walletManager, tokenManager, orcaManager) {
         this.walletManager = walletManager;
         this.tokenManager = tokenManager;
-        this.raydiumManager = raydiumManager;
+        this.orcaManager = orcaManager; // Using Orca instead of Raydium
         
         // Trading state
         this.isTrading = false;
