@@ -147,7 +147,7 @@ class RealTradingManager {
         }
 
         // Check if pool exists for this token
-        if (!this.raydiumManager.hasPool(tokenMint)) {
+        if (!this.orcaManager.hasPool(tokenMint)) {
             return {
                 success: false,
                 error: 'No pool found for this token. Create pool first with /create_pool'
