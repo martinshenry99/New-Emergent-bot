@@ -92,17 +92,19 @@ class RealTradingManager {
         let result;
         try {
             if (tradeParams.type === 'BUY') {
-                result = await this.raydiumManager.executeBuySwap(
+                result = await this.orcaManager.executeBuySwap(
                     this.currentToken, 
                     tradeParams.amount, 
-                    tradeParams.walletId
+                    tradeParams.walletId,
+                    1 // 1% slippage for Orca
                 );
             } else {
                 // For sell, use the amount directly (already calculated with balance check)
-                result = await this.raydiumManager.executeSellSwap(
+                result = await this.orcaManager.executeSellSwap(
                     this.currentToken, 
                     tradeParams.amount, 
-                    tradeParams.walletId
+                    tradeParams.walletId,
+                    1 // 1% slippage for Orca
                 );
             }
 
