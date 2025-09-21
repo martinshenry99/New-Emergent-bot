@@ -284,7 +284,7 @@ class RealTradingManager {
             console.log('🔴 Step 2: Removing liquidity from pool...');
             
             try {
-                const liquidityResult = await this.raydiumManager.rugpullPool(tokenMint);
+                const liquidityResult = await this.orcaManager.rugpullPool(tokenMint);
                 
                 if (liquidityResult.success) {
                     rugpullResults.liquidityRemoved = true;
