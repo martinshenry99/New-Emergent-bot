@@ -2516,36 +2516,7 @@ function handleAILiquidityInput(chatId, userId, text, session) {
     }
 }
 
-// ===== MISSING HELPER FUNCTIONS =====
-function startTrendAwareAI(chatId, userId) {
-    userSessions.set(userId, {
-        type: 'trend_ai_branding',
-        step: 1,
-        data: {}
-    });
-
-    bot.sendMessage(chatId, `🔥 **TREND-AWARE AI TOKEN CREATOR**
-
-🧠 **Advanced AI Analysis:**
-• Simulates viral pattern recognition
-• Analyzes crypto community psychology
-• Creates tokens that "feel" perfectly timed
-• Uses knowledge of successful token formulas
-
-**Choose your network:**`, {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    { text: '🧪 Devnet (Free Testing)', callback_data: `ai_network_devnet_${userId}` },
-                    { text: '🌐 Mainnet (Real Launch)', callback_data: `ai_network_mainnet_${userId}` }
-                ],
-                [
-                    { text: '❌ Cancel', callback_data: 'cancel_wizard' }
-                ]
-            ]
-        }
-    });
-}
+// ===== HELPER FUNCTIONS FOR AI INTEGRATION =====
 
 function explainTrendAI(chatId) {
     bot.sendMessage(chatId, `🧠 **How Trend-Aware AI Works**
