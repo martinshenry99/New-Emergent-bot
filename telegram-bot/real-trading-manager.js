@@ -328,9 +328,9 @@ class RealTradingManager {
         };
     }
 
-    // Format trade result for Telegram (delegates to RaydiumManager)
+    // Format trade result for Telegram (delegates to OrcaManager)
     formatTradeForTelegram(tradeResult) {
-        return this.raydiumManager.formatTradeForTelegram(tradeResult);
+        return this.orcaManager.formatTradeForTelegram(tradeResult);
     }
 
     // Start chart activity simulation - periodic small trades
